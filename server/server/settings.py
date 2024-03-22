@@ -151,6 +151,5 @@ EMAIL_HOST_USER = 'healthynutrition201@gmail.com'
 EMAIL_HOST_PASSWORD = 'jtth fwbc tktb lbuq'
 
 REST_FRAMEWORK = {
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 30
+    'DEFAULT_PAGINATION_CLASS': None
 }
