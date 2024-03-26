@@ -28,10 +28,10 @@ function IngredientCard({ingredient}){
                     <p className="inline-flex items-center px-2 py-1 text-xs font-medium text-gray-600 bg-gray-100 rounded-md ring-1 ring-inset ring-gray-100">Calories: {ingredient.calories}kcal</p>
                 </div>
             </div>
-            <div className="w-full p-2 bg-transparent border-2 border-b-indigo-500 border-t-transparent border-r-transparent border-l-transparent">
+            {/* <div className="w-full p-2 bg-transparent border-2 border-b-indigo-500 border-t-transparent border-r-transparent border-l-transparent">
                 <p>Vitamins: {ingredient.vitamins?.join(", ")}</p>
                 <p>Allergens: {ingredient.allergens?.join(", ")}</p>
-            </div>
+            </div> */}
         </div>
     );
 }
