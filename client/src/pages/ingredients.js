@@ -124,7 +124,7 @@ export default function Ingredients() {
                             <option value="legumes">Legumes</option>
                             <option value="dairy">Dairy</option>
                             <option value="spices">Spices</option>
-                        </select>
+                        </select> 
                     </div>
                    <h4 className="text-lg">Nutrients</h4>
                     <div className="filter">
