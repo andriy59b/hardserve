@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'LogReg',
+    'products',
     'Profile', 
     'rest_framework',
     'rest_framework.authtoken',
@@ -81,8 +82,6 @@ TEMPLATES = [
         },
     },
 ]
-
-WSGI_APPLICATION = 'server.wsgi.application'
 
 
 # Database
@@ -138,6 +137,11 @@ STATIC_URL = 'static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': None
+}
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -146,7 +150,6 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'healthynutrition201@gmail.com'
 EMAIL_HOST_PASSWORD = 'jtth fwbc tktb lbuq'
-
-
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
