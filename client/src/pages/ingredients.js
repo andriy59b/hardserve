@@ -11,21 +11,21 @@ import "./ingredients.css";
 
 function IngredientCard({ingredient}){
     return (
-        <div className="relative flex flex-col items-center p-4 bg-transparent rounded-xl">
+        <div className="relative flex flex-col items-center p-4 rounded-xl">
             <img className="mt-2 mb-4 rounded" src="https://via.placeholder.com/150" alt="Ingredient" />
             <div className="flex items-center gap-2">
-                <h3 className="text-xl font-bold">{ingredient.name}</h3>
-                <p className="bg-transparent macro-badge-purple">{ingredient.category}</p>
+                <h3 className="text-xl font-medium">{ingredient.name}</h3>
+                <p className="inline-flex items-center rounded-md bg-green-100 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-50">{ingredient.category}</p>
             </div>
             <div className="p-2 macros">
                 <div className="flex gap-2">
-                    <p className="bg-transparent macro-badge-green">P: {ingredient.proteins}g</p>
-                    <p className="macro-badge-d-green bg-transparent">F: {ingredient.fats}g</p>
-                    <p className="macro-badge-brown bg-transparent">C: {ingredient.carbs}g</p>
+                    <p className="inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-100">P: {ingredient.proteins}g</p>
+                    <p className="inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-100">F: {ingredient.fats}g</p>
+                    <p className="inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-100">C: {ingredient.carbs}g</p>
                 </div>
                 <div className="flex justify-center gap-2 pt-2">
-                    <p className="macro-badge-purple bg-transparent">Fiber: {ingredient.fiber}g</p>
-                    <p className="macro-badge-green bg-transparent">Calories: {ingredient.calories}kcal</p>
+                    <p className="inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-100">Fiber: {ingredient.fiber}g</p>
+                    <p className="inline-flex items-center rounded-md bg-gray-100 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-100">Calories: {ingredient.calories}kcal</p>
                 </div>
             </div>
             <div className="w-full p-2 bg-transparent border-2 border-b-indigo-500 border-t-transparent border-r-transparent border-l-transparent">
@@ -104,7 +104,7 @@ export default function Ingredients() {
     return (
         <div className="flex flex-col">
         <Navbar />
-        <main className="flex flex-col items-center">
+        <main className="flex flex-col items-center bg-[#fefdfd]">
             <div className="search-bar">
                 <input onChange={(e) => {setSearch(e.target.value)}} type="text" />
                 <button><FontAwesomeIcon icon={ faMagnifyingGlass } /></button>
