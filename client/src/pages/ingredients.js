@@ -126,7 +126,7 @@ export default function Ingredients() {
                             <option value="spices">Spices</option>
                         </select>
                     </div>
-                    <h4 className="text-lg">Nutrients</h4>
+                   <h4 className="text-lg">Nutrients</h4>
                     <div className="filter">
                         <p>Proteins</p>
                         <input onChange={(e) => {setProteins(e.target.value)}} type="number" min="0" defaultValue={0} />
