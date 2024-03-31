@@ -16,7 +16,7 @@ export default function UserBar() {
                 </div>
                 <FontAwesomeIcon icon={faHeart} className='h-6 p-2 mr-2 text-sm text-red-500 bg-white shadow cursor-pointer aspect-square rounded-xl hover:text-red-700 hover:bg-gray-200' />
                 <FontAwesomeIcon icon={faScaleUnbalanced} className='h-6 p-2 mr-2 text-sm text-green-500 bg-white shadow cursor-pointer aspect-square rounded-xl hover:text-green-700 hover:bg-gray-200' />
-                <button className="w-20 h-10 p-2 mr-2 text-sm text-white bg-red-500 shadow hover:bg-red-700 rounded-xl">Quit</button>
+                <button className="w-20 h-10 p-2 mr-2 text-sm font-bold text-white bg-red-500 shadow hover:bg-red-700 rounded-xl">Quit</button>
             </div>
         </div>
     );
