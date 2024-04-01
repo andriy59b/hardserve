@@ -3,7 +3,7 @@ import { faBookmark, faScaleUnbalanced } from "@fortawesome/free-solid-svg-icons
 import { useParams } from "react-router-dom";
 import "./ingredient.css";
 
-import Nav from "../components/navbar";
+import Nav from "../components/navbar"; 
 
 const demoIngredients = [
     {name: "Ingredient 1", category: "Vegetable", proteins: 50, fats: 20, carbs: 30, fiber: 10, calories: 100, vitamins: ["A", "B", "C"], allergens: ["Nuts", "Milk"]},
