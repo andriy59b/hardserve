@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 
-import Toggle from "../../components/toggle";
+import { Toggle } from "../../components/formComponents";
 
 const platformSettings = [
     {
@@ -33,19 +33,23 @@ export default function Settings() {
         setToggleStates(newToggleStates);
     }
 
+    useEffect(() => {
+        console.log(toggleStates);
+    }, [toggleStates])
+
     return (
         <div className="flex w-full gap-4">
-            <div className="w-full p-4 bg-white rounded shadow">
+            <div className="w-full p-4 bg-white shadow rounded-xl">
                 <h2 className="font-bold">Platform settings</h2>
                 <p className="text-sm font-bold text-gray-400">Account</p>
                 <div className="flex flex-col gap-2 m-2">
                     {platformSettings.map((setting, index) => (
-                        <Toggle enabled={toggleStates[index]} setEnabled={(e) => {setEnabled(index, e)}} key={index}> {setting.name} </Toggle>
+                        <Toggle value={toggleStates[index]} onChange={(e) => {setEnabled(index, e)}} key={index}> {setting.name} </Toggle>
                     ))}
                 </div>
             </div>
 
-            <div className="flex w-full gap-2 p-4 bg-white rounded shadow ">
+            <div className="flex w-full gap-2 p-4 bg-white shadow rounded-xl ">
                 <div className="flex-col items-center w-full gap-2 m-2">
                     <div className="flex">
                         <h2 className="font-bold">Profile information</h2>

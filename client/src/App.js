@@ -21,7 +21,6 @@ import AccountPage from "./pages/accountPage/main";
 
 function App() {
   return (
-    <body>
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -34,7 +33,6 @@ function App() {
           <Route path="/ingredients/:id" element={<Ingredient />} />
         </Routes>
       </Router>
-    </body>
   );
 }
 

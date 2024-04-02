@@ -18,9 +18,9 @@ const greenGradient = (context) => {
 const darkGradient = (context) => {
     const ctx = context.chart.ctx;
     const gradient = ctx.createLinearGradient(0, 0, 0, 500);
-    gradient.addColorStop(0, "rgba(50, 50, 50, 0.5)");
+    gradient.addColorStop(1, "rgba(50, 50, 50, 0.5)");
     gradient.addColorStop(0.5, "rgba(50, 50, 50, 0.3)");
-    gradient.addColorStop(1, "rgba(50, 50, 50, 0)");
+    gradient.addColorStop(0, "rgba(50, 50, 50, 0)");
     return gradient;
 }
 
@@ -104,24 +104,24 @@ const callories = {
 export default function Dashboard() {
     return (
         <div className="flex flex-col gap-4">
-            <div className="w-full p-4 bg-white rounded shadow">
+            <div className="w-full p-4 bg-white shadow rounded-xl">
                 <h2 className="text-xl font-bold">Weight change</h2>
                 <p><span className="mb-5 text-green-400">(+5 kg) more</span> from last mounth</p>
                 <Line data={testData} options={options} />
             </div>
             <div className="flex gap-4">
-                <div className="w-2/3 p-4 bg-white rounded shadow">
+                <div className="w-2/3 p-4 bg-white shadow rounded-xl">
                     <h2 className="text-xl font-bold">Daily nutrient fullfilment</h2>
                     <div className="flex h-48 gap-4 m-4">
-                        {Object.keys(dailyFullfilement).map((key) => (
-                            <div className="flex flex-col items-center gap-4 ">
+                        {Object.keys(dailyFullfilement).map((key, index) => (
+                            <div className="flex flex-col items-center gap-4 " key={index}>
                                 <p className="mt-2 text-xl font-bold" style={{color:dailyFullfilement[key].color}}>{key}</p>
                                 <CircularProgressbar value={dailyFullfilement[key].value} text={`${dailyFullfilement[key].value}%`} styles={progressStyle(dailyFullfilement[key].color)} />
                             </div>
                         ))}
                     </div>
                 </div>
-                <div className="w-1/3 p-4 bg-white rounded shadow">
+                <div className="w-1/3 p-4 bg-white shadow rounded-xl">
                     <h2 className="text-xl font-bold text-center">Callories</h2>
                     <div className="flex h-48 gap-4 m-4">
                         <CircularProgressbar value={callories.value} maxValue={callories.total} text={`${callories.value}`} styles={progressStyle(callories.color)} />

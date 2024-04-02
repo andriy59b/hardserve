@@ -34,7 +34,7 @@ export function TabTriggers({ children, tabUpdate, currentTab }) {
         <div className="flex flex-col gap-2 mt-4">
             {children.map((child, i) => {
                 if (child.type.name === 'TabTrigger') {
-                    child = React.cloneElement(child, { tabUpdate: tabUpdate, currentTab: currentTab});
+                    child = React.cloneElement(child, { tabUpdate: tabUpdate, currentTab: currentTab, key: i});
                 }
                 return child;
             })}
