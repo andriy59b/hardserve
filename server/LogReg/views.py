@@ -3,7 +3,7 @@ from django.shortcuts import redirect, render
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import UserRegistrationSerializer
+from .serializers import UserRegistrationSerializer, UserGoogleUpdateSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.tokens import TokenError, AccessToken
 from django.contrib.auth import get_user_model
@@ -19,6 +19,8 @@ from django.urls import reverse
 from django.core.mail import send_mail
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.template.loader import render_to_string
+from rest_framework_simplejwt.tokens import TokenError, UntypedToken
+from rest_framework_simplejwt.state import token_backend
 import requests
 
 User = get_user_model()
@@ -151,6 +153,29 @@ class GoogleRedirectURIView(APIView):
                         refresh = RefreshToken.for_user(user)
                         data['access'] = str(refresh.access_token)
                         data['refresh'] = str(refresh)
-                        return Response(data, status.HTTP_201_CREATED)
+                        return redirect(f'http://localhost:8000/accounts/google-signup/compete-profile/?access={refresh.access_token}&refresh={refresh}')
         
         return Response({}, status.HTTP_400_BAD_REQUEST)
+    
+
+class GoogleRegCompeteProfileView(APIView):
+    def post(self, request):
+        access_token = request.GET.get('access')
+        refresh_token = request.GET.get('refresh')
+
+        try:
+            UntypedToken(access_token)
+        except (TokenError, ValueError, TypeError):
+            return Response({'message': 'Invalid token'}, status=status.HTTP_400_BAD_REQUEST)
+
+        user_id = token_backend.decode(access_token)['user_id']
+        user = User.objects.get(id=user_id)
+
+        serializer = UserGoogleUpdateSerializer(user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            user.is_email_verified = True 
+            user.save()
+            return Response({'message': 'Профіль успішно заповнено'}, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    

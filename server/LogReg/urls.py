@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import UserRegistrationView, LoginView, PasswordResetRequestView, PasswordResetConfirmView, GoogleAuthRedirect, GoogleRedirectURIView
+from .views import UserRegistrationView, LoginView, PasswordResetRequestView, PasswordResetConfirmView, GoogleAuthRedirect, GoogleRedirectURIView, GoogleRegCompeteProfileView
 
 urlpatterns = [
     path('register/', UserRegistrationView.as_view(), name='user-register'),
@@ -9,5 +9,6 @@ urlpatterns = [
 
     path('auth/', include('drf_social_oauth2.urls', namespace='drf')),
     path("google-signup/", GoogleAuthRedirect.as_view()),
-    path("google-signup/callback/", GoogleRedirectURIView.as_view(),   name='google-signup-callback')
+    path("google-signup/callback/", GoogleRedirectURIView.as_view(),   name='google-signup-callback'),
+    path("google-signup/compete-profile/", GoogleRegCompeteProfileView.as_view(), name='google-signup-compete-profile'),
 ]
