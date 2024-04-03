@@ -4,19 +4,23 @@ class Recipe(models.Model):
     name = models.CharField(max_length=255)
     image = models.ImageField(upload_to='recipes/image/', null=True, blank=True)
     short_description = models.TextField(blank=True, null=True)
+    category = models.CharField(max_length=255)
 
+class Recipe_Step(models.Model):
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    step_number = models.IntegerField()
+    description = models.TextField()
 
-class Nutritions(models.Model):
-    name = models.CharField(max_length=255)
+class Recipe_Ingredients(models.Model):
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    ingredient_id = models.IntegerField()
+    ingredient = models.CharField(max_length=255)
+    image = models.ImageField(null=True, blank=True)
+    amount = models.FloatField()
     unit = models.CharField(max_length=255)
 
-    def __str__(self):
-        return self.name
-    
-class Recipe_Nutritions(models.Model):
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='recipe_nutrients')
-    nutrient = models.ForeignKey(Nutritions, on_delete=models.CASCADE, related_name='recipe_nutrients')
-    amount = models.DecimalField(max_digits=10, decimal_places=5)
-
-    def __str__(self):
-        return self.recipe.name + ' ' + self.nutrient.name
+class Recipe_Equipment(models.Model):
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    equipment_id = models.IntegerField()
+    equipment = models.CharField(max_length=255)
+    image = models.ImageField(null=True, blank=True)
