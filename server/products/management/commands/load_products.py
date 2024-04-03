@@ -20,7 +20,7 @@ class Command(BaseCommand):
             # "Chili peppers", "Lard", "Mayonnaise", "Sea salt", "Margarine", "Chicken fillet", "Turkey", "Chicken legs",
             # "Sour cream", "Parsley", "Coriander", "Cumin", "Cardamom", "Cloves", "Grapes", "Grape juice",
             # "Capers", "Sausage", "Ham", "Pumpkin", "Lettuce leaves", "Green onions", "Shrimp", "Mussels",
-            # "Crab meat", "Shellfish", "French fries", "Green peas", "Sesame seeds", "Paprika", "Black tea", 
+            # "Crab meat", "French fries", "Green peas", "Sesame seeds", "Paprika", "Black tea", 
             # "Coconut", "Lavender", "Butter cream", "Sesame oil", "Turmeric", "Carrot",
             # "Watermelon", "Grapefruit", "Cranberries", "Spinach", "Dark chocolate", "Beans", "Cottage cheese"
         ]
@@ -55,7 +55,7 @@ class Command(BaseCommand):
 
             product = product_data['name']
 
-            if Product.objects.filter(name=product_data['name']).exists():
+            if Product.objects.filter(name=product_name).exists():
                 self.stdout.write(self.style.WARNING('Products already loaded into the database'))
                 continue
 
