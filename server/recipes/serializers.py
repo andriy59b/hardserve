@@ -4,17 +4,19 @@ from .models import *
 class RecipeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Recipe
-        fields = ['name', 'image', 'short_description']
+        fields = ['id', 'name', 'image', 'category', 'short_description']
 
-class NutritionsSerializer(serializers.ModelSerializer):
+class RecipeStepSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Nutritions
-        fields = ['name', 'unit']
+        model = Recipe_Step
+        fields = ['recipe_id', 'step_number', 'description']
 
-class RecipeNutritionsSerializer(serializers.ModelSerializer):
-    recipe = RecipeSerializer(read_only=True)
-    nutrient = NutritionsSerializer(read_only=True)
-
+class RecipeIngredientsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Recipe_Nutritions
-        fields = ['recipe', 'nutrient', 'amount']
+        model = Recipe_Ingredients
+        fields = ['recipe_id', 'ingredient_id', 'ingredient', 'image', 'amount', 'unit']
+
+class RecipeEquipmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Recipe_Equipment
+        fields = ['recipe_id', 'equipment_id', 'equipment', 'image']
