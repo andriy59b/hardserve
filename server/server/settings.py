@@ -45,11 +45,16 @@ INSTALLED_APPS = [
     'products',
     'rest_framework',
     'rest_framework.authtoken',
+    'oauth2_provider',
+    'social_django',
+    'drf_social_oauth2',
 ]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+        'drf_social_oauth2.authentication.SocialAuthentication',
     ],
 }
 
@@ -77,6 +82,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -115,6 +122,9 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTHENTICATION_BACKENDS = [
     'LogReg.backends.EmailOrUsernameModelBackend',
     'django.contrib.auth.backends.ModelBackend', 
+    'drf_social_oauth2.backends.DjangoOAuth2',
+    # Google OAuth2
+    'social_core.backends.google.GoogleOAuth2',
 ]
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
@@ -149,3 +159,13 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'healthynutrition201@gmail.com'
 EMAIL_HOST_PASSWORD = 'jtth fwbc tktb lbuq'
+
+
+# розкоментувати ключі для використання Google OAuth2
+
+
+# Define SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE to get extra permissions from Google.
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
+    'https://www.googleapis.com/auth/userinfo.email',
+    'https://www.googleapis.com/auth/userinfo.profile',
+]        

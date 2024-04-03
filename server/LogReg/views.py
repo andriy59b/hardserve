@@ -19,6 +19,7 @@ from django.urls import reverse
 from django.core.mail import send_mail
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.template.loader import render_to_string
+import requests
 
 User = get_user_model()
 
@@ -104,3 +105,52 @@ class PasswordResetConfirmView(APIView):
                 return Response({"message": "Новий пароль не надано."}, status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response({"message": "Посилання для скидання пароля недійсне."}, status=status.HTTP_400_BAD_REQUEST)
+        
+
+class GoogleAuthRedirect(View):
+    permission_classes = [AllowAny]
+    
+    def get(self, request):
+        redirect_url = f"https://accounts.google.com/o/oauth2/v2/auth?client_id={settings.SOCIAL_AUTH_GOOGLE_OAUTH2_KEY}&response_type=code&scope=https://www.googleapis.com/auth/userinfo.profile%20https://www.googleapis.com/auth/userinfo.email&access_type=offline&redirect_uri=http://localhost:8000/accounts/google-signup/callback"
+        return redirect(redirect_url)
+    
+class GoogleRedirectURIView(APIView):
+    permission_classes = [AllowAny]
+    
+    def get(self, request):
+        code = request.GET.get('code')
+        
+        if code:
+            token_endpoint = 'https://oauth2.googleapis.com/token'
+            token_params = {
+                'code': code,
+                'client_id': settings.SOCIAL_AUTH_GOOGLE_OAUTH2_KEY,
+                'client_secret': settings.SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET,
+                'redirect_uri': 'http://localhost:8000/accounts/google-signup/callback',  
+                'grant_type': 'authorization_code',
+            }
+
+            response = requests.post(token_endpoint, data=token_params)
+            
+            if response.status_code == 200:
+                access_token = response.json().get('access_token')
+                
+                if access_token:
+                    profile_endpoint = 'https://www.googleapis.com/oauth2/v1/userinfo'
+                    headers = {'Authorization': f'Bearer {access_token}'}
+                    profile_response = requests.get(profile_endpoint, headers=headers)
+                    
+                    if profile_response.status_code == 200:
+                        data = {}
+                        profile_data = profile_response.json()
+                        user = User.objects.create_user(username=profile_data["given_name"],
+                                                                    email=profile_data["email"])
+                        if "family_name" in profile_data:
+                            user.last_name = profile_data["family_name"]
+                            user.save
+                        refresh = RefreshToken.for_user(user)
+                        data['access'] = str(refresh.access_token)
+                        data['refresh'] = str(refresh)
+                        return Response(data, status.HTTP_201_CREATED)
+        
+        return Response({}, status.HTTP_400_BAD_REQUEST)
