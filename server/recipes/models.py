@@ -1,10 +1,13 @@
 from django.db import models
 
+class Category(models.Model):
+    name = models.CharField(max_length=255)
+
 class Recipe(models.Model):
     name = models.CharField(max_length=255)
     image = models.ImageField(null=True, blank=True)
     short_description = models.TextField(blank=True, null=True)
-    category = models.CharField(max_length=255)
+    categories = models.ManyToManyField(Category)
 
 class Recipe_Step(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
