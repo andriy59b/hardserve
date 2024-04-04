@@ -13,6 +13,7 @@ import About from './pages/about';
 import Ingredients from "./pages/ingredients";
 import Ingredient from "./pages/ingredient";
 import Recipes from "./pages/recipes";
+import Recipe from "./pages/recipe";
 
 import LogIn from "./components/LogIn/LogIn";
 import SignUp from "./components/SignUp/SignUp";
@@ -33,6 +34,7 @@ function App() {
         <Route path="/ingredients" element={<Ingredients />} />
         <Route path="/ingredients/:id" element={<Ingredient />} />
         <Route path="/recipes" element={<Recipes />} />
+        <Route path="/recipes/:id" element={<Recipe />} />
       </Routes>
     </Router>
   );
