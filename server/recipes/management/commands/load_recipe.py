@@ -9,22 +9,27 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
 
         recipe_term = [
-                        'muffin', 'sushi', 
-                        'pasta', 'ketchup', 
-                        'buckwheat', 'rice', 
-                        'borscht', 'pizza', 
-                        'broccoli soup', 'kebab', 
-                        'tiramisu', 'napoleon', 
-                        'goulash', 'dumplings',
-                        'cabbage', 'sorbet',
-                       ]
+            'muffin', 'sushi', 
+            'pasta', 'ketchup', 
+            'buckwheat', 'rice', 
+            'borscht', 'pizza', 
+            'broccoli soup', 'kebab', 
+            'tiramisu', 'napoleon', 
+            'goulash', 'dumplings',
+            'cabbage', 'sorbet',
+            'pancakes', 'omelette',
+            'lasagna', 'burger',
+            'salad', 'steak',
+            'chicken soup', 'apple pie',
+            'chocolate cake', 'cheesecake',
+        ]
 
         # api_key = '339a5df078aa48f2aa831ec1413f7537'
         # api_key = '60c5617260b84b1fb7ba939f0cdad2a6'
         # api_key = 'dbb41dcdd4ef4c6dacfd8e6c9b1db54c'
-        # api_key = 'e258317c18264d14ba91f8f215d80f62'
+        api_key = 'e258317c18264d14ba91f8f215d80f62'
         # api_key = '87f459c41b2542809173f185926cec62'
-        api_key = '42d94788e6dd4b2c81ee247449c38820'
+        # api_key = '42d94788e6dd4b2c81ee247449c38820'
 
         for recipes in recipe_term:
 
@@ -46,18 +51,27 @@ class Command(BaseCommand):
 
             recipe_data = response.json()
 
+            
+            if Recipe.objects.filter(name=recipe_name).exists():
+                self.stdout.write(self.style.WARNING('Recipe already loaded into the database'))
+                continue
+
+            # Create Recipe object outside of the loop
+            recipe, created = Recipe.objects.get_or_create(
+                name=recipe_name,  
+                image=recipe_data['image'],
+                short_description=recipe_data['summary'],
+            )
+
             for key in ['vegetarian', 'vegan', 'glutenFree', 'dairyFree', 'veryHealthy', 'cheap', 'veryPopular', 'sustainable', 'lowFodmap']:
                 if recipe_data.get(key, False):
-                    recipe, created = Recipe.objects.get_or_create(
-                        name=recipe_name,  
-                        image=recipe_data['image'],
-                        short_description=recipe_data['summary'],
-                        category=key, 
-                    )
-                    if created:
-                        self.stdout.write(self.style.SUCCESS(f'Successfully created recipe: {recipe_name}'))
-                    else:
-                        self.stdout.write(self.style.ERROR(f'Recipe already exists: {recipe_name}'))
+                    category, _ = Category.objects.get_or_create(name=key)
+                    recipe.categories.add(category)
+
+            if created:
+                self.stdout.write(self.style.SUCCESS(f'Successfully created recipe: {recipe_name}'))
+            else:
+                self.stdout.write(self.style.ERROR(f'Recipe already exists: {recipe_name}'))
 
             analyzedInstructions = recipe_data['analyzedInstructions']
 
