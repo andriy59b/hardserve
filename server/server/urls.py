@@ -23,4 +23,5 @@ urlpatterns = [
     path('accounts/', include('LogReg.urls')), 
     path('products/', include('products.urls')),
     path('recipes/', include('recipes.urls')),
+    path('', include('Profile.urls')),
 ]
