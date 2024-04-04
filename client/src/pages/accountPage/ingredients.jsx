@@ -95,7 +95,7 @@ function IngredientCard({ingredient}){
     const [detailsModal, setDetailsModal] = useState(false);
 
     return (
-        <div className="relative flex items-center p-2 bg-transparent bg-white shadow-lg w-fit rounded-xl">
+        <div className="relative flex items-center p-2 bg-transparent  bg-[#F8F9FA] shadow-lg w-fit rounded-xl">
 
             <Modal isOpen={deleteModal} title={`Delete ${ingredient.name}`} onClose={() => {setDeleteModal(false)}}>
                 <p>Are you sure you want to delete {ingredient.name}?</p>
@@ -128,17 +128,17 @@ function IngredientCard({ingredient}){
                 
                 <div className="flex items-center gap-2">
                     <h3 onClick={() => {setDetailsModal(true)}} className="text-xl font-bold cursor-pointer">{ingredient.name}</h3>
-                    <p className="bg-transparent macro-badge-purple">{ingredient.category}</p>
+                    <p className="inline-flex items-center px-2 py-1 text-xs font-medium text-green-700 bg-green-100 rounded-md ring-1 ring-inset ring-green-50">{ingredient.category}</p>
                 </div>
                 <div className="p-2 macros">
                     <div className="flex justify-center gap-2">
-                        <p className="bg-transparent macro-badge-green">P: {ingredient.proteins}g</p>
-                        <p className="bg-transparent macro-badge-d-green">F: {ingredient.fats}g</p>
-                        <p className="bg-transparent macro-badge-brown">C: {ingredient.carbs}g</p>
+                        <p className="inline-flex items-center px-2 py-1 text-xs font-medium text-gray-600 bg-gray-100 rounded-md ring-1 ring-inset ring-gray-100">P: {ingredient.proteins}g</p>
+                        <p className="inline-flex items-center px-2 py-1 text-xs font-medium text-gray-600 bg-gray-100 rounded-md ring-1 ring-inset ring-gray-100">F: {ingredient.fats}g</p>
+                        <p className="inline-flex items-center px-2 py-1 text-xs font-medium text-gray-600 bg-gray-100 rounded-md ring-1 ring-inset ring-gray-100">C: {ingredient.carbs}g</p>
                     </div>
                     <div className="flex flex-wrap justify-center gap-2 pt-2">
-                        <p className="bg-transparent macro-badge-purple">Glycemic index: {ingredient.glycemic_index}</p>
-                        <p className="bg-transparent macro-badge-green">Calories: {ingredient.calories}kcal</p>
+                        <p className="inline-flex items-center px-2 py-1 text-xs font-medium text-gray-600 bg-gray-100 rounded-md ring-1 ring-inset ring-gray-100">Glycemic index: {ingredient.glycemic_index}</p>
+                        <p className="inline-flex items-center px-2 py-1 text-xs font-medium text-gray-600 bg-gray-100 rounded-md ring-1 ring-inset ring-gray-100">Calories: {ingredient.calories}kcal</p>
                     </div>
                 </div>
                 <div className="flex items-center justify-center w-full gap-2 px-2">
@@ -161,7 +161,7 @@ export default function Ingredients() {
                 <h2 className="text-xl font-bold">My Ingredients</h2>
                 <AcceptButton>Add Ingredient +</AcceptButton>
             </div>
-            <div className="flex flex-wrap gap-2 p-3 m-2 bg-gray-300 shadow-inner justify-evenly rounded-2xl">
+            <div className="flex flex-wrap gap-2 p-3 m-2 justify-evenly">
                 {demoIngredients.map((ingredient, index) => (
                     <IngredientCard ingredient={ingredient} key={index} />
                 ))}

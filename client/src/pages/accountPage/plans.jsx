@@ -31,7 +31,7 @@ function PlanCard({ plan }) {
     const [detailsModal, setDetailsModal] = useState(false);
 
     return (
-        <div className="flex justify-between gap-2 px-6 py-3 bg-white shadow min-h-20 h-fit rounded-xl">
+        <div className="flex justify-between gap-2 px-6 py-3 bg-[#F8F9FA] min-h-20 h-fit rounded-xl">
             <Modal isOpen={editModal} title={`Edit ${plan.name} plan`} onClose={() => {setEditModal(false)}}>
                 <TextField placeholder="Name" />
                 <TextArea className="w-96" placeholder="Description" />
@@ -78,7 +78,7 @@ export default function Plans() {
                 <h2 className="text-xl font-bold">My Plans</h2>
                 <AcceptButton>Add Plan +</AcceptButton>
             </div>
-            <div className="flex flex-col gap-2 p-3 m-2 bg-gray-300 shadow-inner rounded-2xl">
+            <div className="flex flex-col gap-3 p-3 m-2">
                 {demoPlans.map((plan, index) => (
                     <PlanCard plan={plan} key={index} />
                 ))}

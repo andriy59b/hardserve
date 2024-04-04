@@ -1,10 +1,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faHeart, faScaleUnbalanced } from '@fortawesome/free-solid-svg-icons';
 
+import back from '../../components/img/back.svg'
+
 export default function UserBar() {
     return (
         <div className="flex flex-col items-end w-full p-5 -mt-5">
-            <img src="https://as1.ftcdn.net/v2/jpg/02/14/59/76/1000_F_214597619_GgPZ3cQAasuYwMTeEqopTKfjMo2cOF8U.jpg" alt="header" className="object-cover w-full h-60 rounded-2xl" />
+            <img src={back} alt="header" className="object-cover w-full h-60 rounded-2xl" />
             <div className="flex items-center w-11/12 h-20 p-2 mr-2 -mt-8 shadow-md bg-white/30 backdrop-blur-md rounded-2xl">
                 <div className="absolute flex items-center w-20 h-20 py-2">
                     <img src="https://media.istockphoto.com/id/1327656409/vector/user-icon-admin-profile-pictogram.jpg?s=612x612&w=0&k=20&c=SCadkvBVVRHToUEiwBL5rxE2e8XS7ch5Eizf509kWeE=" alt="profile" className="object-cover h-full shadow aspect-square rounded-xl" />
