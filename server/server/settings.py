@@ -163,6 +163,8 @@ EMAIL_HOST_PASSWORD = 'jtth fwbc tktb lbuq'
 
 # розкоментувати ключі для використання Google OAuth2
 
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = "532182831899-54s9jvnrj3j031vaclmm122k5mgeqdl7.apps.googleusercontent.com"
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "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"
 
 # Define SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE to get extra permissions from Google.
 SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
