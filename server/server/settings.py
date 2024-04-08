@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'oauth2_provider',
     'social_django',
     'drf_social_oauth2',
+    'corsheaders',
 ]
 
 REST_FRAMEWORK = {
@@ -70,6 +71,10 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'server.urls'
+
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:3000",
+]
 
 TEMPLATES = [
     {
@@ -137,6 +142,9 @@ USE_I18N = True
 
 USE_TZ = True
 
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
