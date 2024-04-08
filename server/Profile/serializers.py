@@ -23,3 +23,21 @@ class FavouriteProductSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({"product": "This product is already in your favorites."})
         
         return favorite
+    
+class FavouriteRecipeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Favorite
+        fields = ['recipe']
+
+    def create(self, validated_data):
+        user = self.context['request'].user
+        recipe = validated_data.get('recipe')
+
+        if not recipe:
+            raise serializers.ValidationError({"recipe": "This field is required."})
+
+        favorite, created = Favorite.objects.get_or_create(user=user, recipe=recipe)
+        if not created:
+            raise serializers.ValidationError({"recipe": "This recipe is already in your favorites."})
+        
+        return favorite
