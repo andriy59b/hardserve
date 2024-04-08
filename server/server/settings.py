@@ -47,12 +47,18 @@ INSTALLED_APPS = [
     'Profile',
     'rest_framework',
     'rest_framework.authtoken',
+    'oauth2_provider',
+    'social_django',
+    'drf_social_oauth2',
     'corsheaders',
 ]
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+        'drf_social_oauth2.authentication.SocialAuthentication',
     ],
 }
 
@@ -84,6 +90,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -122,6 +130,9 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTHENTICATION_BACKENDS = [
     'LogReg.backends.EmailOrUsernameModelBackend',
     'django.contrib.auth.backends.ModelBackend', 
+    'drf_social_oauth2.backends.DjangoOAuth2',
+    # Google OAuth2
+    'social_core.backends.google.GoogleOAuth2',
 ]
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
@@ -162,3 +173,13 @@ EMAIL_HOST_PASSWORD = 'jtth fwbc tktb lbuq'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+# розкоментувати ключі для використання Google OAuth2
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = "532182831899-54s9jvnrj3j031vaclmm122k5mgeqdl7.apps.googleusercontent.com"
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "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"
+
+# Define SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE to get extra permissions from Google.
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
+    'https://www.googleapis.com/auth/userinfo.email',
+    'https://www.googleapis.com/auth/userinfo.profile',
+]        

@@ -23,7 +23,7 @@ body {
 
     font-family: var(--poppins),var(--avenir-roman);
 
-    background-color: #FFFFFF;
+    background: rgb(249, 252, 251);
 }
 
 #root {
