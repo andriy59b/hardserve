@@ -17,19 +17,19 @@ class Command(BaseCommand):
             "Garlic", "Pork", "Beef", "Chicken", "Salmon", "Tuna", "Soy sauce", "Black pepper",
             "Leeks", "Bell peppers", "Horseradish", "Olive oil", "Orange juice", "Lemons", "Cinnamon",
             "Blackcurrants", "Currants", "Strawberries", "Raspberries", "Pasta", "Ketchup", "Bay leaf",
-            # "Chili peppers", "Lard", "Mayonnaise", "Sea salt", "Margarine", "Chicken fillet", "Turkey", "Chicken legs",
-            # "Sour cream", "Parsley", "Coriander", "Cumin", "Cardamom", "Cloves", "Grapes", "Grape juice",
-            # "Capers", "Sausage", "Ham", "Pumpkin", "Lettuce leaves", "Green onions", "Shrimp", "Mussels",
-            # "Crab meat", "French fries", "Green peas", "Sesame seeds", "Paprika", "Black tea", 
-            # "Coconut", "Lavender", "Butter cream", "Sesame oil", "Turmeric", "Carrot",
-            # "Watermelon", "Grapefruit", "Cranberries", "Spinach", "Dark chocolate", "Beans", "Cottage cheese"
+            "Chili peppers", "Lard", "Mayonnaise", "Sea salt", "Margarine", "Chicken fillet", "Turkey", "Chicken legs",
+            "Sour cream", "Parsley", "Coriander", "Cumin", "Cardamom", "Cloves", "Grapes", "Grape juice",
+            "Capers", "Sausage", "Ham", "Pumpkin", "Lettuce leaves", "Green onions", "Shrimp", "Mussels",
+            "Crab meat", "French fries", "Green peas", "Sesame seeds", "Paprika", "Black tea", 
+            "Coconut", "Lavender", "Butter cream", "Sesame oil", "Turmeric", "Carrot",
+            "Watermelon", "Grapefruit", "Cranberries", "Spinach", "Dark chocolate", "Beans", "Cottage cheese"
         ]
         # api_key = '339a5df078aa48f2aa831ec1413f7537'
         # api_key = '60c5617260b84b1fb7ba939f0cdad2a6'
         # api_key = 'dbb41dcdd4ef4c6dacfd8e6c9b1db54c'
         # api_key = 'e258317c18264d14ba91f8f215d80f62'
-        # api_key = '87f459c41b2542809173f185926cec62'
-        api_key = '42d94788e6dd4b2c81ee247449c38820'
+        api_key = '87f459c41b2542809173f185926cec62'
+        # api_key = '42d94788e6dd4b2c81ee247449c38820'
 
         for product in search_terms:
 
@@ -70,6 +70,7 @@ class Command(BaseCommand):
                 category = '——'  
 
             product = Product.objects.create(
+                product_id=product_id,
                 name=product_name,  
                 category=category,
                 image=product_image,
