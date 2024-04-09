@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Product, Nutriens, Product_Nutriens
+from .models import *
 
 class ProductSerializer(serializers.ModelSerializer):
     proteins = serializers.FloatField(read_only=True)
@@ -9,7 +9,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ['name', 'image', 'category', 'short_description', 'proteins', 'fats', 'carbs', 'calories','glycemic_index']
+        fields = ['id', 'product_id', 'name', 'image', 'category', 'short_description', 'proteins', 'fats', 'carbs', 'calories','glycemic_index']
 
 class NutriensSerializer(serializers.ModelSerializer):
     class Meta:

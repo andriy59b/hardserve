@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'LogReg',
     'products',
+    'recipes',
+    'Profile',
     'rest_framework',
     'rest_framework.authtoken',
     'oauth2_provider',
@@ -53,6 +55,7 @@ INSTALLED_APPS = [
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework.authentication.TokenAuthentication',
         'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
         'drf_social_oauth2.authentication.SocialAuthentication',
@@ -167,7 +170,8 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'healthynutrition201@gmail.com'
 EMAIL_HOST_PASSWORD = 'jtth fwbc tktb lbuq'
-
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # розкоментувати ключі для використання Google OAuth2
 
