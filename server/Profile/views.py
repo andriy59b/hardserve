@@ -74,6 +74,6 @@ class RemoveFavoriteRecipesView(APIView):
     def delete(self, request, recipe_id):
         favorite = Favorite.objects.filter(user=request.user, recipe_id=recipe_id)
         if not favorite.exists():
-            return Response({'error': 'Favorite product not found'}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'error': 'Favorite recipe not found'}, status=status.HTTP_404_NOT_FOUND)
         favorite.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
