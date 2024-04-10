@@ -8,7 +8,7 @@ export default function Pagination({children, itemsPerPage}) {
     const pages = children !== undefined ? Math.ceil(children.length / itemsPerPage) : 1;
     return (
         <div className="flex flex-col items-center">
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap justify-center gap-4">
                 {
                     children !== undefined && children.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage)
                 }
