@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Profile, Favorite
+from .models import *
 
 class ProfileSerializer(serializers.ModelSerializer):
     username = serializers.SerializerMethodField()
@@ -14,6 +14,34 @@ class ProfileSerializer(serializers.ModelSerializer):
     def get_email(self, obj):
         return obj.user.email
 
+
+class ProductSerializer(serializers.ModelSerializer):
+    glycemic_index = serializers.SerializerMethodField()
+    proteins = serializers.SerializerMethodField()
+    carbs = serializers.SerializerMethodField()
+    fats = serializers.SerializerMethodField()
+    calories = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Product
+        fields = ('id','product_id', 'name', 'category', 'short_description', 'image', 'glycemic_index', 'proteins', 'carbs', 'fats', 'calories')
+
+    def get_glycemic_index(self, obj):
+        return obj.glycemic_index
+
+    def get_proteins(self, obj):
+        return obj.proteins
+
+    def get_carbs(self, obj):
+        return obj.carbs
+
+    def get_fats(self, obj):
+        return obj.fats
+
+    def get_calories(self, obj):
+        return obj.calories
+    
+
 class FavoriteProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Favorite
@@ -25,15 +53,29 @@ class FavoriteProductSerializer(serializers.ModelSerializer):
 
         if not product:
             raise serializers.ValidationError({"product": "This field is required."})
-
+        
         favorite, created = Favorite.objects.get_or_create(user=user, product=product)
         if not created:
             raise serializers.ValidationError({"product": "This product is already in your favorites."})
         
         return favorite
     
-class FavoriteRecipeSerializer(serializers.ModelSerializer):
+
+class FavoriteProductSerializerInfo(serializers.ModelSerializer):
+    product = ProductSerializer(read_only=True) 
     class Meta:
+        model = Favorite
+        fields = ['product']
+
+class RecipeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Recipe
+        fields = ['id', 'name', 'image', 'short_description', 'categories']
+
+class FavoriteRecipeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        recipe = RecipeSerializer(read_only=True)
         model = Favorite
         fields = ['recipe']
 
@@ -49,3 +91,12 @@ class FavoriteRecipeSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({"recipe": "This recipe is already in your favorites."})
         
         return favorite
+    
+class FavoriteRecipeSerializerInfo(serializers.ModelSerializer):
+    recipe = RecipeSerializer(read_only=True)
+
+    class Meta:
+        recipe = RecipeSerializer(read_only=True)
+        model = Favorite
+        fields = ['recipe']
+
