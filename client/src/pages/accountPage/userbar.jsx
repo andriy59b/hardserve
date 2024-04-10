@@ -19,26 +19,37 @@ export default function UserBar() {
     const [favoritedRecipesModal, setFavoritedRecipesModal] = useState(false);
     const [favoritedIngredients, setFavoritedIngredients] = useState([]);
     const [favoritedRecipes, setFavoritedRecipes] = useState([]);
+    const [username, password] = [localStorage.getItem("username"), localStorage.getItem("password")];
+    const [displayName, setDisplayName] = useState("");
+    const [email, setEmail] = useState("");
+
+    useEffect(() => {
+        fetch('http://localhost:8000/profile/', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic ' + btoa(username + ':' + password),
+            },
+        }).catch((error) => {
+            console.error('Error:', error);
+        }).then(response => response.json()).then(data => {
+            setDisplayName(data.username);
+            setEmail(data.email);
+        })
+    }, [])
 
     useEffect(() => {
         fetch('http://localhost:8000/favorites/', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Basic ' + btoa(localStorage.getItem('username') + ':' + localStorage.getItem('password')),
+                'Authorization': 'Basic ' + btoa(username + ':' + password),
             },
         }).catch((error) => {
             console.error('Error:', error);
         }
         ).then(response => response.json()).then(data => {
-            fetch(`http://localhost:8000/products/`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            }).then(response => response.json()).then(ingredients => {
-                setFavoritedIngredients(data.map(record => record.product ? ingredients.products.find(ingredient => ingredient.id === parseInt(record.product)) : null));
-            })
+            setFavoritedIngredients(data.map(record => record.product));
         })
     }, [])
 
@@ -47,21 +58,13 @@ export default function UserBar() {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Basic ' + btoa(localStorage.getItem('username') + ':' + localStorage.getItem('password')),
+                'Authorization': 'Basic ' + btoa(username + ':' + password),
             },
         }).catch((error) => {
             console.error('Error:', error);
         }
         ).then(response => response.json()).then(data => {
-            console.log(data);
-            fetch(`http://localhost:8000/recipes/`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            }).then(response => response.json()).then(recipes => {
-                setFavoritedRecipes(data.map(record => record.recipe ? recipes.recipes.find(recipe => recipe.id === parseInt(record.recipe)) : null));
-            })
+            setFavoritedRecipes(data.map(record => record.recipe));
         })
     }, [])
 
@@ -74,7 +77,7 @@ export default function UserBar() {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Basic ' + btoa(localStorage.getItem('username') + ':' + localStorage.getItem('password')),
+                'Authorization': 'Basic ' + btoa(username + ':' + password),
             }
         }).catch((error) => {
             console.error('Error:', error);
@@ -88,7 +91,7 @@ export default function UserBar() {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Basic ' + btoa(localStorage.getItem('username') + ':' + localStorage.getItem('password')),
+                'Authorization': 'Basic ' + btoa(username + ':' + password),
             }
         }).catch((error) => {
             console.error('Error:', error);
@@ -103,7 +106,7 @@ export default function UserBar() {
             <Modal isOpen={favoritedIngredientsModal} onClose={() => {setFavoritedIngredientsModal(false)}} title="Favorited ingredients">
                 <div className="flex flex-col gap-4">
                     {favoritedIngredients.map((ingredient, index) => {
-                        if (ingredient === null) return null;
+                        if (ingredient === null || ingredient === undefined) return null;
                         return (
                             <div className="flex p-2 bg-white shadow rounded-xl">
                                 <div className="items-center gap-2" key={index}>
@@ -123,10 +126,11 @@ export default function UserBar() {
             <Modal isOpen={favoritedRecipesModal} onClose={() => {setFavoritedRecipesModal(false)}} title="Favorited recipes">
                 <div className="flex flex-col gap-4">
                     {favoritedRecipes.map((recipe, index) => {
-                        if (recipe === null) return null;
+                        console.log("recipe: ", recipe)
+                        if (recipe === null || recipe === undefined) return null;
                         return (
                             <div className="flex gap-2 p-2 bg-white shadow rounded-xl" key={index}>
-                                <img src={recipe.image.replace("http://localhost:8000/media/", "").replace("%3A", ":/")} alt="Recipe" className="object-cover h-24 rounded-lg" />
+                                <img src={recipe.image.replace("/media/", "").replace("%3A", ":/")} alt="Recipe" className="object-cover h-24 rounded-lg" />
                                 <div>
                                     <a href={"http://localhost:3000/recipes/" + recipe.id} className='pl-0 text-xl font-bold'>{recipe.name}</a>
                                     <div className="flex gap-2 pt-2">
@@ -150,8 +154,8 @@ export default function UserBar() {
                     <FontAwesomeIcon icon={faPen} className='absolute bottom-0 h-4 p-1 bg-white rounded shadow cursor-pointer right-1 hover:bg-gray-200' />
                 </div>
                 <div className="flex flex-col justify-center w-full h-full pl-24">
-                    <h1 className="text-xl font-bold">John Doe</h1>
-                    <p className="text-sm text-gray-400">{localStorage.getItem('username')}</p>
+                    <h1 className="text-xl font-bold">{displayName}</h1>
+                    <p className="text-sm text-gray-400">{email}</p>
                 </div>
                 <FontAwesomeIcon onClick={() => {setFavoritedRecipesModal(true)}} icon={faHeart} className='h-6 p-2 mr-2 text-sm text-red-500 bg-white shadow cursor-pointer aspect-square rounded-xl hover:text-red-700 hover:bg-gray-200' />
                 <FontAwesomeIcon icon={faScaleUnbalanced} className='h-6 p-2 mr-2 text-sm text-green-500 bg-white shadow cursor-pointer aspect-square rounded-xl hover:text-green-700 hover:bg-gray-200' />
