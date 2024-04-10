@@ -16,7 +16,7 @@ export function TextArea({label, value, onChange, placeholder, className, id}) {
     return (
         <div className={"flex flex-col " + className}>
             <label>{label}</label>
-            <textarea value={value} onChange={onChange} id={id} placeholder={placeholder} className="w-full p-2 rounded-lg shadow-inner focus:ring-0 ring-2 ring-gray-300 max-h-96 min-h-10 focus:ring-green-500"/>
+            <textarea value={value} onChange={onChange} id={id} placeholder={placeholder} className="w-full p-2 rounded-lg shadow-inner ring-2 ring-gray-300 max-h-96 min-h-10 focus:ring-green-500 focus:ring-2"/>
         </div>
     )
 }

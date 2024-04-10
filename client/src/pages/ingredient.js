@@ -5,8 +5,10 @@ import { useEffect, useState } from "react";
 import "./ingredient.css";
 
 import Nav from "../components/navbar";
+import Modal from "../components/modal";
 
 async function getIngredient(ingredientId){
+
     const response = await fetch("http://localhost:8000/products/" + ingredientId + "/", {
         method: "GET",
         headers: {
@@ -22,8 +24,6 @@ async function getIngredient(ingredientId){
     })
     return result;
 }
-
-
 
 function RecipeCard({recipe}) {
     return (
@@ -54,23 +54,68 @@ function IngredientCard({product}) {
 export default function Ingredient() {
     const { id: ingredientId } = useParams();
     const [ingredient, setIngredient] = useState()
+    const [favorited, setFavorited] = useState(false)
+    const [username, password] = [localStorage.getItem("username"), localStorage.getItem("password")]
+    const [loginQuery, setLoginQuery] = useState(false)
+
+    useEffect(() => {
+        if (username && password) {
+            fetch("http://localhost:8000/favorites/", {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Basic " + btoa(username + ":" + password),
+                }
+            }).then(response => response.json()).then(data => {
+                setFavorited(data.map(record => record.product).includes(parseInt(ingredientId)))
+            })
+        }
+    }, [ingredientId, username, password])
+
+    function favoriteIngredient(){
+        if (!username || !password) {
+            setLoginQuery(true);
+            return
+        }
+
+        fetch("http://localhost:8000/favorites/", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Basic " + btoa(username + ":" + password),
+            },
+            body: JSON.stringify({product: ingredientId})
+        }).then(response => response.json()).then(data => {
+            console.log(data);
+            setFavorited(true);
+        })
+    }
 
     useEffect(() => {
         if (ingredientId === undefined) return;
         getIngredient(ingredientId).then(data => {
             setIngredient(data);
-            console.log(data);
         }
         );
     }, [ingredientId])
+
 
     if (ingredient === undefined) return <div>Loading...</div>
     else return (
         <>
         <Nav />
+        <Modal isOpen={loginQuery} onClose={() => setLoginQuery(false)} title="Log In">
+            <div className="flex flex-col gap-4">
+                <p>You need to login to perform this action</p>
+                <button className='p-2 text-white bg-green-400 rounded-lg' onClick={() => {
+                    window.location.href = '/login';
+                }
+                }>Log In</button>
+            </div> 
+        </Modal>
         <div className="flex justify-center bg-[#fefdfd]">
             <div className="relative flex flex-col items-center ">
-                <div className="flex flex-col items-center md:items-start md:flex-row h-fit bg-white border-2 my-16 shadow-sm w-[80vw] min-w-fit rounded-xl p-10 gap-10">
+                <div className="flex flex-col items-center lg:items-start lg:flex-row h-fit bg-white border-2 my-16 shadow-sm w-[80vw] min-w-fit rounded-xl p-10 gap-10">
                     <img className="object-contain m-2 rounded-xl h-96" src="https://via.placeholder.com/150" alt="Ingredient" />
                     <div className="flex flex-col items-center justify-around w-full h-96">
                         <div>
@@ -108,9 +153,9 @@ export default function Ingredient() {
                         </div>
                     </div>
 
-                    <div className="flex flex-row gap-4 p-4 items-right w-max md:flex-col">
-                        <FontAwesomeIcon className="h-8 hover:text-rose-500 hover:cursor-pointer" icon={faBookmark} />
-                        <FontAwesomeIcon className="h-8 hover:text-green-500 hover:cursor-pointer" icon={faScaleUnbalanced} />
+                    <div className="flex flex-row justify-end w-full gap-4 max-w-9 h-fit items-right lg:flex-col">
+                        <FontAwesomeIcon className={"h-5 w-5 aspect-square cursor-pointer " + (favorited ? "text-rose-500" : "hover:text-rose-500")} onClick={favorited ? null : favoriteIngredient} icon={faBookmark} />
+                        <FontAwesomeIcon className="w-5 h-5 cursor-pointer aspect-square hover:text-green-500" icon={faScaleUnbalanced} />
                     </div>
                 </div>
 

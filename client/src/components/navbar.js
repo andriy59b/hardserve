@@ -3,6 +3,8 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import "./navbar.css";
 
+const access_token = localStorage.getItem('access_token');
+
 const elements = (
     <>
         <li>
@@ -21,7 +23,7 @@ const elements = (
             <a href="/ingredients">Ingredients</a>
         </li>
         <li>
-            <a href="/login" className="login-button">Log In</a>
+            {access_token ? <a href="/account" className="login-button">Account</a> : <a href="/login" className="login-button">Log In</a>}
         </li>
     </>
 )
@@ -29,7 +31,7 @@ const elements = (
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     return (
-        <nav id="nav" className="w-screen max-w-screen">
+        <nav id="nav" className="min-w-screen max-w-screen">
             <div className="logo-section">
                 <img src="/icons/logo.svg" alt="logo" className="logo" />
                 <h1><a href="/" className="logo-text">Ration</a></h1>
