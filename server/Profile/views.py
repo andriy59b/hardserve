@@ -23,25 +23,25 @@ class ProfileView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class FavouriteProductsView(APIView):
+class FavoriteProductsView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
-        favourite_products = Favorite.objects.filter(user=request.user)
-        serializer = FavouriteProductSerializer(favourite_products, many=True)
+        favorite_products = Favorite.objects.filter(user=request.user)
+        serializer = FavoriteProductSerializer(favorite_products, many=True)
         return Response(serializer.data)
 
     def post(self, request):
         print("Request Data:", request.data)
         print("User:", request.user)
-        serializer = FavouriteProductSerializer(data=request.data, context={'request': request})
+        serializer = FavoriteProductSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
 
-class RemoveFavouriteProductsView(APIView):
+class RemoveFavoriteProductsView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def delete(self, request, product_id):
@@ -51,24 +51,24 @@ class RemoveFavouriteProductsView(APIView):
         favorite.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
     
-class FavouriteRecipesView(APIView):
+class FavoriteRecipesView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
-        favourite_recipes = Favorite.objects.filter(user=request.user)
-        serializer = FavouriteRecipeSerializer(favourite_recipes, many=True)
+        favorite_recipes = Favorite.objects.filter(user=request.user)
+        serializer = FavoriteRecipeSerializer(favorite_recipes, many=True)
         return Response(serializer.data)
 
     def post(self, request):
         print("Request Data:", request.data)
         print("User:", request.user)
-        serializer = FavouriteRecipeSerializer(data=request.data, context={'request': request})
+        serializer = FavoriteRecipeSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-class RemoveFavouriteRecipesView(APIView):
+class RemoveFavoriteRecipesView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def delete(self, request, recipe_id):

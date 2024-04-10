@@ -2,11 +2,19 @@ from rest_framework import serializers
 from .models import Profile, Favorite
 
 class ProfileSerializer(serializers.ModelSerializer):
+    username = serializers.SerializerMethodField()
+    email = serializers.SerializerMethodField()
     class Meta:
         model = Profile
-        fields = ['bio', 'location', 'profile_picture']
+        fields = ['username', 'email', 'bio', 'location', 'profile_picture']
+    
+    def get_username(self, obj):
+        return obj.user.username
+    
+    def get_email(self, obj):
+        return obj.user.email
 
-class FavouriteProductSerializer(serializers.ModelSerializer):
+class FavoriteProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Favorite
         fields = ['product']
@@ -24,7 +32,7 @@ class FavouriteProductSerializer(serializers.ModelSerializer):
         
         return favorite
     
-class FavouriteRecipeSerializer(serializers.ModelSerializer):
+class FavoriteRecipeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Favorite
         fields = ['recipe']
