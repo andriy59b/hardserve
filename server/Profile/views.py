@@ -28,7 +28,7 @@ class FavoriteProductsView(APIView):
 
     def get(self, request):
         favorite_products = Favorite.objects.filter(user=request.user)
-        serializer = FavoriteProductSerializer(favorite_products, many=True)
+        serializer = FavoriteProductSerializerInfo(favorite_products, many=True)
         return Response(serializer.data)
 
     def post(self, request):
@@ -56,7 +56,7 @@ class FavoriteRecipesView(APIView):
 
     def get(self, request):
         favorite_recipes = Favorite.objects.filter(user=request.user)
-        serializer = FavoriteRecipeSerializer(favorite_recipes, many=True)
+        serializer = FavoriteRecipeSerializerInfo(favorite_recipes, many=True)
         return Response(serializer.data)
 
     def post(self, request):
