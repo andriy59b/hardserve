@@ -58,7 +58,7 @@ export function Toggle({value, onChange, className, id, children}) {
 export function CheckBox({label, value, onChange, className, id, name}) {
     return (
         <div className={"flex gap-2 " + className}>
-            <input type="checkbox" checked={value} onChange={onChange} id={id} name={name} className="w-5 h-5 m-0 text-green-500 bg-white border-gray-300 rounded-md shadow-inner cursor-pointer focus:ring-green-500"/>
+            <input type="checkbox" checked={value} onChange={onChange} id={id} name={name} className="w-5 h-5 m-0 text-green-500 border-gray-300 rounded-md shadow-inner cursor-pointer focus:ring-green-500"/>
             <label htmlFor={id}>{label}</label>
         </div>
     )
