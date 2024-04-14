@@ -67,7 +67,7 @@ export default function Ingredient() {
                     "Authorization": "Basic " + btoa(username + ":" + password),
                 }
             }).then(response => response.json()).then(data => {
-                setFavorited(data.map(record => record.product).includes(parseInt(ingredientId)))
+                setFavorited(data.map(record => record.product ? record.product.id : null).includes(parseInt(ingredientId)))
             })
         }
     }, [ingredientId, username, password])

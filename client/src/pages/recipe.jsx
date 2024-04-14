@@ -52,7 +52,7 @@ export default function Recipe() {
                 }
             }).then(response => response.json()).then(data => {
                 console.log(data)
-                setFavorited(data.map(record => record.recipe).includes(parseInt(recipeId)))
+                setFavorited(data.map(record => record.recipe ? record.recipe.id : null).includes(parseInt(recipeId)))
             })
         }
     }, [recipeId, username, password])
@@ -71,7 +71,6 @@ export default function Recipe() {
             },
             body: JSON.stringify({recipe: recipeId})
         }).then(response => response.json()).then(data => {
-            console.log(data);
             setFavorited(true);
         })
     }
@@ -100,7 +99,7 @@ export default function Recipe() {
 
     if (recipe === undefined) return <div>Loading...</div>
     else return (
-        <div className="w-screen  overflow-x-clip">
+        <div className="w-screen overflow-x-clip">
         <Nav />
         <Modal isOpen={loginQuery} onClose={() => setLoginQuery(false)} title="Log In">
             <div className="flex flex-col gap-4">
