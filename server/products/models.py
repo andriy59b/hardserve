@@ -35,7 +35,7 @@ class Product(models.Model):
     def __str__(self):
         return self.name
     
-class Nutriens(models.Model):
+class Nutrients(models.Model):
     name = models.CharField(max_length=255)
     unit = models.CharField(max_length=255)
 
@@ -43,9 +43,9 @@ class Nutriens(models.Model):
         return self.name
     
 
-class Product_Nutriens(models.Model):
+class Product_Nutrients(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='product_nutrients')
-    nutrient = models.ForeignKey(Nutriens, on_delete=models.CASCADE, related_name='product_nutrients')
+    nutrient = models.ForeignKey(Nutrients, on_delete=models.CASCADE, related_name='product_nutrients')
     amount = models.DecimalField(max_digits=10, decimal_places=5)
 
     def __str__(self):

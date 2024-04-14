@@ -1,6 +1,6 @@
 import requests
 from django.core.management.base import BaseCommand
-from products.models import Product, Nutriens, Product_Nutriens
+from products.models import *
 from .image_finder import find_image
 
 class Command(BaseCommand):
@@ -10,12 +10,12 @@ class Command(BaseCommand):
 
         # заливати по 50-60 продуктів за раз, щоб не перевантажувати сервер  
         search_terms = [
-            "Bread", "Milk", "Soured cream", "Egg", "Sugar", "Butter", "Salt", "Buckwheat", "Rice", "Potatoes", 
-            "Flour", "Carrots", "Onions", "Cabbage", "Beets", "Apples", "Bananas", "Oranges", "Cheese", "Kefir",
-            "Coffee", "Tea", "Tomatoes", "Cucumbers", "Eggplant", "Corn", "Olives", "Baking soda",
-            "Water", "Syrup","Condensed milk", "Tomato sauce", "Spaghetti", "Sesame seeds", "Ginger",
-            "Garlic", "Pork", "Beef", "Chicken", "Salmon", "Tuna", "Soy sauce", "Black pepper",
-            "Leeks", "Bell peppers", "Horseradish", "Olive oil", "Orange juice", "Lemons", "Cinnamon",
+            # "Bread", "Milk", "Soured cream", "Egg", "Sugar", "Butter", "Salt", "Buckwheat", "Rice", "Potatoes", 
+            # "Flour", "Carrots", "Onions", "Cabbage", "Beets", "Apples", "Bananas", "Oranges", "Cheese", "Kefir",
+            # "Coffee", "Tea", "Tomatoes", "Cucumbers", "Eggplant", "Corn", "Olives", "Baking soda",
+            # "Water", "Syrup","Condensed milk", "Tomato sauce", "Spaghetti", "Sesame seeds", "Ginger",
+            # "Garlic", "Pork", "Beef", "Chicken", "Salmon", "Tuna", "Soy sauce", "Black pepper",
+            # "Leeks", "Bell peppers", "Horseradish", "Olive oil", "Orange juice", "Lemons", "Cinnamon",
             "Blackcurrants", "Currants", "Strawberries", "Raspberries", "Pasta", "Ketchup", "Bay leaf",
             "Chili peppers", "Lard", "Mayonnaise", "Sea salt", "Margarine", "Chicken fillet", "Turkey", "Chicken legs",
             "Sour cream", "Parsley", "Coriander", "Cumin", "Cardamom", "Cloves", "Grapes", "Grape juice",
@@ -27,8 +27,8 @@ class Command(BaseCommand):
         # api_key = '339a5df078aa48f2aa831ec1413f7537'
         # api_key = '60c5617260b84b1fb7ba939f0cdad2a6'
         # api_key = 'dbb41dcdd4ef4c6dacfd8e6c9b1db54c'
-        # api_key = 'e258317c18264d14ba91f8f215d80f62'
-        api_key = '87f459c41b2542809173f185926cec62'
+        api_key = 'e258317c18264d14ba91f8f215d80f62'
+        # api_key = '87f459c41b2542809173f185926cec62'
         # api_key = '42d94788e6dd4b2c81ee247449c38820'
 
         for product in search_terms:
@@ -80,8 +80,8 @@ class Command(BaseCommand):
 
             for category in categories:
                 for item in product_data['nutrition'][category]:
-                    nutrient_obj, _ = Nutriens.objects.get_or_create(name=item['name'], unit=item['unit'])
-                    Product_Nutriens.objects.create(
+                    nutrient_obj, _ = Nutrients.objects.get_or_create(name=item['name'], unit=item['unit'])
+                    Product_Nutrients.objects.create(
                         product=product,
                         nutrient=nutrient_obj,
                         amount=item['amount']

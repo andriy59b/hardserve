@@ -11,15 +11,15 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = ['id', 'product_id', 'name', 'image', 'category', 'short_description', 'proteins', 'fats', 'carbs', 'calories','glycemic_index']
 
-class NutriensSerializer(serializers.ModelSerializer):
+class NutrientsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Nutriens
+        model = Nutrients
         fields = ['name', 'unit']
 
-class ProductNutriensSerializer(serializers.ModelSerializer):
+class ProductNutrientsSerializer(serializers.ModelSerializer):
     product = ProductSerializer(read_only=True)
-    nutrient = NutriensSerializer(read_only=True)
+    nutrient = NutrientsSerializer(read_only=True)
 
     class Meta:
-        model = Product_Nutriens
+        model = Product_Nutrients
         fields = ['product', 'nutrient', 'amount']
