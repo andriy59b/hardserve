@@ -9,4 +9,5 @@ urlpatterns = [
     path('favorites/recipes', FavoriteRecipesView.as_view(), name='favorite-recipes'),
     path('favorites/<int:product_id>/remove/', RemoveFavoriteProductsView.as_view(), name='remove-favorite-product'),
     path('favorites/recipes/<int:recipe_id>/remove/', RemoveFavoriteRecipesView.as_view(), name='remove-favorite-recipe'),
+    path('weight/', UserWeightHistoryView.as_view(), name='weight-history'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

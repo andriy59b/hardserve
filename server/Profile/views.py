@@ -77,3 +77,20 @@ class RemoveFavoriteRecipesView(APIView):
             return Response({'error': 'Favorite recipe not found'}, status=status.HTTP_404_NOT_FOUND)
         favorite.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+class UserWeightHistoryView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request):
+        weight_history = UserWeightHistory.objects.filter(user=request.user)
+        serializer = UserWeightHistorySerializer(weight_history, many=True)
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = UserWeightHistorySerializer(data=request.data, context={'request': request})
+        if serializer.is_valid():
+            weight_history = serializer.save(user=request.user)
+            request.user.weight = weight_history.weight
+            request.user.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
