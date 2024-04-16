@@ -1,10 +1,15 @@
 import requests
 from django.core.management.base import BaseCommand
 from recipes.models import *
+from products.models import Product
 import json
+from .load_product import product_load
 
 class Command(BaseCommand):
     help = 'Load initial recipe into the database from Spoonacular API'
+
+    def check_product_in_db(product_name, self):
+        return Product.objects.filter(name=product_name).exists()
 
     def handle(self, *args, **kwargs):
 
@@ -27,8 +32,8 @@ class Command(BaseCommand):
         # api_key = '339a5df078aa48f2aa831ec1413f7537'
         # api_key = '60c5617260b84b1fb7ba939f0cdad2a6'
         # api_key = 'dbb41dcdd4ef4c6dacfd8e6c9b1db54c'
-        api_key = 'e258317c18264d14ba91f8f215d80f62'
-        # api_key = '87f459c41b2542809173f185926cec62'
+        # api_key = 'e258317c18264d14ba91f8f215d80f62'
+        api_key = '87f459c41b2542809173f185926cec62'
         # api_key = '42d94788e6dd4b2c81ee247449c38820'
 
         for recipes in recipe_term:
@@ -80,20 +85,22 @@ class Command(BaseCommand):
 
             # First, create Recipe_Ingredients for all ingredients without a step
             for ingredient in ingredients:
-                image_name = ingredient['image']
-                image = f'https://img.spoonacular.com/ingredients_100x100/{image_name}'
-                recipe_ingredient, created = Recipe_Ingredients.objects.get_or_create(
-                    recipe=recipe,
-                    ingredient_id=ingredient['id'],
-                    ingredient=ingredient['name'],
-                    image=image,
-                    amount=ingredient['measures']['metric']['amount'],
-                    unit=ingredient['measures']['metric']['unitShort'],
-                )
-                if created:
-                    self.stdout.write(self.style.SUCCESS(f'Successfully created ingredient: {ingredient["name"]}'))
-                else:
-                    self.stdout.write(self.style.ERROR(f'Ingredient already exists: {ingredient["name"]}'))
+                if not self.check_product_in_db(ingredient['name']):
+                    image_name = ingredient['image']
+                    image = f'https://img.spoonacular.com/ingredients_100x100/{image_name}'
+                    recipe_ingredient, created = Recipe_Ingredients.objects.get_or_create(
+                        recipe=recipe,
+                        ingredient_id=ingredient['id'],
+                        ingredient=ingredient['name'],
+                        image=image,
+                        amount=ingredient['measures']['metric']['amount'],
+                        unit=ingredient['measures']['metric']['unitShort'],
+                    )
+                    if created:
+                        product_load(ingredient['id'], image_name, self)
+                        self.stdout.write(self.style.SUCCESS(f'Successfully created ingredient: {ingredient["name"]}'))
+                    else:
+                        self.stdout.write(self.style.ERROR(f'Ingredient already exists: {ingredient["name"]}'))
 
             # Then, update the step for the ingredients used in each step
             for instruction in analyzedInstructions:
