@@ -10,19 +10,19 @@ class Command(BaseCommand):
 
         # заливати по 50-60 продуктів за раз, щоб не перевантажувати сервер  
         search_terms = [
-            # "Bread", "Milk", "Soured cream", "Egg", "Sugar", "Butter", "Salt", "Buckwheat", "Rice", "Potatoes", 
+            "Bread", "Milk", "Soured cream", "Egg", "Sugar", "Butter", "Salt", "Buckwheat", "Rice", "Potatoes", 
             # "Flour", "Carrots", "Onions", "Cabbage", "Beets", "Apples", "Bananas", "Oranges", "Cheese", "Kefir",
             # "Coffee", "Tea", "Tomatoes", "Cucumbers", "Eggplant", "Corn", "Olives", "Baking soda",
             # "Water", "Syrup","Condensed milk", "Tomato sauce", "Spaghetti", "Sesame seeds", "Ginger",
             # "Garlic", "Pork", "Beef", "Chicken", "Salmon", "Tuna", "Soy sauce", "Black pepper",
             # "Leeks", "Bell peppers", "Horseradish", "Olive oil", "Orange juice", "Lemons", "Cinnamon",
-            "Blackcurrants", "Currants", "Strawberries", "Raspberries", "Pasta", "Ketchup", "Bay leaf",
-            "Chili peppers", "Lard", "Mayonnaise", "Sea salt", "Margarine", "Chicken fillet", "Turkey", "Chicken legs",
-            "Sour cream", "Parsley", "Coriander", "Cumin", "Cardamom", "Cloves", "Grapes", "Grape juice",
-            "Capers", "Sausage", "Ham", "Pumpkin", "Lettuce leaves", "Green onions", "Shrimp", "Mussels",
-            "Crab meat", "French fries", "Green peas", "Sesame seeds", "Paprika", "Black tea", 
-            "Coconut", "Lavender", "Butter cream", "Sesame oil", "Turmeric", "Carrot",
-            "Watermelon", "Grapefruit", "Cranberries", "Spinach", "Dark chocolate", "Beans", "Cottage cheese"
+            # "Blackcurrants", "Currants", "Strawberries", "Raspberries", "Pasta", "Ketchup", "Bay leaf",
+            # "Chili peppers", "Lard", "Mayonnaise", "Sea salt", "Margarine", "Chicken fillet", "Turkey", "Chicken legs",
+            # "Sour cream", "Parsley", "Coriander", "Cumin", "Cardamom", "Cloves", "Grapes", "Grape juice",
+            # "Capers", "Sausage", "Ham", "Pumpkin", "Lettuce leaves", "Green onions", "Shrimp", "Mussels",
+            # "Crab meat", "French fries", "Green peas", "Sesame seeds", "Paprika", "Black tea", 
+            # "Coconut", "Lavender", "Butter cream", "Sesame oil", "Turmeric", "Carrot",
+            # "Watermelon", "Grapefruit", "Cranberries", "Spinach", "Dark chocolate", "Beans", "Cottage cheese"
         ]
         # api_key = '339a5df078aa48f2aa831ec1413f7537'
         # api_key = '60c5617260b84b1fb7ba939f0cdad2a6'
@@ -33,10 +33,6 @@ class Command(BaseCommand):
 
         for product in search_terms:
 
-            product_name = product
-
-            product_image = find_image(product, self)
-
             url = 'https://api.spoonacular.com/food/ingredients/search' 
             params = {'apiKey': api_key, f'query': {product}, 'number': '1'}
             response = requests.get(url, params=params)
@@ -45,6 +41,7 @@ class Command(BaseCommand):
             data = response.json()
 
             product_id = data['results'][0]['id']
+            image_name = data['results'][0]['image']
 
             url = f'https://api.spoonacular.com/food/ingredients/{product_id}/information'
             params = {'apiKey': api_key, 'amount': '100', 'unit': 'g'}
@@ -53,12 +50,11 @@ class Command(BaseCommand):
 
             product_data = response.json()
 
-            product = product_data['name']
+            product_name = product_data['name']
 
             if Product.objects.filter(name=product_name).exists():
                 self.stdout.write(self.style.WARNING('Products already loaded into the database'))
                 continue
-
 
             if len(product_data['categoryPath']) == 2:
                 n = 1
@@ -73,7 +69,7 @@ class Command(BaseCommand):
                 product_id=product_id,
                 name=product_name,  
                 category=category,
-                image=product_image,
+                image = f'https://img.spoonacular.com/ingredients_100x100/{image_name}'
             )
 
             categories = ['nutrients', 'properties', 'flavonoids']
