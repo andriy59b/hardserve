@@ -1,7 +1,6 @@
 import requests
 from django.core.management.base import BaseCommand
 from products.models import *
-from .image_finder import find_image
 
 class Command(BaseCommand):
     help = 'Load initial products into the database from Spoonacular API'
