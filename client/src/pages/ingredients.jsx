@@ -1,11 +1,13 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { faFilter } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 
 import Navbar from "../components/navbar";
 import Footer from "../components/footer";
-import MultiSelect from "../components/multiselect";
 import Pagination from "../components/pagination";
+
+import Modal from "../components/modal";
+import { SearchBar, NumberField, Select, CancelButton } from "../components/formComponents";
 
 import "./ingredients.css";
 
@@ -50,8 +52,6 @@ async function getIngredients(){
 export default function Ingredients() {
     const [loadedIngredients, setLoadedIngredients] = useState();
 
-    const [selectedVitamins, setSelectedVitamins] = useState([]);
-    const [selectedAllergies, setSelectedAllergies] = useState([]);
     const [filteredIngredients, setFilteredIngredients] = useState([]);
     const [category, setCategory] = useState("all");
     const [search, setSearch] = useState("");
@@ -60,6 +60,7 @@ export default function Ingredients() {
     const [carbs, setCarbs] = useState(0);
     const [glycemic, setGlycemic] = useState(0);
     const [calories, setCalories] = useState(0);
+    const [filterModal, setFilterModal] = useState(false);
 
     useEffect(() => {
         getIngredients().then(data => {
@@ -101,98 +102,79 @@ export default function Ingredients() {
             .filter(ingredient => {
                 return ingredient.calories >= calories;
             })
-            // .filter(ingredient => {
-            //     return selectedVitamins.every(vitamin => ingredient.vitamins.includes(vitamin));
-            // })
-            // .filter(ingredient => {
-            //     return selectedAllergies.every(allergy => !ingredient.allergens.includes(allergy));
-            // })
         )
-    }, [category, search, proteins, fats, carbs, glycemic, calories, selectedVitamins, selectedAllergies, loadedIngredients]);
+    }, [category, search, proteins, fats, carbs, glycemic, calories, loadedIngredients]);
+
+    function resetFilters(){
+        setCategory("all");
+        setSearch("");
+        setProteins(0);
+        setFats(0);
+        setCarbs(0);
+        setGlycemic(0);
+        setCalories(0);
+    }
+
+    const options = ["all", "vegetable", "fruit", "meat", "seafood", "grains", "legumes", "dairy", "spices"]
 
     return (
-        <div className="flex flex-col">
-        <Navbar />
-        <main className="flex flex-col items-center">
-            <div className="search-bar">
-                <input onChange={(e) => {setSearch(e.target.value)}} type="text" />
-                <button><FontAwesomeIcon icon={ faMagnifyingGlass } /></button>
-            </div>
-            <div className="container h-fit">
-                <div className="filters">
+        <>
+            <Navbar />
+            <Modal className="relative z-50 select-none w-96" isOpen={filterModal} onClose={() => {setFilterModal(false)}}>
+                <div className="">
                     <h2 className="text-xl font-bold">Filters</h2>
-                    <div className="filter">
+                    <div className="flex items-center">
                         <p>Category</p>
-                        <select onChange={(e) => {setCategory(e.target.value)}} defaultValue="all">
-                            <option value="all">All</option>
-                            <option value="vegetable">Vegetables</option>
-                            <option value="fruit">Fruits</option>
-                            <option value="meat">Meat</option>
-                            <option value="seafood">Seafood</option>
-                            <option value="grains">Grains</option>
-                            <option value="legumes">Legumes</option>
-                            <option value="dairy">Dairy</option>
-                            <option value="spices">Spices</option>
-                        </select>
+                        <Select className="w-40 ml-auto" value={category} onChange={(e) => {setCategory(e.target.value)}} options={options} />
                     </div>
-                    <h4 className="text-lg">Nutrients</h4>
-                    <div className="filter">
+                    <h4 className="mt-2 text-lg text-center">Nutrients</h4>
+                    <div className="flex items-center">
                         <p>Proteins</p>
-                        <input onChange={(e) => {setProteins(e.target.value)}} type="number" min="0" defaultValue={0} />
-                        g/kg
+                        <NumberField value={proteins} onChange={(e) => {setProteins(e.target.value)}} className="w-16 ml-auto mr-2" min="0" defaultValue={0} />
+                        g/100g
                     </div>
-                    <div className="filter">
+                    <div className="flex items-center">
                         <p>Fats</p>
-                        <input onChange={(e) => {setFats(e.target.value)}} type="number" min="0" defaultValue={0} />
-                        g/kg
+                        <NumberField value={fats} onChange={(e) => {setFats(e.target.value)}} className="w-16 ml-auto mr-2" min="0" defaultValue={0} />
+                        g/100g
                     </div>
-                    <div className="filter">
+                    <div className="flex items-center">
                         <p>Carbs</p>
-                        <input onChange={(e) => {setCarbs(e.target.value)}} type="number" min="0" defaultValue={0} />
-                        g/kg
+                        <NumberField value={carbs} onChange={(e) => {setCarbs(e.target.value)}} className="w-16 ml-auto mr-2" min="0" defaultValue={0} />
+                        g/100g
                     </div>
-                    <div className="filter">
+                    <div className="flex items-center">
                         <p>Glycemic index</p>
-                        <input onChange={(e) => {setGlycemic(e.target.value)}} type="number" min="0" defaultValue={0} />
-                        g/kg
+                        <NumberField value={glycemic} onChange={(e) => {setGlycemic(e.target.value)}} className="w-16 ml-auto mr-2" min="0" defaultValue={0} />
                     </div>
-                    <div className="filter">
+                    <div className="flex items-center">
                         <p>Calories</p>
-                        <input onChange={(e) => {setCalories(e.target.value)}} type="number" min="0" defaultValue={0} />
-                        kcal/kg
+                        <NumberField value={calories} onChange={(e) => {setCalories(e.target.value)}} className="w-16 ml-auto mr-2" min="0" defaultValue={0} />
+                        kcal/100g
                     </div>
-                    <div className="filter">
-                        <p>Vitamins</p>
-                        <MultiSelect className="rounded-full" placeholder="Select" prefix="Vitamin " options={[
-                            "A", 
-                            "B", 
-                            "C", 
-                            "D", 
-                            "E", 
-                            "K"]} selected={selectedVitamins} setSelected={setSelectedVitamins} />
-                    </div>
-                    <h4 className="text-lg">Allergies</h4>
-                    <div className="filter">
-                        <p>Allergens</p>
-                        <MultiSelect className="rounded-full" placeholder="Select" options={[
-                            "Nuts", 
-                            "Milk", 
-                            "Fish", 
-                            "Meats", 
-                            "Soy", 
-                            "Citrus"]} selected={selectedAllergies} setSelected={setSelectedAllergies} />
+                    <CancelButton onClick={resetFilters} className="w-full mt-2">Reset Filters</CancelButton>
+                </div>
+                
+            </Modal>
+            <main className="flex flex-col items-center">
+            <h1 className="pb-5 text-4xl font-bold text-center">Ingredients</h1>
+                <div className="w-[30rem]">
+                    <SearchBar type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search..."/>
+                    <div className="flex flex-wrap justify-start gap-4 p-2 mx-5">
+                        <p onClick={() => {setFilterModal(true)}} className="text-sm font-bold text-gray-500 cursor-pointer hover:text-green-500"><FontAwesomeIcon icon={ faFilter }/> Filters</p>
                     </div>
                 </div>
-                    <Pagination itemsPerPage={10}>{
+                <div className="container px-5 h-fit">
+                    <Pagination itemsPerPage={9}>{
                         filteredIngredients.map((ingredient, index) => (
                                 <IngredientCard key={index} ingredient={ingredient} />
                             )
                         )
                     }
                     </Pagination>
-            </div>
-            <Footer />
-        </main>
-        </div>
+                </div>
+                <Footer />
+            </main>
+        </>
     );
 }

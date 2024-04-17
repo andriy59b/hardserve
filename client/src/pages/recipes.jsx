@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 
 import Modal from "../components/modal";
 import Navbar from "../components/navbar";
-import { SearchBar, NumberField, CheckBox } from "../components/formComponents";
+import { SearchBar, CheckBox, CancelButton } from "../components/formComponents";
 
 import Pagination from "../components/pagination";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
 
-const checkBoxStyle = "p-2 rounded-lg shadow w-fit h-fit ring-green-500 hover:ring";
+const checkBoxStyle = "p-2 rounded-lg shadow bg-white w-fit h-fit ring-green-500 hover:ring";
 
 function RecipeCard({ recipe }) {
     return (
@@ -59,48 +59,6 @@ function RecipeCard({ recipe }) {
     );
 }
 
-const demoRecipes = [
-    {
-        id: 1,
-        date: "06/04/24",
-        name: "Pasta",
-        image: "https://via.placeholder.com/150",
-        category: "Main Course",
-        proteins: 10,
-        fats: 5,
-        carbs: 20,
-        calories: 250,
-        cuisine: "Italian",
-        points: 4.5
-    },
-    {
-        id: 2,
-        date: "03/04/24",
-        name: "Salad",
-        image: "https://via.placeholder.com/150",
-        category: "Appetizer",
-        proteins: 5,
-        fats: 2,
-        carbs: 10,
-        calories: 100,
-        cuisine: "Mediterranean",
-        points: 4.95
-    },
-    {
-        id: 3,
-        date: "04/04/24",
-        name: "Cake",
-        image: "https://via.placeholder.com/150",
-        category: "Dessert",
-        proteins: 15,
-        fats: 10,
-        carbs: 30,
-        calories: 350,
-        cuisine: "French",
-        points: 4.6
-    }
-];
-
 export default function Recipes() {
     const [recipes, setRecipes] = useState([]);
     const [filteredRecipes, setFilteredRecipes] = useState([]);
@@ -132,12 +90,12 @@ export default function Recipes() {
     , [])
     
 
-    function handleChange(e) {
-        setFilters({
-            ...filters,
-            [e.target.name]: e.target.value
-        });
-    }
+    // function handleChange(e) {
+    //     setFilters({
+    //         ...filters,
+    //         [e.target.name]: e.target.value
+    //     });
+    // }
 
     function handleToggle(e) {
         setFilters({
@@ -148,6 +106,17 @@ export default function Recipes() {
 
     function handleSearch(e) {
         setSearch(e.target.value);
+    }
+
+    function ResetFilters(){
+        setFilters({
+            vegan: false,
+            vegetarian: false,
+            glutenFree: false,
+            dairyFree: false,
+            lowFodmap: false,
+            veryHealthy: false,
+        });
     }
 
     useEffect(() => {
@@ -176,7 +145,7 @@ export default function Recipes() {
                         </div>
                     </div>
                 </div>
-                
+                <CancelButton onClick={ResetFilters} className="mt-2">Reset Filters</CancelButton>
             </Modal>
         )
     }
