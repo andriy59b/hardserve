@@ -4,6 +4,8 @@ from .models import *
 from recipes.serializers import *
 from django.http import FileResponse,  JsonResponse
 from rest_framework.response import Response
+from Profile.models import Favorite
+from Profile.serializers import FavoriteProductSerializerInfo
 
 
 class RecipeListView(ListAPIView):
@@ -81,6 +83,13 @@ class RecipeView(ListAPIView):
                 'recipe_ingredients': recipe_ingredient_serializer.data,
                 'recipe_equipments': recipe_equipment_serializer.data,
             }
+
+            if request.user.is_authenticated:
+                product_ids = [ingredient['ingredient_id'] for ingredient in recipe_ingredient_serializer.data]
+                favorite_products = Favorite.objects.filter(user=request.user, product__product_id__in=product_ids)
+                favorite_product_serializer = FavoriteProductSerializerInfo(favorite_products, many=True)
+                response.data['favorite_products'] = favorite_product_serializer.data
+    
         else:
             response.data = {
                 'message': 'Рецепт не знайдено.',
