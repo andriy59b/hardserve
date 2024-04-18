@@ -2,14 +2,11 @@ import requests
 from django.core.management.base import BaseCommand
 from products.models import *
 
-def product_load(product_id, image_name, self, *args, **kwargs):
-
-    # api_key = '339a5df078aa48f2aa831ec1413f7537'
-    # api_key = '60c5617260b84b1fb7ba939f0cdad2a6'
-    # api_key = 'dbb41dcdd4ef4c6dacfd8e6c9b1db54c'
-    # api_key = 'e258317c18264d14ba91f8f215d80f62'
-    api_key = '87f459c41b2542809173f185926cec62'
-    # api_key = '42d94788e6dd4b2c81ee247449c38820'
+def product_load(product_id, image_name, api_key, self, *args, **kwargs):
+    
+    if Product.objects.filter(product_id=product_id).exists():
+        self.stdout.write(self.style.WARNING('Products already loaded into the database'))
+        return
 
     url = f'https://api.spoonacular.com/food/ingredients/{product_id}/information'
     params = {'apiKey': api_key, 'amount': '100', 'unit': 'g'}
@@ -19,9 +16,6 @@ def product_load(product_id, image_name, self, *args, **kwargs):
     product_data = response.json()
 
     product_name = product_data['name']
-
-    if Product.objects.filter(name=product_name).exists():
-        self.stdout.write(self.style.WARNING('Products already loaded into the database'))
 
     if len(product_data['categoryPath']) == 2:
         n = 1
