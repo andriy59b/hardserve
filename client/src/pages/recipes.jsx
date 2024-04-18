@@ -145,7 +145,7 @@ export default function Recipes() {
                         </div>
                     </div>
                 </div>
-                <CancelButton onClick={ResetFilters} className="mt-2">Reset Filters</CancelButton>
+                <CancelButton onClick={ResetFilters} className="w-full mt-5">Reset Filters</CancelButton>
             </Modal>
         )
     }

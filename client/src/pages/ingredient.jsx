@@ -121,6 +121,25 @@ export default function Ingredient() {
       });
   }
 
+  function unfavoriteIngredient() {
+    if (!username || !password) {
+      setLoginQuery(true);
+      return;
+    }
+
+    fetch(`http://localhost:8000/favorites/${ingredientId}/remove/`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic ' + btoa(username + ':' + password),
+            }
+        }).catch((error) => {
+            console.error('Error:', error);
+        }).then(response => {
+            response.status === 204 ? setFavorited(false) : console.log(response);
+        })
+  }
+
   useEffect(() => {
     if (ingredientId === undefined) return;
     getIngredient(ingredientId).then((data) => {
@@ -221,7 +240,7 @@ export default function Ingredient() {
                     "h-5 w-5 aspect-square cursor-pointer " +
                     (favorited ? "text-rose-500" : "hover:text-rose-500")
                   }
-                  onClick={favorited ? null : favoriteIngredient}
+                  onClick={favorited ? unfavoriteIngredient : favoriteIngredient}
                   icon={faBookmark}
                 />
                 <FontAwesomeIcon
