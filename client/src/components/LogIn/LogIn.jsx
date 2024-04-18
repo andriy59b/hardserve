@@ -76,7 +76,7 @@ const LogIn = () => {
                 localStorage.setItem('refresh_token', data.refresh);
                 localStorage.setItem('username', inputFields.email);
                 localStorage.setItem('password', inputFields.password);
-                window.location.href = '/';
+                window.location.href = '/account';
             }
         })
       };
