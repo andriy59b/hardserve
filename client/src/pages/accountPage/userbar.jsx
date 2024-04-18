@@ -3,7 +3,7 @@ import { faPen, faHeart, faBookmark, faScaleUnbalanced, faTrash } from '@fortawe
 
 import { useState, useEffect } from 'react';
 
-import back from '../../components/img/back.svg'
+import back from '../../components/img/.back.svg.icloud'
 import Modal from '../../components/modal';
 
 function Quit(){
@@ -36,7 +36,7 @@ export default function UserBar() {
             setDisplayName(data.username);
             setEmail(data.email);
         })
-    }, [])
+    }, [username, password])
 
     useEffect(() => {
         fetch('http://localhost:8000/favorites/', {
@@ -49,9 +49,12 @@ export default function UserBar() {
             console.error('Error:', error);
         }
         ).then(response => response.json()).then(data => {
+            if (data.detail) {
+                return
+            }
             setFavoritedIngredients(data.map(record => record.product));
         })
-    }, [])
+    }, [username, password])
 
     useEffect(() => {
         fetch('http://localhost:8000/favorites/recipes', {
@@ -64,13 +67,13 @@ export default function UserBar() {
             console.error('Error:', error);
         }
         ).then(response => response.json()).then(data => {
+            if (data.detail) {
+                return
+            }
             setFavoritedRecipes(data.map(record => record.recipe));
         })
-    }, [])
+    }, [username, password])
 
-    useEffect(() => {
-        console.log(favoritedRecipes);
-    }, [favoritedRecipes])
 
     function DeleteIngredient(id){
         fetch(`http://localhost:8000/favorites/${id}/remove/`, {

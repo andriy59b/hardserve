@@ -7,6 +7,22 @@
     }
 }
 
+.gradient-animation {
+    animation: gradientChange 3s infinite;
+  }
+  
+  @keyframes gradientChange {
+    0% {
+      stop-color: #4F5AA8; /* Початковий колір */
+    }
+    50% {
+      stop-color: #A1F480; /* Кінцевий колір */
+    }
+    100% {
+      stop-color: #4F5AA8; /* Початковий колір */
+    }
+  }
+  
 
 #nav{
     display: flex;
@@ -30,8 +46,8 @@
 }
 
 .logo{
-    width: 50px;
-    height: 50px;
+    width: 70px;
+    height: 70px;
 }
 
 .logo-text{
