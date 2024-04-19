@@ -16,22 +16,6 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
 
-        # recipe_term = [
-        #     'muffin', 'sushi', 
-        #     'pasta', 'ketchup', 
-        #     'buckwheat', 'rice', 
-        #     'borscht', 'pizza', 
-        #     'broccoli soup', 'kebab', 
-        #     'tiramisu', 'napoleon', 
-        #     'goulash', 'dumplings',
-        #     'cabbage', 'sorbet',
-        #     'pancakes', 'omelette',
-        #     'lasagna', 'burger',
-        #     'salad', 'steak',
-        #     'chicken soup', 'apple pie',
-        #     'chocolate cake', 'cheesecake',
-        # ]
-
         def generate_recipe_ids(num_ids):
             return random.sample(range(1000, 177088), num_ids)
 
@@ -78,16 +62,6 @@ class Command(BaseCommand):
             print(api_key + '------------')
             for recipe_id in recipe_ids:
                 try:
-                    # recipes = 'muffin'
-                    # url = 'https://api.spoonacular.com/recipes/complexSearch' 
-                    # params = {'apiKey': api_key, f'query': {recipes}}
-                    # response = requests.get(url, params=params)
-                    # response.raise_for_status()
-                    
-                    # data = response.json()
-
-                    # recipe_id = data['results'][0]['id']
-
                     url = f'https://api.spoonacular.com/recipes/{recipe_id}/information'
                     params = {'apiKey': api_key}
                     response = requests.get(url, params=params)
