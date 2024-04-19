@@ -98,10 +98,8 @@ class Command(BaseCommand):
                         response.status_code = 404
                         raise HTTPError(f'Error 404: No preparation steps found for recipe: {recipe_name}')
 
-                    # Dictionary to store the ingredients and their corresponding image URLs
                     ingredients = recipe_data['extendedIngredients']        
 
-                    # First, create Recipe_Ingredients for all ingredients without a step
                     for ingredient in ingredients:
                         if not self.check_product_in_db(ingredient['name']):
                             image_name = ingredient['image']
@@ -120,10 +118,8 @@ class Command(BaseCommand):
                             else:
                                 self.stdout.write(self.style.ERROR(f'Ingredient already exists: {ingredient["name"]}'))               
 
-                    # Then, update the step for the ingredients used in each step
                     for instruction in analyzedInstructions:
                         for step in instruction['steps']:
-                            # Create Recipe_Step objects
                             recipe_step, created = Recipe_Step.objects.get_or_create(
                                 recipe=recipe,
                                 step_number=step['number'],
@@ -151,7 +147,6 @@ class Command(BaseCommand):
                                     self.stdout.write(self.style.ERROR(f'Equipment already exists: {equipment["name"]}, skipping...'))
                 except HTTPError as http_err:
                     if response.status_code in [402, 404]:
-                        # Delete the recipe and all related objects
                         Recipe.objects.filter(name=recipe_name).delete()
                         self.stdout.write(self.style.ERROR(f'HTTP error occurred: {http_err}. Recipe {recipe_name} and all related objects have been deleted.'))
                     else:
