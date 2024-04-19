@@ -21,11 +21,11 @@ export function TextArea({label, value, onChange, placeholder, className, id}) {
     )
 }
 
-export function NumberField({label, value, onChange, placeholder, name, className, id, min, max}) {
+export function NumberField({label, value, onChange, placeholder, name, className, id, min, max, defaultValue}) {
     return (
         <div className={"flex flex-col gap-2 " + className}>
             <label>{label}</label>
-            <input type="number" min={min} max={max} value={value} name={name} onChange={onChange} id={id} placeholder={placeholder} className="p-2 border-2 border-gray-300 rounded-lg shadow-inner focus:ring-0 focus:border-green-500"/>
+            <input type="number" min={min} max={max} value={value} name={name} defaultValue={defaultValue} onChange={onChange} id={id} placeholder={placeholder} className="p-2 border-2 border-gray-300 rounded-lg shadow-inner focus:ring-0 focus:border-green-500"/>
         </div>
     )
 }
@@ -68,7 +68,7 @@ export function Select({label, options, value, onChange, className, id}) {
     return (
         <div className={"flex flex-col " + className}>
             <label>{label}</label>
-            <select value={value} onChange={onChange} id={id} className="p-2 border-2 border-gray-300 rounded-lg focus:border-green-500">
+            <select value={value} onChange={onChange} id={id} className="p-2 rounded-lg ring-2 ring-gray-300 focus:ring-2 focus:ring-green-500">
                 {options.map((option, index) => (
                     <option key={index} value={option}>{option}</option>
                 ))}

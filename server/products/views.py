@@ -3,6 +3,7 @@ from rest_framework.generics import ListAPIView
 from .models import *
 from products.serializers import *
 from django.http import FileResponse,  JsonResponse
+from django.shortcuts import get_object_or_404
 
 class ProductListView(ListAPIView):
     queryset = Product.objects.all()
@@ -34,7 +35,8 @@ class ProductNutrientsListView(ListAPIView):
 
     def get_queryset(self):
         product_id = self.kwargs['product_id']
-        return Product_Nutrients.objects.filter(product_id=product_id)
+        product = get_object_or_404(Product, product_id=product_id)
+        return Product_Nutrients.objects.filter(product_id=product.id)
 
     def list(self, request, *args, **kwargs):
         response = super(ProductNutrientsListView, self).list(request, *args, **kwargs)
