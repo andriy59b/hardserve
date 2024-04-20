@@ -17,7 +17,7 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
 
         def generate_recipe_ids(num_ids):
-            return random.sample(range(1000, 177088), num_ids)
+            return random.sample(range(10, 177088), num_ids)
 
         api_keys = [
             '339a5df078aa48f2aa831ec1413f7537',
