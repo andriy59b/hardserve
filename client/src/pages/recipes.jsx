@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 
 import Modal from "../components/modal";
 import Navbar from "../components/navbar";
-import { SearchBar, CheckBox, CancelButton } from "../components/formComponents";
+import { SearchBar, CheckBox, TriStateCheckBox, CancelButton, IngredientPicker, BadgeToggle } from "../components/formComponents";
 
 import Pagination from "../components/pagination";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFilter } from "@fortawesome/free-solid-svg-icons";
+import { faArrowsRotate, faCarrot, faFilter, faHeart } from "@fortawesome/free-solid-svg-icons";
 
-const checkBoxStyle = "p-2 rounded-lg shadow bg-white w-fit h-fit ring-green-500 hover:ring";
+const checkBoxStyle = "p-2 rounded-lg shadow bg-white w-fit h-fit ring-green-500 hover:ring-2";
 
 function RecipeCard({ recipe }) {
     return (
@@ -33,25 +33,25 @@ function RecipeCard({ recipe }) {
                             <p key={index} className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 bg-gray-100 rounded-md ring-1 ring-inset ring-gray-100">{category.name}</p>
                         ))}
                     </div>
-                    <div class="flex items-center mt-auto">
-                        <svg class="w-3 h-3 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                    <div className="flex items-center mt-auto">
+                        <svg className="w-3 h-3 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                             <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
                         </svg>
-                        <svg class="w-3 h-3 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                        <svg className="w-3 h-3 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                             <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
                         </svg>
-                        <svg class="w-3 h-3 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                        <svg className="w-3 h-3 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                             <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
                         </svg>
-                        <svg class="w-3 h-3 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                        <svg className="w-3 h-3 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                             <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
                         </svg>
-                        <svg class="w-3 h-3 text-gray-300 me-1 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                        <svg className="w-3 h-3 text-gray-300 me-1 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                             <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
                         </svg>
-                        <p class="ms-1 text-xs font-medium text-gray-500 dark:text-gray-400">{recipe.points}</p>
-                        <p class="ms-1 text-xs font-medium text-gray-500 dark:text-gray-400">out of</p>
-                        <p class="ms-1 text-xs font-medium text-gray-500 dark:text-gray-400">5</p>
+                        <p className="text-xs font-medium text-gray-500 ms-1 dark:text-gray-400">{recipe.points}</p>
+                        <p className="text-xs font-medium text-gray-500 ms-1 dark:text-gray-400">out of</p>
+                        <p className="text-xs font-medium text-gray-500 ms-1 dark:text-gray-400">5</p>
                     </div>
                 </div>
             </div>
@@ -59,11 +59,41 @@ function RecipeCard({ recipe }) {
     );
 }
 
+function IngredientCheckBox({ingredient, setIncludedIngredients, setExcludedIngredients, includedIngredients, excludedIngredients}){
+    const [value, setValue] = useState(null);
+    const id = ingredient.product_id;
+
+    useEffect(() => {
+        if (value === null) {
+            setIncludedIngredients(includedIngredients.filter(ing => ing !== id));
+            setExcludedIngredients(excludedIngredients.filter(ing => ing !== id));
+        } else if (value) {
+            setIncludedIngredients([...includedIngredients, id]);
+            setExcludedIngredients(excludedIngredients.filter(ing => ing !== id));
+        } else {
+            setExcludedIngredients([...excludedIngredients, id]);
+            setIncludedIngredients(includedIngredients.filter(ing => ing !== id));
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [value])
+
+    return (
+        <TriStateCheckBox value={value} onChange={setValue} className={checkBoxStyle} label={ingredient.name} id={ingredient.name}/>
+    )
+}
+
 export default function Recipes() {
     const [recipes, setRecipes] = useState([]);
     const [filteredRecipes, setFilteredRecipes] = useState([]);
     const [search, setSearch] = useState("");
     const [filterModal, setFilterModal] = useState(false);
+    const [ingredientsModal, setIngredientsModal] = useState(false);
+    const [ingredients, setIngredients] = useState([]);
+    const [onlyFavorites, setOnlyFavorites] = useState(false);
+    const [favoritedIngredients, setFavoritedIngredients] = useState([]);
+    const [selectedIngredients, setSelectedIngredients] = useState([]);
+    const [includedIngredients, setIncludedIngredients] = useState([]);
+    const [excludedIngredients, setExcludedIngredients] = useState([]);
     const [filters, setFilters] = useState({
         vegan: false,
         vegetarian: false,
@@ -72,6 +102,33 @@ export default function Recipes() {
         lowFodmap: false,
         veryHealthy: false,
     });
+    const [username, password] = [
+        localStorage.getItem("username"),
+        localStorage.getItem("password"),
+    ];
+
+    useEffect(() => {
+        fetch('http://localhost:8000/favorites/', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic ' + btoa(username + ':' + password),
+            },
+        }).catch((error) => {
+            console.error('Error:', error);
+        }
+        ).then(response => response.json()).then(data => {
+            if (data.detail) {
+                return
+            }
+            data = data.map((el) => {
+                el.product.image = el.product.image.replace("/media/", "").replace("%3A", ":/");
+                return el;
+            })
+            setFavoritedIngredients(data.map(record => record.product));
+        })
+    }, [username, password])
+
 
     useEffect(() => {
         fetch("http://localhost:8000/recipes/",
@@ -81,13 +138,43 @@ export default function Recipes() {
                 'Content-Type': 'application/json',
             }
         }).then(response => response.json()).then(data => {
-            data.recipes.forEach(recipe => {
-                recipe.image = recipe.image.replace("http://localhost:8000/media/", "").replace("%3A", ":/");
+            const promises = data.recipes.map(recipe => {
+                return fetch("http://localhost:8000/recipes/" + recipe.id + "/",
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                }).then(response => response.json()).then(data => {
+                    return new Promise((resolve, reject) => {
+                        recipe.recipe_ingredients = data.recipe_ingredients.map(ingredient => ingredient.ingredient_id);
+                        recipe.image = recipe.image.replace("http://localhost:8000/media/", "").replace("%3A", ":/");
+                        resolve(recipe);
+                    })
+                })
             });
-            setRecipes(data.recipes);
+            Promise.all(promises).then(recipes => {
+                setRecipes(recipes);
+            })
         })
     }
     , [])
+
+    useEffect(() => {
+        fetch("http://localhost:8000/products/",
+        {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then(response => response.json()).then(data => {
+            data.products = data.products.map((product, index) => {
+                product.image = product.image.replace("http://localhost:8000/media/", "").replace("%3A", ":/");
+                return product;
+            })
+            setIngredients(data.products);
+        })
+    }, [])
     
 
     // function handleChange(e) {
@@ -119,14 +206,27 @@ export default function Recipes() {
         });
     }
 
+    function ResetIngredients(){
+        setSelectedIngredients([]);
+        setIncludedIngredients([]);
+        setExcludedIngredients([]);
+    
+    }
+
     useEffect(() => {
         setFilteredRecipes(recipes.filter(recipe => {
+            if (!includedIngredients.every(ingredient => (
+                recipe.recipe_ingredients.includes(ingredient)
+            ))) return false;
+            if (excludedIngredients.some(ingredient => (
+                recipe.recipe_ingredients.includes(ingredient)
+            ))) return false;
             for (const [key, value] of Object.entries(filters)) {
                 if (value && !recipe.categories.map(category => category.name).includes(key)) return false;
             }
             return true;
         }));
-    }, [filters, recipes])
+    }, [filters, recipes, includedIngredients, excludedIngredients])
 
     function FilterModal(){
         return (
@@ -150,25 +250,56 @@ export default function Recipes() {
         )
     }
 
-
     return (
         <>
             <Navbar />
             <div className="flex flex-col items-center p-4">
                 <FilterModal />
+                <Modal className="relative select-none w-96 h-96" isOpen={ingredientsModal} onClose={() => {setIngredientsModal(false)}}>
+                    <div className="flex flex-col h-full">
+                        <h1 className="pb-2 text-2xl font-bold text-center">Ingredients</h1>
+                        <IngredientPicker className="" ingredients={onlyFavorites ? favoritedIngredients : ingredients} selected={selectedIngredients} setSelected={setSelectedIngredients} />
+                        { username && password ? 
+                        
+                        <BadgeToggle value={onlyFavorites} onChange={setOnlyFavorites} className="mt-1 ml-4" label="Included Ingredients">
+                            <FontAwesomeIcon icon={faHeart} /> Favorites
+                        </BadgeToggle>
+
+                        : null }
+                        
+                        <div className="flex flex-wrap h-40 gap-2 p-2 mt-5 overflow-y-auto border-2 border-gray-300 border-dashed rounded-lg shadow-inner">
+                            {selectedIngredients.map((ingredient, index) => (
+                                
+                                <IngredientCheckBox 
+                                    includedIngredients={includedIngredients} 
+                                    excludedIngredients={excludedIngredients} 
+                                    setExcludedIngredients={setExcludedIngredients}
+                                    setIncludedIngredients={setIncludedIngredients}
+                                    ingredient={ingredient} 
+                                    key={index}/>
+                                
+                            ))}
+                        </div>
+                        <CancelButton onClick={ResetIngredients} className="w-full mt-auto">Reset Ingredients</CancelButton>
+                    </div>
+                </Modal>
                 <h1 className="pb-5 text-4xl font-bold text-center">Recipes</h1>
-                <div className="w-[30rem]">
-                    <SearchBar type="text" value={search} onChange={handleSearch} placeholder="Search..."/>
-                    <div className="flex flex-wrap justify-start gap-4 p-2 mx-5">
+                <div className="flex flex-col items-center w-[40rem] max-w-[70vw]">
+                    <SearchBar className="w-full" type="text" value={search} onChange={handleSearch} placeholder="Search..."/>
+                    <div className="flex flex-wrap justify-start w-full gap-4 p-2 mx-5">
                         <p onClick={() => {setFilterModal(true)}} className="text-sm font-bold text-gray-500 cursor-pointer hover:text-green-500"><FontAwesomeIcon icon={ faFilter }/> Filters</p>
+                        <p onClick={() => {setIngredientsModal(true)}} className="text-sm font-bold text-gray-500 cursor-pointer hover:text-green-500"><FontAwesomeIcon icon={ faCarrot }/> Ingredients</p>
                     </div>
                 </div>
                 <div className="flex flex-wrap justify-center w-full gap-4 p-2 mx-5">
-                    <Pagination itemsPerPage={9}>
+                    {filteredRecipes.length === 0 ? <p className="text-lg font-bold text-gray-500">
+                        <FontAwesomeIcon icon={faArrowsRotate} className="mx-1 animate-spin" /> Loading...</p> : 
+                    (<Pagination itemsPerPage={9}>
                         {filteredRecipes.filter(recipe => recipe.name.toLowerCase().includes(search.toLowerCase())).map(recipe => (
                             <RecipeCard key={recipe.id} recipe={recipe} />
                         ))}
-                    </Pagination>
+                    </Pagination>)
+                    }
                 </div>
             </div>
         </>

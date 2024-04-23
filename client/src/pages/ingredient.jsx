@@ -21,9 +21,8 @@ async function getIngredient(ingredientId) {
     }
   );
   const data = await response.json();
-  console.log(data);
   let result = data.product_nutrients[0].product;
-  result.id = ingredientId;
+  result.image = result.image.replace("http://localhost:8000/media/", "").replace("%3A", ":/");
   result.nutrients = data.product_nutrients.map((record) => {
     return {
       name: record.nutrient.name,
@@ -81,7 +80,7 @@ export default function Ingredient() {
   const [loginQuery, setLoginQuery] = useState(false);
 
   useEffect(() => {
-    if (username && password) {
+    if (username && password && ingredient) {
       fetch("http://localhost:8000/favorites/", {
         method: "GET",
         headers: {
@@ -94,11 +93,11 @@ export default function Ingredient() {
           setFavorited(
             data
               .map((record) => (record.product ? record.product.id : null))
-              .includes(parseInt(ingredientId))
+              .includes(parseInt(ingredient.id))
           );
         });
     }
-  }, [ingredientId, username, password]);
+  }, [ingredient, username, password]);
 
   function favoriteIngredient() {
     if (!username || !password) {
@@ -112,7 +111,7 @@ export default function Ingredient() {
         "Content-Type": "application/json",
         Authorization: "Basic " + btoa(username + ":" + password),
       },
-      body: JSON.stringify({ product: ingredientId }),
+      body: JSON.stringify({ product: ingredient.id }),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -127,7 +126,7 @@ export default function Ingredient() {
       return;
     }
 
-    fetch(`http://localhost:8000/favorites/${ingredientId}/remove/`, {
+    fetch(`http://localhost:8000/favorites/${ingredient.id}/remove/`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -174,7 +173,7 @@ export default function Ingredient() {
             <div className="flex flex-col items-center lg:items-start lg:flex-row h-fit bg-white border-2 my-16 shadow-sm w-[80vw] min-w-fit rounded-xl p-10 gap-10">
               <img
                 className="object-contain m-2 rounded-xl h-96"
-                src="https://via.placeholder.com/150"
+                src={ingredient.image}
                 alt="Ingredient"
               />
               <div className="flex flex-col items-center justify-around w-full h-96">
