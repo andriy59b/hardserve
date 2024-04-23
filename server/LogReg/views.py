@@ -113,6 +113,7 @@ class EmailConfirmationView(APIView):
         user = User.objects.filter(confirmation_token=confirmation_token).first()
         if user:
             user.is_email_verified = True
+            user.is_active = True
             user.save()
             return Response({"message": "Ваша електронна пошта успішно підтверджена."}, status=status.HTTP_200_OK)
         else:
