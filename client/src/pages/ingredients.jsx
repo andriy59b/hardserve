@@ -13,9 +13,9 @@ import "./ingredients.css";
 
 function IngredientCard({ingredient}){
     return (
-        <div className="relative flex flex-col items-center px-2 py-4 bg-transparent bg-gray-200 shadow-lg cursor-pointer w-72 rounded-xl" onClick={() => window.location.href += "/" + ingredient.id}>
-            <img className="w-full mt-2 mb-4 rounded" src="https://via.placeholder.com/150" alt="Ingredient" />
-            <div className="flex items-center gap-2">
+        <div className="relative flex flex-col items-center px-2 py-4 bg-transparent bg-gray-200 shadow-lg cursor-pointer w-72 rounded-xl" onClick={() => window.location.href += "/" + ingredient.product_id}>
+            <img className="object-contain w-full mt-2 mb-4 rounded-xl max-h-52" src={ingredient.image} alt="Ingredient" />
+            <div className="flex items-center gap-2 mt-auto">
                 <h3 className="text-xl font-bold">{ingredient.name}</h3>
                 <p className="bg-transparent macro-badge-purple">{ingredient.category}</p>
             </div>
@@ -46,6 +46,10 @@ async function getIngredients(){
         }
     });
     const data = await response.json();
+    data.products = data.products.map((product, index) => {
+        product.image = product.image.replace("http://localhost:8000/media/", "").replace("%3A", ":/");
+        return product;
+    })
     return data.products;
 }
 

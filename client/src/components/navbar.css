@@ -1,12 +1,3 @@
-@keyframes slideFromRight {
-    0% {
-        transform: translateX(100%);
-    }
-    100% {
-        transform: translateX(0);
-    }
-}
-
 .gradient-animation {
     animation: gradientChange 3s infinite;
   }
@@ -78,7 +69,8 @@
 }
 
 .mobile-menu{
-    display: none;
+    visibility: hidden;
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: start;
@@ -89,7 +81,8 @@
     background-color: #fefdfd;
     top: 80px;
     z-index: 19;
-    animation: slideFromRight 0.3s ease;
+    transition: all 0.25s ease-in-out;
+    transform: translateX(100%);
 }
 
 .mobile-menu ul {
@@ -102,7 +95,7 @@
 }
 
 .enabled {
-    display: none;
+    visibility: hidden;
 }
 
 @media (max-width: 1200px) {
@@ -114,7 +107,8 @@
         display: flex;
     }
     .enabled {
-        display: flex;
+        visibility: visible;
+        transform: translateX(0%);
     }
 }
 
