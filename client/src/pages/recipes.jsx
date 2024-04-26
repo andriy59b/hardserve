@@ -14,7 +14,6 @@ const checkBoxStyle = "p-2 rounded-lg shadow w-fit h-fit ring-green-500 hover:ri
 
 function RecipeCard({ recipe, darkMode }) {
     return (
-        <div className={`${darkMode && "dark"}`} >
 
         
         <div className="px-2 py-4 bg-white dark:bg-neutral-800  shadow-sm cursor-pointer w-72 rounded-xl" >
@@ -64,7 +63,6 @@ function RecipeCard({ recipe, darkMode }) {
 
                 </div>
             </div>
-        </div>
         </div>
         </div>
     );
