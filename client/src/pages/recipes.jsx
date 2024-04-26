@@ -145,24 +145,7 @@ export default function Recipes({darkMode, setDarkMode}) {
                 'Content-Type': 'application/json',
             }
         }).then(response => response.json()).then(data => {
-            const promises = data.recipes.map(recipe => {
-                return fetch("http://localhost:8000/recipes/" + recipe.id + "/",
-                {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
-                }).then(response => response.json()).then(data => {
-                    return new Promise((resolve, reject) => {
-                        recipe.recipe_ingredients = data.recipe_ingredients.map(ingredient => ingredient.ingredient_id);
-                        recipe.image = recipe.image.replace("http://localhost:8000/media/", "").replace("%3A", ":/");
-                        resolve(recipe);
-                    })
-                })
-            });
-            Promise.all(promises).then(recipes => {
-                setRecipes(recipes);
-            })
+            setRecipes(data.recipes)
         })
     }
     , [])
@@ -223,10 +206,10 @@ export default function Recipes({darkMode, setDarkMode}) {
     useEffect(() => {
         setFilteredRecipes(recipes.filter(recipe => {
             if (!includedIngredients.every(ingredient => (
-                recipe.recipe_ingredients.includes(ingredient)
+                recipe.ingredient_ids.includes(ingredient)
             ))) return false;
             if (excludedIngredients.some(ingredient => (
-                recipe.recipe_ingredients.includes(ingredient)
+                recipe.ingredient_ids.includes(ingredient)
             ))) return false;
             for (const [key, value] of Object.entries(filters)) {
                 if (value && !recipe.categories.map(category => category.name).includes(key)) return false;
