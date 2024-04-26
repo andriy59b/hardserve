@@ -12,7 +12,7 @@ import { faFilter } from "@fortawesome/free-solid-svg-icons";
 const checkBoxStyle = "p-2 rounded-lg shadow w-fit h-fit ring-green-500 hover:ring";
 
 
-function RecipeCard({ recipe, darkMode }) {
+function RecipeCard({ recipe }) {
     return (
 
         
@@ -166,7 +166,8 @@ export default function Recipes({darkMode, setDarkMode}) {
 
     function FilterModal(){
         return (
-            <Modal className="relative select-none w-96 " isOpen={filterModal} onClose={() => {setFilterModal(false)}}> 
+            <Modal className="relative select-none w-96" isOpen={filterModal} onClose={() => {setFilterModal(false)}}> 
+                <h1 className="pb-2 text-2xl font-bold text-center">Filters</h1>
                 <div className="flex flex-col relative items-center overflow-auto no-scrollbar max-h-[80vh]">
                     <div className="w-full p-4">
                         <h4 className="mb-3 text-xl font-medium text-center">Nutrients</h4>
@@ -227,7 +228,7 @@ export default function Recipes({darkMode, setDarkMode}) {
         const newDarkMode = !darkMode;
         setDarkMode(newDarkMode);
         localStorage.setItem('darkMode', newDarkMode); // Зберігаємо нове значення в локальному сховищі
-    };
+    }
 
     return (
 
