@@ -22,8 +22,8 @@
     }
   </style>
 
-<rect x="4" y="2" width="52" height="37" rx="8" fill="#F8FCFB" stroke="url(#paint0_linear_191_11)" stroke-width="4"/>
-<path d="M9.9219 19.0197L45.0524 11.9369C45.6716 11.8121 46.25 12.2855 46.25 12.9172V27.0828C46.25 27.7145 45.6716 28.1879 45.0524 28.0631L9.92189 20.9803C8.85209 20.7646 8.85206 19.2354 9.9219 19.0197Z" fill="#F8FCFB" stroke="url(#paint1_linear_191_11)" stroke-width="2"/>
+<rect x="4" y="2" width="52" height="37" rx="8" fill="transperent" stroke="url(#paint0_linear_191_11)" stroke-width="4"/>
+<path d="M9.9219 19.0197L45.0524 11.9369C45.6716 11.8121 46.25 12.2855 46.25 12.9172V27.0828C46.25 27.7145 45.6716 28.1879 45.0524 28.0631L9.92189 20.9803C8.85209 20.7646 8.85206 19.2354 9.9219 19.0197Z" fill="transperent" stroke="url(#paint1_linear_191_11)" stroke-width="2"/>
 <rect width="6.70213" height="1.15789" rx="0.578947" transform="matrix(1 0 0 -1 45.5745 20.5789)" fill="url(#paint2_linear_191_11)"/>
 <rect width="5.78947" height="1.34043" rx="0.670213" transform="matrix(0 -1 -1 0 26.8085 20.5789)" fill="url(#paint3_linear_191_11)"/>
 <rect width="5.78947" height="1.34043" rx="0.670213" transform="matrix(0 -1 -1 0 40.2128 18.2632)" fill="url(#paint4_linear_191_11)"/>
