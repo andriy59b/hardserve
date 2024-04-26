@@ -26,7 +26,7 @@ const elements = (
             <a className="dark:text-[#fefdfd]" href="/ingredients">Ingredients</a>
         </li>
         <li>
-            {access_token ? <a href="/account" className="login-button border border-[#346D75]">Account</a> : <a href="/login" className="login-button text-[#696969] dark:text-[#346D75] border-2 border-[#696969] dark:border-[#346D75] rounded-md">Log In</a>}
+            {access_token ? <a href="/account" className="login-button text-[#696969] dark:text-[#346D75] border-2 border-[#696969] dark:border-[#346D75] rounded-md">Account</a> : <a href="/login" className="login-button text-[#696969] dark:text-[#346D75] border-2 border-[#696969] dark:border-[#346D75] rounded-md">Log In</a>}
         </li>
         <li>
         
