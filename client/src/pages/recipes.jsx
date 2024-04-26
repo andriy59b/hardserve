@@ -11,32 +11,36 @@ import { faFilter } from "@fortawesome/free-solid-svg-icons";
 
 const checkBoxStyle = "p-2 rounded-lg shadow w-fit h-fit ring-green-500 hover:ring";
 
-function RecipeCard({ recipe }) {
+
+function RecipeCard({ recipe, darkMode }) {
     return (
-        <div className="px-2 py-4 bg-white bg-gray-200 shadow-sm cursor-pointer w-72 rounded-xl" >
+        <div className={`${darkMode && "dark"}`} >
+
+        
+        <div className="px-2 py-4 bg-white dark:bg-neutral-800  shadow-sm cursor-pointer w-72 rounded-xl" >
 
         <div className="relative flex flex-col items-center " onClick={() => window.location.href += "/" + recipe.id}>
             <img className="w-full mb-4 -mt-2 rounded" src={recipe.image} alt="Recipe" />
         </div>
 
         <div className="relative flex flex-col items-left" >
-            <p className="text-xs font-light text-left pl-2 text-gray-600" >{recipe.date}</p>
+            <p className="text-xs font-light text-left pl-2 text-gray-600 dark:text-gray-400" >{recipe.date}</p>
         </div>
 
         <div className="relative flex flex-col pl-1 pr-1 " onClick={() => window.location.href += "/" + recipe.id}>
             <div className="flex justify-between p-1">
-                <h3 className="text-xl font-bold">{recipe.name}</h3>
-                <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-green-700 bg-green-100 rounded-md ring-1 ring-inset ring-green-50">{recipe.category}</p>
+                <h3 className="text-xl font-bold dark:text-[#fefdfd]">{recipe.name}</h3>
+                <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-green-700 bg-green-100 dark:bg-green-700 dark:text-green-100 rounded-md ring-1 ring-inset ring-green-50 dark:ring-green-700">{recipe.category}</p>
             </div>
             <div className="p-1 macros">
                 <div className="flex justify-between gap-2">
-                    <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 bg-gray-100 rounded-md ring-1 ring-inset ring-gray-100">P: {recipe.proteins}g</p>
-                    <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 bg-gray-100 rounded-md ring-1 ring-inset ring-gray-100">F: {recipe.fats}g</p>
-                    <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 bg-gray-100 rounded-md ring-1 ring-inset ring-gray-100">C: {recipe.carbs}g</p>
+                    <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 dark:bg-gray-600 bg-gray-100 dark:text-gray-100 rounded-md ring-1 ring-inset ring-gray-100 dark:ring-gray-600">P: {recipe.proteins}g</p>
+                    <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 dark:bg-gray-600 bg-gray-100 dark:text-gray-100 rounded-md ring-1 ring-inset ring-gray-100 dark:ring-gray-600">F: {recipe.fats}g</p>
+                    <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 dark:bg-gray-600 bg-gray-100 dark:text-gray-100 rounded-md ring-1 ring-inset ring-gray-100 dark:ring-gray-600">C: {recipe.carbs}g</p>
                 </div>
                 <div className="flex flex-wrap justify-between gap-2 pt-2">
-                    <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 bg-gray-100 rounded-md ring-1 ring-inset ring-gray-100">Calories: {recipe.calories}kcal</p>
-                    <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 bg-gray-100 rounded-md ring-1 ring-inset ring-gray-100">Cuisine: {recipe.cuisine}</p>
+                    <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 dark:bg-gray-600 bg-gray-100 dark:text-gray-100 rounded-md ring-1 ring-inset ring-gray-100 dark:ring-gray-600">Calories: {recipe.calories}kcal</p>
+                    <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 dark:bg-gray-600 bg-gray-100 dark:text-gray-100 rounded-md ring-1 ring-inset ring-gray-100 dark:ring-gray-600">Cuisine: {recipe.cuisine}</p>
                     <div class="flex items-center">
                         <svg class="w-3 h-3 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                             <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
@@ -50,7 +54,7 @@ function RecipeCard({ recipe }) {
                         <svg class="w-3 h-3 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                             <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
                         </svg>
-                        <svg class="w-3 h-3 text-gray-300 me-1 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                        <svg class="w-3 h-3 text-gray-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                             <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
                         </svg>
                         <p class="ms-1 text-xs font-medium text-gray-500 dark:text-gray-400">{recipe.points}</p>
@@ -60,6 +64,7 @@ function RecipeCard({ recipe }) {
 
                 </div>
             </div>
+        </div>
         </div>
         </div>
     );
@@ -107,7 +112,7 @@ const demoRecipes = [
     }
 ];
 
-export default function Recipes() {
+export default function Recipes({darkMode, setDarkMode}) {
     const [recipes, setRecipes] = useState(demoRecipes);
     const [search, setSearch] = useState("");
     const [filterModal, setFilterModal] = useState(false);
@@ -163,7 +168,7 @@ export default function Recipes() {
 
     function FilterModal(){
         return (
-            <Modal className="relative select-none w-96" isOpen={filterModal} onClose={() => {setFilterModal(false)}}> 
+            <Modal className="relative select-none w-96 " isOpen={filterModal} onClose={() => {setFilterModal(false)}}> 
                 <div className="flex flex-col relative items-center overflow-auto no-scrollbar max-h-[80vh]">
                     <div className="w-full p-4">
                         <h4 className="mb-3 text-xl font-medium text-center">Nutrients</h4>
@@ -220,24 +225,32 @@ export default function Recipes() {
         )
     }
 
+    const toggleDarkMode = () => {
+        const newDarkMode = !darkMode;
+        setDarkMode(newDarkMode);
+        localStorage.setItem('darkMode', newDarkMode); // Зберігаємо нове значення в локальному сховищі
+    };
 
     return (
+
         <>
-            <Navbar />
-            <div className="flex flex-col items-center p-4 bg-[#fefdfd]">
+            <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode}/>
+            <div className={`${darkMode && "dark"}`} >
+            <div className="flex flex-col items-center p-4 bg-[#fefdfd] dark:bg-neutral-900">
                 <FilterModal />
-                <h1 className="pb-5 text-4xl font-bold text-center">Recipes</h1>
+                <h1 className="pb-5 text-4xl font-bold dark:text-[#fefdfd] text-center">Recipes</h1>
                 <div className="w-[30rem]">
-                    <SearchBar type="text" className="bg-white" value={search} onChange={handleSearch} placeholder="Search..."/>
+                    <SearchBar darkMode={darkMode} type="text" className="bg-white" value={search} onChange={handleSearch} placeholder="Search..."/>
                     <div className="flex flex-wrap justify-end gap-4 p-2 mx-1">
                         <p onClick={() => {setFilterModal(true)}} className="text-sm font-medium text-gray-500 cursor-pointer hover:text-green-500"><FontAwesomeIcon icon={ faFilter }/> Filters</p>
                     </div>
                 </div>
-                <div className="flex flex-wrap justify-center gap-4 p-2 mx-5">
+                <div className="flex flex-wrap justify-center gap-4 p-4 mx-5">
                     {recipes.filter(recipe => recipe.name.toLowerCase().includes(search.toLowerCase())).map(recipe => (
                         <RecipeCard key={recipe.id} recipe={recipe} />
                     ))}
                 </div>
+            </div>
             </div>
         </>
     );

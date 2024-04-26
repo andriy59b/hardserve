@@ -30,11 +30,13 @@ export function NumberField({label, value, onChange, placeholder, name, classNam
     )
 }
 
-export function SearchBar({value, onChange, placeholder, className, id}) {
+export function SearchBar({value, onChange, placeholder, className, id, darkMode}) {
     return (
-        <div className={"group h-10 p-2 flex ring-2 ring-gray-300 rounded-xl shadow-inner focus-within:ring-green-500 " + className}>
-            <input type="text" value={value} onChange={onChange} id={id} placeholder={placeholder} className="p-0 border-none rounded-none focus:ring-0 h-fit caret-green-500"/>
-            <FontAwesomeIcon className="h-6 text-gray-300 group-focus-within:text-green-500" icon={faMagnifyingGlass} />
+        <div className={`${darkMode && "dark"}`} >
+        <div className={"group h-10 p-2 flex ring-2 dark:bg-neutral-900 ring-gray-300 rounded-xl shadow-inner focus-within:ring-green-500 " + className}>
+            <input type="text" value={value} onChange={onChange} id={id} placeholder={placeholder} className="p-0 border-none dark:bg-neutral-900 dark:text-[#fefdfd] rounded-none focus:ring-0 h-fit caret-green-500"/>
+            <FontAwesomeIcon className="h-6 text-gray-300  group-focus-within:text-green-500" icon={faMagnifyingGlass} />
+        </div>
         </div>
     )
 }

@@ -3,7 +3,7 @@ import { faPen, faHeart, faBookmark, faScaleUnbalanced, faTrash } from '@fortawe
 
 import { useState, useEffect } from 'react';
 
-import back from '../../components/img/.back.svg.icloud'
+import back from '../../components/img/back.png'
 import Modal from '../../components/modal';
 
 function Quit(){

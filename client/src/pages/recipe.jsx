@@ -35,12 +35,18 @@ function IngredientCard(ingredient, key) {
     )
 }
 
-export default function Recipe() {
+export default function Recipe({darkMode, setDarkMode}) {
     const { id: recipeId } = useParams();
     const [recipe, setRecipe] = useState([])
     const [favorited, setFavorited] = useState(false)
     const [username, password] = [localStorage.getItem("username"), localStorage.getItem("password")]
     const [loginQuery, setLoginQuery] = useState(false)
+
+    const toggleDarkMode = () => {
+        const newDarkMode = !darkMode;
+        setDarkMode(newDarkMode);
+        localStorage.setItem('darkMode', newDarkMode); // Зберігаємо нове значення в локальному сховищі
+    };
 
     useEffect(() => {
         if (username && password) {
@@ -100,7 +106,7 @@ export default function Recipe() {
     if (recipe === undefined) return <div>Loading...</div>
     else return (
         <div className="w-screen overflow-x-clip">
-        <Nav />
+        <Nav darkMode={darkMode} toggleDarkMode={toggleDarkMode}/>
         <Modal isOpen={loginQuery} onClose={() => setLoginQuery(false)} title="Log In">
             <div className="flex flex-col gap-4">
                 <p>You need to login to perform this action</p>
