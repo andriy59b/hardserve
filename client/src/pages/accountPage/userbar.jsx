@@ -36,7 +36,7 @@ export default function UserBar() {
             setDisplayName(data.username);
             setEmail(data.email);
         })
-    }, [])
+    }, [username, password])
 
     useEffect(() => {
         fetch('http://localhost:8000/favorites/', {
@@ -49,9 +49,12 @@ export default function UserBar() {
             console.error('Error:', error);
         }
         ).then(response => response.json()).then(data => {
+            if (data.detail) {
+                return
+            }
             setFavoritedIngredients(data.map(record => record.product));
         })
-    }, [])
+    }, [username, password])
 
     useEffect(() => {
         fetch('http://localhost:8000/favorites/recipes', {
@@ -64,13 +67,13 @@ export default function UserBar() {
             console.error('Error:', error);
         }
         ).then(response => response.json()).then(data => {
+            if (data.detail) {
+                return
+            }
             setFavoritedRecipes(data.map(record => record.recipe));
         })
-    }, [])
+    }, [username, password])
 
-    useEffect(() => {
-        console.log(favoritedRecipes);
-    }, [favoritedRecipes])
 
     function DeleteIngredient(id){
         fetch(`http://localhost:8000/favorites/${id}/remove/`, {
@@ -103,12 +106,12 @@ export default function UserBar() {
 
     return (
         <div className="flex flex-col items-end w-full p-5 -mt-5">
-            <Modal isOpen={favoritedIngredientsModal} onClose={() => {setFavoritedIngredientsModal(false)}} title="Favorited ingredients">
+            <Modal isOpen={favoritedIngredientsModal} onClose={() => {setFavoritedIngredientsModal(false)}} title="Favorite ingredients">
                 <div className="flex flex-col gap-4">
                     {favoritedIngredients.map((ingredient, index) => {
                         if (ingredient === null || ingredient === undefined) return null;
                         return (
-                            <div className="flex p-2 bg-white shadow rounded-xl">
+                            <div key={index} className="flex p-2 bg-white shadow rounded-xl">
                                 <div className="items-center gap-2" key={index}>
                                     <a href={"http://localhost:3000/ingredients/" + ingredient.id} className='text-xl font-bold'>{ingredient.name}</a>
                                     <div className="flex justify-center gap-2 pt-2">
@@ -123,10 +126,9 @@ export default function UserBar() {
                     })}
                 </div>
             </Modal>
-            <Modal isOpen={favoritedRecipesModal} onClose={() => {setFavoritedRecipesModal(false)}} title="Favorited recipes">
+            <Modal isOpen={favoritedRecipesModal} onClose={() => {setFavoritedRecipesModal(false)}} title="Favorite recipes">
                 <div className="flex flex-col gap-4">
                     {favoritedRecipes.map((recipe, index) => {
-                        console.log("recipe: ", recipe)
                         if (recipe === null || recipe === undefined) return null;
                         return (
                             <div className="flex gap-2 p-2 bg-white shadow rounded-xl" key={index}>

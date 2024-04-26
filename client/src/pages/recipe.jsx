@@ -81,6 +81,25 @@ export default function Recipe({darkMode, setDarkMode}) {
         })
     }
 
+    function unfavoriteRecipe(){
+        if (!username || !password) {
+            setLoginQuery(true);
+            return
+        }
+
+        fetch(`http://localhost:8000/favorites/recipes/${recipeId}/remove/`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic ' + btoa(username + ':' + password),
+            }
+        }).catch((error) => {
+            console.error('Error:', error);
+        }).then(response => {
+            response.status === 204 ? setFavorited(false) : console.log(response);
+        })
+    }
+
     useEffect(() => {
         fetch("http://localhost:8000/recipes/" + recipeId + "/", {
             method: "GET",
@@ -151,10 +170,9 @@ export default function Recipe({darkMode, setDarkMode}) {
                             </div> */}
                         </div>
 
-                        <div className="flex flex-row justify-end gap-4 p-2 lg:ml-2 min-w-9 h-fit items-right lg:flex-col">
-                            <FontAwesomeIcon className={"h-5 w-5 aspect-square cursor-pointer " + (favorited ? "text-rose-500" : "hover:text-rose-500")} onClick={favorited ? null : favoriteRecipe} icon={faHeart} />
-                            <FontAwesomeIcon className="w-5 h-5 cursor-pointer aspect-square dark:text-white dark:hover:text-green-500 hover:text-green-500" icon={faScaleUnbalanced} />
-                        </div>
+                    <div className="flex flex-row justify-end gap-4 p-2 lg:ml-2 min-w-9 h-fit items-right lg:flex-col">
+                        <FontAwesomeIcon className={"h-5 w-5 aspect-square cursor-pointer " + (favorited ? "text-rose-500" : "hover:text-rose-500")} onClick={favorited ? unfavoriteRecipe : favoriteRecipe} icon={faHeart} />
+                        <FontAwesomeIcon className="w-5 h-5 cursor-pointer aspect-square hover:text-green-500" icon={faScaleUnbalanced} />
                     </div>
 
                     <div className="flex flex-col w-full gap-2 p-5 mx-8 bg-white dark:bg-neutral-800 rounded-lg shadow-custom1 max-w-fit">

@@ -3,6 +3,7 @@ from rest_framework.generics import ListAPIView
 from .models import *
 from products.serializers import *
 from django.http import FileResponse,  JsonResponse
+from django.shortcuts import get_object_or_404
 
 class ProductListView(ListAPIView):
     queryset = Product.objects.all()
@@ -16,31 +17,32 @@ class ProductListView(ListAPIView):
         }
         return response
     
-# class NutriensListView(ListAPIView):
-#     queryset = Nutriens.objects.all()
-#     serializer_class = NutriensSerializer
+# class NutrientsListView(ListAPIView):
+#     queryset = Nutrients.objects.all()
+#     serializer_class = NutrientsSerializer
 
 #     def list(self, request, *args, **kwargs):
-#         response = super(NutriensListView, self).list(request, *args, **kwargs)
+#         response = super(NutrientsListView, self).list(request, *args, **kwargs)
 #         response.data = {
 #             'message': 'Список поживних речовин успішно отримано.',
-#             'nutriens': response.data,
+#             'nutrients': response.data,
 #         }
 #         return response
     
-class ProductNutriensListView(ListAPIView):
-    queryset = Product_Nutriens.objects.all()
-    serializer_class = ProductNutriensSerializer
+class ProductNutrientsListView(ListAPIView):
+    queryset = Product_Nutrients.objects.all()
+    serializer_class = ProductNutrientsSerializer
 
     def get_queryset(self):
         product_id = self.kwargs['product_id']
-        return Product_Nutriens.objects.filter(product_id=product_id)
+        product = get_object_or_404(Product, product_id=product_id)
+        return Product_Nutrients.objects.filter(product_id=product.id)
 
     def list(self, request, *args, **kwargs):
-        response = super(ProductNutriensListView, self).list(request, *args, **kwargs)
+        response = super(ProductNutrientsListView, self).list(request, *args, **kwargs)
         response.data = {
             'message': 'Детальну інформацію про продукт успішно отримано.',
-            'product_nutriens': response.data,
+            'product_nutrients': response.data,
         }
         return response
 

@@ -2,19 +2,18 @@ import React, { useState, useEffect } from "react";
 
 import Modal from "../components/modal";
 import Navbar from "../components/navbar";
-import { SearchBar, NumberField, CheckBox } from "../components/formComponents";
+import { SearchBar, CheckBox, TriStateCheckBox, CancelButton, IngredientPicker, BadgeToggle } from "../components/formComponents";
 
 import Pagination from "../components/pagination";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFilter } from "@fortawesome/free-solid-svg-icons";
+import { faArrowsRotate, faCarrot, faFilter, faHeart } from "@fortawesome/free-solid-svg-icons";
 
-const checkBoxStyle = "p-2 rounded-lg shadow w-fit h-fit ring-green-500 hover:ring";
+const checkBoxStyle = "p-2 rounded-lg shadow bg-white w-fit h-fit ring-green-500 hover:ring-2";
 
 
 function RecipeCard({ recipe }) {
     return (
-
         
         <div className="px-2 py-4 bg-white dark:bg-neutral-800  shadow-sm cursor-pointer w-72 rounded-xl" >
 
@@ -44,106 +43,153 @@ function RecipeCard({ recipe }) {
                         <svg class="w-3 h-3 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                             <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
                         </svg>
-                        <svg class="w-3 h-3 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                        <svg className="w-3 h-3 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                             <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
                         </svg>
-                        <svg class="w-3 h-3 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                        <svg className="w-3 h-3 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                             <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
                         </svg>
-                        <svg class="w-3 h-3 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                        <svg className="w-3 h-3 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                             <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
                         </svg>
-                        <svg class="w-3 h-3 text-gray-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                        <svg className="w-3 h-3 text-gray-300 me-1 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
                             <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
                         </svg>
-                        <p class="ms-1 text-xs font-medium text-gray-500 dark:text-gray-400">{recipe.points}</p>
-                        <p class="ms-1 text-xs font-medium text-gray-500 dark:text-gray-400">out of</p>
-                        <p class="ms-1 text-xs font-medium text-gray-500 dark:text-gray-400">5</p>
+                        <p className="text-xs font-medium text-gray-500 ms-1 dark:text-gray-400">{recipe.points}</p>
+                        <p className="text-xs font-medium text-gray-500 ms-1 dark:text-gray-400">out of</p>
+                        <p className="text-xs font-medium text-gray-500 ms-1 dark:text-gray-400">5</p>
                     </div>
-
                 </div>
             </div>
-        </div>
         </div>
     );
 }
 
-const demoRecipes = [
-    {
-        id: 1,
-        date: "06/04/24",
-        name: "Pasta",
-        image: "https://via.placeholder.com/150",
-        category: "Main Course",
-        proteins: 10,
-        fats: 5,
-        carbs: 20,
-        calories: 250,
-        cuisine: "Italian",
-        points: 4.5
-    },
-    {
-        id: 2,
-        date: "03/04/24",
-        name: "Salad",
-        image: "https://via.placeholder.com/150",
-        category: "Appetizer",
-        proteins: 5,
-        fats: 2,
-        carbs: 10,
-        calories: 100,
-        cuisine: "Mediterranean",
-        points: 4.95
-    },
-    {
-        id: 3,
-        date: "04/04/24",
-        name: "Cake",
-        image: "https://via.placeholder.com/150",
-        category: "Dessert",
-        proteins: 15,
-        fats: 10,
-        carbs: 30,
-        calories: 350,
-        cuisine: "French",
-        points: 4.6
-    }
-];
+function IngredientCheckBox({ingredient, setIncludedIngredients, setExcludedIngredients, includedIngredients, excludedIngredients}){
+    const [value, setValue] = useState(null);
+    const id = ingredient.product_id;
+
+    useEffect(() => {
+        if (value === null) {
+            setIncludedIngredients(includedIngredients.filter(ing => ing !== id));
+            setExcludedIngredients(excludedIngredients.filter(ing => ing !== id));
+        } else if (value) {
+            setIncludedIngredients([...includedIngredients, id]);
+            setExcludedIngredients(excludedIngredients.filter(ing => ing !== id));
+        } else {
+            setExcludedIngredients([...excludedIngredients, id]);
+            setIncludedIngredients(includedIngredients.filter(ing => ing !== id));
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [value])
+
+    return (
+        <TriStateCheckBox value={value} onChange={setValue} className={checkBoxStyle} label={ingredient.name} id={ingredient.name}/>
+    )
+}
+
 
 export default function Recipes({darkMode, setDarkMode}) {
-    const [recipes, setRecipes] = useState(demoRecipes);
+    const [recipes, setRecipes] = useState([]);
+    const [filteredRecipes, setFilteredRecipes] = useState([]);
     const [search, setSearch] = useState("");
     const [filterModal, setFilterModal] = useState(false);
+    const [ingredientsModal, setIngredientsModal] = useState(false);
+    const [ingredients, setIngredients] = useState([]);
+    const [onlyFavorites, setOnlyFavorites] = useState(false);
+    const [favoritedIngredients, setFavoritedIngredients] = useState([]);
+    const [selectedIngredients, setSelectedIngredients] = useState([]);
+    const [includedIngredients, setIncludedIngredients] = useState([]);
+    const [excludedIngredients, setExcludedIngredients] = useState([]);
     const [filters, setFilters] = useState({
-        proteins: 0,
-        fats: 0,
-        carbs: 0,
-        glycemic: 0,
-        calories: 0,
         vegan: false,
         vegetarian: false,
         glutenFree: false,
         dairyFree: false,
-        nutFree: false,
-        eggFree: false,
-        soyFree: false,
-        Ukrainian: false,
-        Italian: false,
-        French: false,
-        Japanese: false,
-        Chinese: false,
-        Indian: false,
-        Mexican: false,
-        American: false,
-        Mediterranean: false,
+        lowFodmap: false,
+        veryHealthy: false,
     });
+    const [username, password] = [
+        localStorage.getItem("username"),
+        localStorage.getItem("password"),
+    ];
 
-    function handleChange(e) {
-        setFilters({
-            ...filters,
-            [e.target.name]: e.target.value
-        });
+    useEffect(() => {
+        fetch('http://localhost:8000/favorites/', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic ' + btoa(username + ':' + password),
+            },
+        }).catch((error) => {
+            console.error('Error:', error);
+        }
+        ).then(response => response.json()).then(data => {
+            if (data.detail) {
+                return
+            }
+            data = data.map((el) => {
+                el.product.image = el.product.image.replace("/media/", "").replace("%3A", ":/");
+                return el;
+            })
+            setFavoritedIngredients(data.map(record => record.product));
+        })
+    }, [username, password])
+
+
+    useEffect(() => {
+        fetch("http://localhost:8000/recipes/",
+        {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then(response => response.json()).then(data => {
+            const promises = data.recipes.map(recipe => {
+                return fetch("http://localhost:8000/recipes/" + recipe.id + "/",
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                }).then(response => response.json()).then(data => {
+                    return new Promise((resolve, reject) => {
+                        recipe.recipe_ingredients = data.recipe_ingredients.map(ingredient => ingredient.ingredient_id);
+                        recipe.image = recipe.image.replace("http://localhost:8000/media/", "").replace("%3A", ":/");
+                        resolve(recipe);
+                    })
+                })
+            });
+            Promise.all(promises).then(recipes => {
+                setRecipes(recipes);
+            })
+        })
     }
+    , [])
+
+    useEffect(() => {
+        fetch("http://localhost:8000/products/",
+        {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then(response => response.json()).then(data => {
+            data.products = data.products.map((product, index) => {
+                product.image = product.image.replace("http://localhost:8000/media/", "").replace("%3A", ":/");
+                return product;
+            })
+            setIngredients(data.products);
+        })
+    }, [])
+    
+
+    // function handleChange(e) {
+    //     setFilters({
+    //         ...filters,
+    //         [e.target.name]: e.target.value
+    //     });
+    // }
 
     function handleToggle(e) {
         setFilters({
@@ -152,74 +198,61 @@ export default function Recipes({darkMode, setDarkMode}) {
         });
     }
 
-    useEffect(() => {
-        fetch("/api/recipes")
-            .then(res => res.json())
-            .then(data => {
-                setRecipes(data);
-            });
-    }, []);
-
     function handleSearch(e) {
         setSearch(e.target.value);
     }
 
+    function ResetFilters(){
+        setFilters({
+            vegan: false,
+            vegetarian: false,
+            glutenFree: false,
+            dairyFree: false,
+            lowFodmap: false,
+            veryHealthy: false,
+        });
+    }
+
+    function ResetIngredients(){
+        setSelectedIngredients([]);
+        setIncludedIngredients([]);
+        setExcludedIngredients([]);
+    
+    }
+
+    useEffect(() => {
+        setFilteredRecipes(recipes.filter(recipe => {
+            if (!includedIngredients.every(ingredient => (
+                recipe.recipe_ingredients.includes(ingredient)
+            ))) return false;
+            if (excludedIngredients.some(ingredient => (
+                recipe.recipe_ingredients.includes(ingredient)
+            ))) return false;
+            for (const [key, value] of Object.entries(filters)) {
+                if (value && !recipe.categories.map(category => category.name).includes(key)) return false;
+            }
+            return true;
+        }));
+    }, [filters, recipes, includedIngredients, excludedIngredients])
+
     function FilterModal(){
         return (
-            <Modal className="relative select-none w-96" isOpen={filterModal} onClose={() => {setFilterModal(false)}}> 
+            <Modal className="relative select-none w-96" isOpen={filterModal} onClose={() => {setFilterModal(false)}}>
                 <h1 className="pb-2 text-2xl font-bold text-center">Filters</h1>
                 <div className="flex flex-col relative items-center overflow-auto no-scrollbar max-h-[80vh]">
-                    <div className="w-full p-4">
-                        <h4 className="mb-3 text-xl font-medium text-center">Nutrients</h4>
-                        <div className="flex items-center justify-between -my-2">
-                            <p className="text-lg h-min">Proteins</p>
-                            <span className="flex items-center gap-2"><NumberField value={filters.proteins} onChange={handleChange} className="w-16" name="proteins" min="0" /> g/kg</span>
-                        </div>
-                        <div className="flex items-center justify-between -my-2">
-                            <p className="text-lg h-min">Fats</p>
-                            <span className="flex items-center gap-2"><NumberField value={filters.fats} onChange={handleChange} className="w-16" name="fats" min="0" /> g/kg</span>
-                        </div>
-                        <div className="flex items-center justify-between -my-2">
-                            <p className="text-lg h-min">Carbs</p>
-                            <span className="flex items-center gap-2"><NumberField value={filters.carbs} onChange={handleChange} className="w-16" name="carbs" min="0" /> g/kg</span>
-                        </div>
-                        <div className="flex items-center justify-between -my-2">
-                            <p className="text-lg h-min">Glycemic index</p>
-                            <span className="flex items-center gap-2"><NumberField value={filters.glycemic} onChange={handleChange} className="w-16" name="glycemic" min="0" /> g/kg</span>
-                        </div>
-                        <div className="flex items-center justify-between -my-2">
-                            <p className="text-lg h-min">Calories</p>
-                            <span className="flex items-center gap-2"><NumberField value={filters.calories} onChange={handleChange} className="w-16" name="calories" min="0" /> kcal</span>
-                        </div>
-                    </div>
-                    <div className="p-2 bg-white  w-fit rounded-xl">
-                        <h4 className="mb-3 text-lg font-medium text-center">Dietary Restrictions</h4>
-                        <div className="grid grid-cols-2 gap-2">
+                    <div className="p-2 bg-gray-300 shadow-inner w-fit rounded-xl">
+                        <h4 className="mb-3 text-lg font-bold text-center bg-white rounded-lg shadow-inner">Dietary Restrictions</h4>
+                        <div className="grid grid-cols-2 gap-2 ">
                             <CheckBox className={checkBoxStyle} label="Vegan" value={filters.vegan} onChange={handleToggle} name="vegan" id="vegan"/>
                             <CheckBox className={checkBoxStyle} label="Vegetarian" value={filters.vegetarian} onChange={handleToggle} name="vegetarian" id="vegetarian"/>
                             <CheckBox className={checkBoxStyle} label="Gluten Free" value={filters.glutenFree} onChange={handleToggle} name="glutenFree" id="glutenFree"/>
                             <CheckBox className={checkBoxStyle} label="Dairy Free" value={filters.dairyFree} onChange={handleToggle} name="dairyFree" id="dairyFree"/>
-                            <CheckBox className={checkBoxStyle} label="Nut Free" value={filters.nutFree} onChange={handleToggle} name="nutFree" id="nutFree"/>
-                            <CheckBox className={checkBoxStyle} label="Egg Free" value={filters.eggFree} onChange={handleToggle} name="eggFree" id="eggFree"/>
-                            <CheckBox className={checkBoxStyle} label="Soy Free" value={filters.soyFree} onChange={handleToggle} name="soyFree" id="soyFree"/>
-                        </div>
-                    </div>
-                    <div className="p-2 mt-4 w-fit rounded-xl">
-                        <h4 className="mb-3 text-lg font-medium text-center">Cuisine</h4>
-                        <div className="grid grid-cols-2 gap-2">
-                            <CheckBox className={checkBoxStyle} label="Ukrainian" value={filters.Ukrainian} onChange={handleToggle} name="Ukrainian" id="Ukrainian"/>
-                            <CheckBox className={checkBoxStyle} label="Italian" value={filters.Italian} onChange={handleToggle} name="Italian" id="Italian"/>
-                            <CheckBox className={checkBoxStyle} label="French" value={filters.French} onChange={handleToggle} name="French" id="French"/>
-                            <CheckBox className={checkBoxStyle} label="Japanese" value={filters.Japanese} onChange={handleToggle} name="Japanese" id="Japanese"/>
-                            <CheckBox className={checkBoxStyle} label="Chinese" value={filters.Chinese} onChange={handleToggle} name="Chinese" id="Chinese"/>
-                            <CheckBox className={checkBoxStyle} label="Indian" value={filters.Indian} onChange={handleToggle} name="Indian" id="Indian"/>
-                            <CheckBox className={checkBoxStyle} label="Mexican" value={filters.Mexican} onChange={handleToggle} name="Mexican" id="Mexican"/>
-                            <CheckBox className={checkBoxStyle} label="American" value={filters.American} onChange={handleToggle} name="American" id="American"/>
-                            <CheckBox className={checkBoxStyle} label="Mediterranean" value={filters.Mediterranean} onChange={handleToggle} name="Mediterranean" id="Mediterranean"/>
+                            <CheckBox className={checkBoxStyle} label="Low Fodmap" value={filters.lowFodmap} onChange={handleToggle} name="lowFodmap" id="lowFodmap"/>
+                            <CheckBox className={checkBoxStyle} label="Very Healthy" value={filters.veryHealthy} onChange={handleToggle} name="veryHealthy" id="veryHealthy"/>
                         </div>
                     </div>
                 </div>
-                
+                <CancelButton onClick={ResetFilters} className="w-full mt-5">Reset Filters</CancelButton>
             </Modal>
         )
     }
@@ -233,23 +266,57 @@ export default function Recipes({darkMode, setDarkMode}) {
     return (
 
         <>
-            <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode}/>
-            <div className={`${darkMode && "dark"}`} >
-            <div className="flex flex-col items-center p-4 bg-[#fefdfd] dark:bg-neutral-900">
-                <FilterModal />
-                <h1 className="pb-5 text-4xl font-bold dark:text-[#fefdfd] text-center">Recipes</h1>
-                <div className="w-[30rem]">
-                    <SearchBar darkMode={darkMode} type="text" className="bg-white" value={search} onChange={handleSearch} placeholder="Search..."/>
-                    <div className="flex flex-wrap justify-end gap-4 p-2 mx-1">
-                        <p onClick={() => {setFilterModal(true)}} className="text-sm font-medium text-gray-500 cursor-pointer hover:text-green-500"><FontAwesomeIcon icon={ faFilter }/> Filters</p>
-                    </div>
-                </div>
-                <div className="flex flex-wrap justify-center gap-4 p-4 mx-5">
-                    {recipes.filter(recipe => recipe.name.toLowerCase().includes(search.toLowerCase())).map(recipe => (
-                        <RecipeCard key={recipe.id} recipe={recipe} />
-                    ))}
-                </div>
-            </div>
+            <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+            <div className={`flex flex-col items-center p-4 ${darkMode && "dark"}`} >
+              <div className="flex flex-col items-center p-4 bg-[#fefdfd] dark:bg-neutral-900">
+                  <FilterModal />
+                  <Modal className="relative select-none w-96 h-96" isOpen={ingredientsModal} onClose={() => {setIngredientsModal(false)}}>
+                      <div className="flex flex-col h-full">
+                          <h1 className="pb-2 text-2xl font-bold text-center">Ingredients</h1>
+                          <IngredientPicker className="" ingredients={onlyFavorites ? favoritedIngredients : ingredients} selected={selectedIngredients} setSelected={setSelectedIngredients} />
+                          { username && password ? 
+
+                          <BadgeToggle value={onlyFavorites} onChange={setOnlyFavorites} className="mt-1 ml-4" label="Included Ingredients">
+                              <FontAwesomeIcon icon={faHeart} /> Favorites
+                          </BadgeToggle>
+
+                          : null }
+
+                          <div className="flex flex-wrap h-40 gap-2 p-2 mt-5 overflow-y-auto border-2 border-gray-300 border-dashed rounded-lg shadow-inner">
+                              {selectedIngredients.map((ingredient, index) => (
+
+                                  <IngredientCheckBox 
+                                      includedIngredients={includedIngredients} 
+                                      excludedIngredients={excludedIngredients} 
+                                      setExcludedIngredients={setExcludedIngredients}
+                                      setIncludedIngredients={setIncludedIngredients}
+                                      ingredient={ingredient} 
+                                      key={index}/>
+
+                              ))}
+                          </div>
+                          <CancelButton onClick={ResetIngredients} className="w-full mt-auto">Reset Ingredients</CancelButton>
+                      </div>
+                  </Modal>
+                  <h1 className="pb-5 text-4xl font-bold text-center">Recipes</h1>
+                  <div className="flex flex-col items-center w-[40rem] max-w-[70vw] dark:text-[#fefdfd]">
+                      <SearchBar darkMode={darkMode} className="w-full" type="text" value={search} onChange={handleSearch} placeholder="Search..."/>
+                      <div className="flex flex-wrap justify-start w-full gap-4 p-2 mx-5">
+                          <p onClick={() => {setFilterModal(true)}} className="text-sm font-bold text-gray-500 cursor-pointer hover:text-green-500"><FontAwesomeIcon icon={ faFilter }/> Filters</p>
+                          <p onClick={() => {setIngredientsModal(true)}} className="text-sm font-bold text-gray-500 cursor-pointer hover:text-green-500"><FontAwesomeIcon icon={ faCarrot }/> Ingredients</p>
+                      </div>
+                  </div>
+                  <div className="flex flex-wrap justify-center w-full gap-4 p-2 mx-5">
+                      {filteredRecipes.length === 0 ? <p className="text-lg font-bold text-gray-500">
+                          <FontAwesomeIcon icon={faArrowsRotate} className="mx-1 animate-spin" /> Loading...</p> : 
+                      (<Pagination itemsPerPage={9}>
+                          {filteredRecipes.filter(recipe => recipe.name.toLowerCase().includes(search.toLowerCase())).map(recipe => (
+                              <RecipeCard key={recipe.id} recipe={recipe} />
+                          ))}
+                      </Pagination>)
+                      }
+                  </div>
+              </div>
             </div>
         </>
     );

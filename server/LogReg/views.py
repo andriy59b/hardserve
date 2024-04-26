@@ -56,7 +56,7 @@ class UserRegistrationView(APIView):
                 try:
                     send_mail(
                         'Підтвердіть вашу електронну пошту',
-                        'Натисніть на посилання нижче, щоб підтвердити вашу електронну пошту:\nhttp://localhost:8000/confirm/' + str(user.confirmation_token),
+                        'Натисніть на посилання нижче, щоб підтвердити вашу електронну пошту:\nhttp://localhost:8000/accounts/confirm/' + str(user.confirmation_token),
                         'your-email@gmail.com',
                         [user.email],
                         fail_silently=False,
@@ -107,7 +107,17 @@ class PasswordResetConfirmView(APIView):
                 return Response({"message": "Новий пароль не надано."}, status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response({"message": "Посилання для скидання пароля недійсне."}, status=status.HTTP_400_BAD_REQUEST)
-        
+
+class EmailConfirmationView(APIView):
+    def get(self, request, confirmation_token):
+        user = User.objects.filter(confirmation_token=confirmation_token).first()
+        if user:
+            user.is_email_verified = True
+            user.is_active = True
+            user.save()
+            return Response({"message": "Ваша електронна пошта успішно підтверджена."}, status=status.HTTP_200_OK)
+        else:
+            return Response({"message": "Посилання для підтвердження електронної пошти недійсне."}, status=status.HTTP_400_BAD_REQUEST)    
 
 class GoogleAuthRedirect(View):
     permission_classes = [AllowAny]
