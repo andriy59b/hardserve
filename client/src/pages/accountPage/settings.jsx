@@ -80,13 +80,13 @@ export default function Settings() {
                     <button className="p-2 text-white bg-green-400 rounded-lg" onClick={() => {saveInformation(); setInformationEdit(false)}}>Save</button>
                 </div>
             </Modal>
-            <div className="w-full p-4 mb-4 bg-white shadow rounded-xl">
-                    <h2 className="font-bold">Bio</h2>
+            <div className="w-full p-4 mb-4 bg-white dark:bg-neutral-800 shadow dark:shadow-none rounded-xl">
+                    <h2 className="font-bold dark:text-white ">Bio</h2>
                     <p className="text-sm text-gray-400">{bio}</p>
-                </div>
+            </div>
             <div className="flex w-full gap-4">
-                <div className="w-full p-4 bg-white shadow rounded-xl">
-                    <h2 className="font-bold">Platform settings</h2>
+                <div className="w-full p-4 bg-white dark:bg-neutral-800 shadow dark:shadow-none rounded-xl">
+                    <h2 className="font-bold dark:text-white">Platform settings</h2>
                     <p className="text-sm font-bold text-gray-400">Account</p>
                     <div className="flex flex-col gap-2 m-2">
                         {platformSettings.map((setting, index) => (
@@ -95,27 +95,27 @@ export default function Settings() {
                     </div>
                 </div>
 
-                <div className="flex w-full gap-2 p-4 bg-white shadow rounded-xl ">
+                <div className="flex w-full gap-2 p-4 bg-white dark:bg-neutral-800 shadow rounded-xl ">
                     <div className="flex-col items-center w-full gap-2 m-2">
                         <div className="flex">
-                            <h2 className="font-bold">Profile information</h2>
+                            <h2 className="font-bold dark:text-white">Profile information</h2>
                             <FontAwesomeIcon onClick={() => {setInformationEdit(true)}} icon={faPen} className='h-4 p-1 ml-auto bg-white rounded shadow cursor-pointer justify-self-end hover:bg-gray-200' />
                         </div>
-                        <div className="flex mt-4 text-sm text-gray-500"><p className="mr-auto font-semibold">Username:</p> Joe Doe</div>
-                        <div className="flex mt-4 text-sm text-gray-500"><p className="mr-auto font-semibold">Email:</p> {username}</div>
-                        <div className="flex mt-4 text-sm text-gray-500"><p className="mr-auto font-semibold">Location:</p> {location}</div>
-                        <div className="flex mt-4 text-sm text-gray-500"><p className="mr-auto font-semibold">Registration date:</p> 34.23.1234</div>
+                        <div className="flex mt-4 text-sm text-gray-500 dark:text-gray-300"><p className="mr-auto font-semibold">Username:</p> Joe Doe</div>
+                        <div className="flex mt-4 text-sm text-gray-500 dark:text-gray-300"><p className="mr-auto font-semibold">Email:</p> {username}</div>
+                        <div className="flex mt-4 text-sm text-gray-500 dark:text-gray-300"><p className="mr-auto font-semibold">Location:</p> {location}</div>
+                        <div className="flex mt-4 text-sm text-gray-500 dark:text-gray-300"><p className="mr-auto font-semibold">Registration date:</p> 34.23.1234</div>
                         
                     </div>
-                    <div className="w-px h-full my-6 bg-gradient-to-b from-gray-400 to-white"></div>
+                    <div className="w-px h-full bg-gradient-to-b from-gray-400 to-white"></div>
                     <div className="flex flex-col w-full gap-2 m-2">
                         <div className="flex">
-                            <h2 className="font-bold">Personal data</h2>
+                            <h2 className="font-bold dark:text-white">Personal data</h2>
                             <FontAwesomeIcon icon={faPen} className='h-4 p-1 ml-auto bg-white rounded shadow cursor-pointer justify-self-end hover:bg-gray-200' />
                         </div>
-                        <div className="flex mt-4 text-sm text-gray-500"><p className="mr-auto font-semibold">Height:</p> 183cm</div>
-                        <div className="flex mt-4 text-sm text-gray-500"><p className="mr-auto font-semibold">Weight:</p> 85kg</div>
-                        <div className="flex mt-4 text-sm text-gray-500"><p className="mr-auto font-semibold">Age:</p> 24 years</div>
+                        <div className="flex mt-4 text-sm text-gray-500 dark:text-gray-300 dark:text-gray-300"><p className="mr-auto font-semibold">Height:</p> 183cm</div>
+                        <div className="flex mt-4 text-sm text-gray-500 dark:text-gray-300"><p className="mr-auto font-semibold">Weight:</p> 85kg</div>
+                        <div className="flex mt-4 text-sm text-gray-500 dark:text-gray-300"><p className="mr-auto font-semibold">Age:</p> 24 years</div>
                         
                     </div>
                 </div>
