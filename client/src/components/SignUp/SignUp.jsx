@@ -299,7 +299,7 @@ const SignUp = (
                                     <label className="typelabel-b">Weight</label>
                                     <div className="typespan">
                                         <div className='dropdown'>
-                                            <input value={inputFields.weight} onChange={handleChange} className="text-box2" type='number' id="weightnum" name='weight' min="1" max='2000' maxlength="4" placeholder='Enter your height'/>
+                                            <input value={inputFields.weight} onChange={handleChange} className="text-box2" type='number' id="weightnum" name='weight' min="1" max='2000' maxlength="4" placeholder='Enter your weight'/>
                                         </div>
                                         <div className="dropdown">
                                             <select value={inputFields.height_unit} onChange={handleChange} className="text-box1" id="weighttype" name='weight_unit'>

@@ -46,7 +46,7 @@ export function Toggle({value, onChange, className, id, children}) {
     onChange = onChange || setState;
     value = value !== undefined ? value : state;
     return (
-        <div className="flex gap-2" id={id}>
+        <div className="flex gap-2 dark:text-white" id={id}>
             <div onClick={() => {onChange(!value)}} className={" cursor-pointer rounded-full h-5 min-w-9 max-w-9 toggle " + (value ? "bg-green-400 shadow shadow-green-300" : "bg-gray-400")}>
                 <div className={" shadow-inner transition-all rounded-full m-0.5 h-4 w-4 toggle-button bg-white " + (value ? " translate-x-4" : "")}></div>
             </div>
@@ -128,7 +128,7 @@ export function CancelButton({onClick, className, children}) {
 
 export function AcceptButton({onClick, className, children}) {
     return (
-        <button onClick={onClick} className={"px-4 py-2 font-bold text-white bg-green-400 rounded-lg hover:bg-green-700 " + className}>{children}</button>
+        <button onClick={onClick} className={"px-4 py-2 font-bold text-white dark:text-neutral-900 bg-green-400 rounded-lg hover:bg-green-700 " + className}>{children}</button>
     )
 }
 

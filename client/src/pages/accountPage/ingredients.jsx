@@ -95,7 +95,7 @@ function IngredientCard({ingredient}){
     const [detailsModal, setDetailsModal] = useState(false);
 
     return (
-        <div className="relative flex items-center p-2 bg-transparent  bg-[#F8F9FA] shadow-lg w-fit rounded-xl">
+        <div className="relative flex items-center p-2 bg-transparent  bg-[#F8F9FA] dark:bg-neutral-800 shadow-lg dark:shadow-none w-fit rounded-xl">
 
             <Modal isOpen={deleteModal} title={`Delete ${ingredient.name}`} onClose={() => {setDeleteModal(false)}}>
                 <p>Are you sure you want to delete {ingredient.name}?</p>
@@ -127,18 +127,18 @@ function IngredientCard({ingredient}){
             <div className="flex flex-col items-center">
                 
                 <div className="flex items-center gap-2">
-                    <h3 onClick={() => {setDetailsModal(true)}} className="text-xl font-bold cursor-pointer">{ingredient.name}</h3>
-                    <p className="inline-flex items-center px-2 py-1 text-xs font-medium text-green-700 bg-green-100 rounded-md ring-1 ring-inset ring-green-50">{ingredient.category}</p>
+                    <h3 onClick={() => {setDetailsModal(true)}} className="text-xl dark:text-white font-bold cursor-pointer">{ingredient.name}</h3>
+                    <p className="inline-flex items-center px-2 py-1 text-xs font-medium text-green-700 dark:bg-green-700 bg-green-100 dark:text-green-100 rounded-md ring-1 ring-inset ring-green-50 dark:ring-green-700">{ingredient.category}</p>
                 </div>
                 <div className="p-2 macros">
                     <div className="flex justify-center gap-2">
-                        <p className="inline-flex items-center px-2 py-1 text-xs font-medium text-gray-600 bg-gray-100 rounded-md ring-1 ring-inset ring-gray-100">P: {ingredient.proteins}g</p>
-                        <p className="inline-flex items-center px-2 py-1 text-xs font-medium text-gray-600 bg-gray-100 rounded-md ring-1 ring-inset ring-gray-100">F: {ingredient.fats}g</p>
-                        <p className="inline-flex items-center px-2 py-1 text-xs font-medium text-gray-600 bg-gray-100 rounded-md ring-1 ring-inset ring-gray-100">C: {ingredient.carbs}g</p>
+                        <p className="inline-flex items-center px-2 py-1 text-xs font-medium text-gray-600 dark:bg-gray-600 bg-gray-100 dark:text-gray-100 rounded-md ring-1 ring-inset ring-gray-100 dark:ring-gray-600">P: {ingredient.proteins}g</p>
+                        <p className="inline-flex items-center px-2 py-1 text-xs font-medium text-gray-600 dark:bg-gray-600 bg-gray-100 dark:text-gray-100 rounded-md ring-1 ring-inset ring-gray-100 dark:ring-gray-600">F: {ingredient.fats}g</p>
+                        <p className="inline-flex items-center px-2 py-1 text-xs font-medium text-gray-600 dark:bg-gray-600 bg-gray-100 dark:text-gray-100 rounded-md ring-1 ring-inset ring-gray-100 dark:ring-gray-600">C: {ingredient.carbs}g</p>
                     </div>
                     <div className="flex flex-wrap justify-center gap-2 pt-2">
-                        <p className="inline-flex items-center px-2 py-1 text-xs font-medium text-gray-600 bg-gray-100 rounded-md ring-1 ring-inset ring-gray-100">Glycemic index: {ingredient.glycemic_index}</p>
-                        <p className="inline-flex items-center px-2 py-1 text-xs font-medium text-gray-600 bg-gray-100 rounded-md ring-1 ring-inset ring-gray-100">Calories: {ingredient.calories}kcal</p>
+                        <p className="inline-flex items-center px-2 py-1 text-xs font-medium text-gray-600 dark:bg-gray-600 bg-gray-100 dark:text-gray-100 rounded-md ring-1 ring-inset ring-gray-100 dark:ring-gray-600">Glycemic index: {ingredient.glycemic_index}</p>
+                        <p className="inline-flex items-center px-2 py-1 text-xs font-medium text-gray-600 dark:bg-gray-600 bg-gray-100 dark:text-gray-100 rounded-md ring-1 ring-inset ring-gray-100 dark:ring-gray-600">Calories: {ingredient.calories}kcal</p>
                     </div>
                 </div>
                 <div className="flex items-center justify-center w-full gap-2 px-2">
@@ -156,9 +156,9 @@ function IngredientCard({ingredient}){
 
 export default function Ingredients() {
     return (
-        <div className="w-full p-4 bg-white rounded-lg shadow">
+        <div className="w-full p-4 bg-white dark:bg-neutral-900 rounded-lg shadow dark:shadow-custom1">
             <div className="flex items-center justify-between px-5">
-                <h2 className="text-xl font-bold">My Ingredients</h2>
+                <h2 className="text-xl font-bold dark:text-white">My Ingredients</h2>
                 <AcceptButton>Add Ingredient +</AcceptButton>
             </div>
             <div className="flex flex-wrap gap-2 p-3 m-2 justify-evenly">

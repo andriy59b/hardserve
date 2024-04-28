@@ -44,7 +44,7 @@ export function TabTriggers({ children, tabUpdate, currentTab }) {
 
 export function TabTrigger({ tabUpdate, currentTab, tab, children }) {
     return (
-        <div className={"flex items-center p-2 cursor-pointer rounded-xl text-sm font-bold " + (currentTab === tab ? "bg-white shadow " : "text-gray-400")} onClick={() => {tabUpdate(tab)}}>
+        <div className={"flex items-center p-2 cursor-pointer rounded-xl text-sm font-bold  " + (currentTab === tab ? "bg-white dark:text-white dark:bg-neutral-800 shadow" : "text-gray-400 ")} onClick={() => {tabUpdate(tab)}}>
             {children}
         </div>
     );

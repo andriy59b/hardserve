@@ -2,7 +2,6 @@
 * {
 	padding: 0px;
 	margin: 0px;
-	@apply transition-colors duration-200;
 }
 
 *,
