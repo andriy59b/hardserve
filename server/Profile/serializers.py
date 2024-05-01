@@ -100,3 +100,28 @@ class FavoriteRecipeSerializerInfo(serializers.ModelSerializer):
         model = Favorite
         fields = ['recipe']
 
+class NotFavoriteProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Not_Favorite
+        fields = ['product']
+
+    def create(self, validated_data):
+        user = self.context['request'].user
+        product = validated_data.get('product')
+
+        if not product:
+            raise serializers.ValidationError({"product": "This field is required."})
+        
+        not_favorite, created = Not_Favorite.objects.get_or_create(user=user, product=product)
+        if not created:
+            raise serializers.ValidationError({"product": "This product is already in your not favorites."})
+        
+        return not_favorite
+    
+
+class NotFavoriteProductSerializerInfo(serializers.ModelSerializer):
+    product = ProductSerializer(read_only=True) 
+    class Meta:
+        model = Not_Favorite
+        fields = ['product']
+
