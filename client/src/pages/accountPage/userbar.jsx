@@ -36,7 +36,7 @@ export default function UserBar() {
             setDisplayName(data.username);
             setEmail(data.email);
         })
-    }, [])
+    }, [username, password])
 
     useEffect(() => {
         fetch('http://localhost:8000/favorites/', {
@@ -49,9 +49,12 @@ export default function UserBar() {
             console.error('Error:', error);
         }
         ).then(response => response.json()).then(data => {
+            if (data.detail) {
+                return
+            }
             setFavoritedIngredients(data.map(record => record.product));
         })
-    }, [])
+    }, [username, password])
 
     useEffect(() => {
         fetch('http://localhost:8000/favorites/recipes', {
@@ -64,13 +67,13 @@ export default function UserBar() {
             console.error('Error:', error);
         }
         ).then(response => response.json()).then(data => {
+            if (data.detail) {
+                return
+            }
             setFavoritedRecipes(data.map(record => record.recipe));
         })
-    }, [])
+    }, [username, password])
 
-    useEffect(() => {
-        console.log(favoritedRecipes);
-    }, [favoritedRecipes])
 
     function DeleteIngredient(id){
         fetch(`http://localhost:8000/favorites/${id}/remove/`, {
@@ -103,12 +106,12 @@ export default function UserBar() {
 
     return (
         <div className="flex flex-col items-end w-full p-5 -mt-5">
-            <Modal isOpen={favoritedIngredientsModal} onClose={() => {setFavoritedIngredientsModal(false)}} title="Favorited ingredients">
+            <Modal isOpen={favoritedIngredientsModal} onClose={() => {setFavoritedIngredientsModal(false)}} title="Favorite ingredients">
                 <div className="flex flex-col gap-4">
                     {favoritedIngredients.map((ingredient, index) => {
                         if (ingredient === null || ingredient === undefined) return null;
                         return (
-                            <div className="flex p-2 bg-white shadow rounded-xl">
+                            <div key={index} className="flex p-2 bg-white shadow rounded-xl">
                                 <div className="items-center gap-2" key={index}>
                                     <a href={"http://localhost:3000/ingredients/" + ingredient.id} className='text-xl font-bold'>{ingredient.name}</a>
                                     <div className="flex justify-center gap-2 pt-2">
@@ -123,10 +126,9 @@ export default function UserBar() {
                     })}
                 </div>
             </Modal>
-            <Modal isOpen={favoritedRecipesModal} onClose={() => {setFavoritedRecipesModal(false)}} title="Favorited recipes">
+            <Modal isOpen={favoritedRecipesModal} onClose={() => {setFavoritedRecipesModal(false)}} title="Favorite recipes">
                 <div className="flex flex-col gap-4">
                     {favoritedRecipes.map((recipe, index) => {
-                        console.log("recipe: ", recipe)
                         if (recipe === null || recipe === undefined) return null;
                         return (
                             <div className="flex gap-2 p-2 bg-white shadow rounded-xl" key={index}>
@@ -148,19 +150,19 @@ export default function UserBar() {
                 </div>
             </Modal>
             <img src={back} alt="header" className="object-cover w-full h-60 rounded-2xl" />
-            <div className="flex items-center w-11/12 h-20 p-2 mr-2 -mt-8 shadow-md bg-white/30 backdrop-blur-md rounded-2xl">
+            <div className="flex items-center w-11/12 h-20 p-2 mr-2 -mt-8 shadow-md bg-white/30 dark:bg-neutral-800/30 backdrop-blur-md rounded-2xl">
                 <div className="absolute flex items-center w-20 h-20 py-2">
-                    <img src="https://media.istockphoto.com/id/1327656409/vector/user-icon-admin-profile-pictogram.jpg?s=612x612&w=0&k=20&c=SCadkvBVVRHToUEiwBL5rxE2e8XS7ch5Eizf509kWeE=" alt="profile" className="object-cover h-full shadow aspect-square rounded-xl" />
+                    <img src="https://media.istockphoto.com/id/1327656409/vector/user-icon-admin-profile-pictogram.jpg?s=612x612&w=0&k=20&c=SCadkvBVVRHToUEiwBL5rxE2e8XS7ch5Eizf509kWeE=" alt="profile" className="object-cover h-full shadow dark:shadow-custom1 aspect-square rounded-xl" />
                     <FontAwesomeIcon icon={faPen} className='absolute bottom-0 h-4 p-1 bg-white rounded shadow cursor-pointer right-1 hover:bg-gray-200' />
                 </div>
                 <div className="flex flex-col justify-center w-full h-full pl-24">
-                    <h1 className="text-xl font-bold">{displayName}</h1>
+                    <h1 className="text-xl font-bold dark:text-white">{displayName}</h1>
                     <p className="text-sm text-gray-400">{email}</p>
                 </div>
-                <FontAwesomeIcon onClick={() => {setFavoritedRecipesModal(true)}} icon={faHeart} className='h-6 p-2 mr-2 text-sm text-red-500 bg-white shadow cursor-pointer aspect-square rounded-xl hover:text-red-700 hover:bg-gray-200' />
-                <FontAwesomeIcon icon={faScaleUnbalanced} className='h-6 p-2 mr-2 text-sm text-green-500 bg-white shadow cursor-pointer aspect-square rounded-xl hover:text-green-700 hover:bg-gray-200' />
-                <FontAwesomeIcon onClick={() => {setFavoritedIngredientsModal(true)}} icon={faBookmark} className='h-6 p-2 mr-2 text-sm text-red-500 bg-white shadow cursor-pointer aspect-square rounded-xl hover:text-red-700 hover:bg-gray-200' />
-                <button onClick={Quit} className="w-20 h-10 p-2 mr-2 text-sm font-bold text-white bg-red-500 shadow hover:bg-red-700 rounded-xl">Quit</button>
+                <FontAwesomeIcon onClick={() => {setFavoritedRecipesModal(true)}} icon={faHeart} className='h-6 p-2 mr-2 text-sm text-red-500 bg-white dark:bg-neutral-900 shadow dark:shadow-custom1 cursor-pointer aspect-square rounded-xl hover:text-red-700 hover:bg-gray-200' />
+                <FontAwesomeIcon icon={faScaleUnbalanced} className='h-6 p-2 mr-2 text-sm text-green-500 bg-white dark:bg-neutral-900 shadow dark:shadow-custom1 cursor-pointer aspect-square rounded-xl hover:text-green-700 hover:bg-gray-200' />
+                <FontAwesomeIcon onClick={() => {setFavoritedIngredientsModal(true)}} icon={faBookmark} className='h-6 p-2 mr-2 text-sm text-red-500 bg-white dark:bg-neutral-900 shadow dark:shadow-custom1 cursor-pointer aspect-square rounded-xl hover:text-red-700 hover:bg-gray-200' />
+                <button onClick={Quit} className="w-20 h-10 p-2 mr-2 text-sm font-bold text-white dark:text-neutral-900 bg-red-500 shadow hover:bg-red-700 rounded-xl">Quit</button>
             </div>
         </div>
     );

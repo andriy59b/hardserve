@@ -23,7 +23,7 @@ body {
 
     font-family: var(--poppins),var(--avenir-roman);
 
-    background: rgb(249, 252, 251);
+    background: #fefdfd;
 }
 
 #root {
@@ -228,14 +228,9 @@ body {
   }
 
   .circle {
-    width: 48px;
-    height: 48px;
 
     position: absolute;
-    top: 150px;
-    
-    background-color: #C4C4C4;
-    border-radius: 50%;
+    top: 145px;
 }
   
   .loginTitle {
@@ -284,7 +279,7 @@ body {
   font-size: 16px;
 }
 
-.focus-input100 {
+/* .focus-input100 {
   position: absolute;
   display: block;
   width: calc(100% + 2px);
@@ -293,7 +288,7 @@ body {
   left: -1px;
   pointer-events: none;
   border: 1px solid #333333;
-  border-radius: 12px;
+  border-radius: 14px;
   visibility: hidden;
   opacity: 0;
   -webkit-transition: all .4s;
@@ -315,7 +310,7 @@ body {
   -ms-transform: scale(1);
   -o-transform: scale(1);
   transform: scale(1)
-}
+} */
   
   .link{
     color: inherit;
@@ -491,7 +486,6 @@ body {
 .light-flourish-body {
     width: 100%;
     text-align: center;
-    background-color: #FFFFFF;
     background-position: right bottom;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -689,6 +683,7 @@ input[type="radio"]:checked + .label {
     width: 500px;
     color: #666666;
     background-color: #FFFFFF;
+    border-radius: 12px;
 }
 
 .typelabel-s {
@@ -796,8 +791,8 @@ input[type="radio"]:checked + .label {
   top: 2px;
   left: 0;
   margin: 0;
-  width: 1px;
-  height: 1px;
+  width: 30px;
+  height: 30px;
   border: 1px solid #6666667f;
   border-radius: 12px;
 }
@@ -806,7 +801,7 @@ input[type="radio"]:checked + .label {
   background-color: #666666;
 }
 
-.checkbox-elem:checked::before {
+/* .checkbox-elem:checked::before {
   content: '';
   display: block;
   position: absolute;
@@ -819,7 +814,7 @@ input[type="radio"]:checked + .label {
   border-right-color: #fff;
   transform-origin: 50% 50%;
   transform: rotate(35deg);
-}
+} */
 
 .submit_sign{
   width: 100%;

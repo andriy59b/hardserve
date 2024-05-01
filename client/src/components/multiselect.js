@@ -5,7 +5,7 @@ import { faChevronDown, faChevronUp, faCheck } from "@fortawesome/free-solid-svg
 import "../pages/ingredients.css";
 
 
-export default function MultiSelect({ options, selected, setSelected, prefix = "", placeholder, className }) {
+export default function MultiSelect({ options, selected, setSelected, prefix = "", placeholder, className, darkMode}) {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
     const triggerRef = useRef(null);
@@ -27,7 +27,7 @@ export default function MultiSelect({ options, selected, setSelected, prefix = "
             return (<p>{`${placeholder}...`}</p>);
         } else {
             return selected.map((item, index) => (
-                <p className=" bg-gray-300 mx-1 px-1 rounded" key={index}>{`${item}`}</p>
+                <p className="bg-gray-300 dark:bg-gray-600 mx-1 px-1 rounded" key={index}>{`${item}`}</p>
             ));
         }
     }
@@ -51,21 +51,23 @@ export default function MultiSelect({ options, selected, setSelected, prefix = "
     });
 
     return (
-        <div ref={triggerRef} className={`bg-transparent p-1 px-2 w-full flex flex-col items-center border-1-5 ${className}`}>
-            <div className="w-full flex text-nowrap cursor-pointer" onClick={toggle}>
-                <div className="flex overflow-clip max-w-48">{placeholderFunc()}</div>
-                <FontAwesomeIcon className="ml-auto pt-1" icon={isOpen ? faChevronUp : faChevronDown} />
-            </div>
-            {isOpen && (
-                <div ref={dropdownRef} className="absolute bg-white p-1 flex flex-col gap-1 -ml-1 mt-8 max-w-52">
-                    {options.map((option, index) => (
-                        <div className="hover:bg-gray-200 px-4 py-1 cursor-pointer" key={index} onClick={() => handleSelect(option)}>
-                            <FontAwesomeIcon className={"ml-auto pt-1 mr-3 " + (selected.includes(option) ? "visible" : "invisible")} icon={faCheck} />
-                            {prefix + option}
-                        </div>
-                    ))}
+        <div className={`${darkMode && "dark"}`} >
+            <div ref={triggerRef} className={`bg-transparent dark:border-white p-1 px-2 w-full flex flex-col items-center border-1-5 ${className}`}>
+                <div className="w-full flex text-nowrap cursor-pointer dark:text-white" onClick={toggle}>
+                    <div className="flex overflow-clip max-w-48">{placeholderFunc()}</div>
+                    <FontAwesomeIcon className="ml-auto pt-1" icon={isOpen ? faChevronUp : faChevronDown} />
                 </div>
-            )}
+                {isOpen && (
+                    <div ref={dropdownRef} className="absolute bg-white p-1 flex flex-col gap-1 -ml-1 mt-8 max-w-52">
+                        {options.map((option, index) => (
+                            <div className="hover:bg-gray-200 px-4 py-1 cursor-pointer" key={index} onClick={() => handleSelect(option)}>
+                                <FontAwesomeIcon className={"ml-auto pt-1 mr-3 " + (selected.includes(option) ? "visible" : "invisible")} icon={faCheck} />
+                                {prefix + option}
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
         </div>
     );
 }

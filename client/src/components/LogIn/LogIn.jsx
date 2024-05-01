@@ -76,7 +76,7 @@ const LogIn = () => {
                 localStorage.setItem('refresh_token', data.refresh);
                 localStorage.setItem('username', inputFields.email);
                 localStorage.setItem('password', inputFields.password);
-                window.location.href = '/';
+                window.location.href = '/account';
             }
         })
       };
@@ -117,7 +117,7 @@ const LogIn = () => {
       <>
       <Navbar/>
         <div className="login">
-          <div className="circle"></div>
+          <img src='././icons/logo.svg' className="circle pl-3"/>
           <h1 className="loginTitle">Log in</h1>
           
           <div className="wrapper">
@@ -129,7 +129,7 @@ const LogIn = () => {
               </div>
 
               <div className="input validate-input">
-                <input className="border-none input100 rounded-xl focus:ring-0" type="email" placeholder="Email Adress"
+                <input className="border-1 input100 rounded-xl focus:ring-0" type="email" placeholder="Email Adress"
                 name="email"
                 value={inputFields.email}
                 onChange={handleChange}/>
@@ -153,7 +153,7 @@ const LogIn = () => {
               </div>
 
               <div className="input validate-input">
-                <input className="border-none input100 rounded-xl focus:ring-0" placeholder="Password" 
+                <input className="border-1 input100 rounded-xl focus:ring-0" placeholder="Password" 
                 name="password"
                 value={inputFields.password}
                 type={visible ? "text" : "password"}

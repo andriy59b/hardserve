@@ -1,12 +1,19 @@
-@keyframes slideFromRight {
+.gradient-animation {
+    animation: gradientChange 3s infinite;
+  }
+  
+  @keyframes gradientChange {
     0% {
-        transform: translateX(100%);
+      stop-color: #4F5AA8; /* Початковий колір */
+    }
+    50% {
+      stop-color: #A1F480; /* Кінцевий колір */
     }
     100% {
-        transform: translateX(0);
+      stop-color: #4F5AA8; /* Початковий колір */
     }
-}
-
+  }
+  
 
 #nav{
     display: flex;
@@ -17,7 +24,6 @@
     height: 80px;
     padding: 0 10px;
     margin: 0;
-    background-color: #fefdfd;
     top: 0;
     z-index: 100;
     max-width: 100vw;
@@ -30,8 +36,8 @@
 }
 
 .logo{
-    width: 50px;
-    height: 50px;
+    width: 70px;
+    height: 70px;
 }
 
 .logo-text{
@@ -62,7 +68,8 @@
 }
 
 .mobile-menu{
-    display: none;
+    visibility: hidden;
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: start;
@@ -70,10 +77,10 @@
     right: 0;
     width: 30vw;
     height: 100vh;
-    background-color: #fefdfd;
     top: 80px;
     z-index: 19;
-    animation: slideFromRight 0.3s ease;
+    transition: all 0.25s ease-in-out;
+    transform: translateX(100%);
 }
 
 .mobile-menu ul {
@@ -86,7 +93,7 @@
 }
 
 .enabled {
-    display: none;
+    visibility: hidden;
 }
 
 @media (max-width: 1200px) {
@@ -98,7 +105,8 @@
         display: flex;
     }
     .enabled {
-        display: flex;
+        visibility: visible;
+        transform: translateX(0%);
     }
 }
 
@@ -106,7 +114,6 @@ a {
     margin: 0 10px;
     padding: 10px 20px;
     text-decoration: none;
-    color: #373737;
     font-size: 20px;
     font-weight: 500;
 }
@@ -115,9 +122,6 @@ a {
     margin: 0 20px;
     padding: 10px 30px;
     text-decoration: none;
-    color: #696969;
     font-size: 20px;
     font-weight: 500;
-    border: 2px solid #696969;
-    border-radius: 5px;
 }
