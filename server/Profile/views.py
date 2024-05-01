@@ -100,7 +100,8 @@ class RemoveNotFavoriteProductsView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def delete(self, request, product_id):
-        not_favorite = Favorite.objects.filter(user=request.user, product_id=product_id)
+        not_favorite = Not_Favorite.objects.filter(user=request.user, product_id=product_id)
+        
         if not not_favorite.exists():
             return Response({'error': 'Not favorite product not found'}, status=status.HTTP_404_NOT_FOUND)
         not_favorite.delete()
