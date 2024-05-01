@@ -17,7 +17,7 @@ function RecipeCard({recipe}) {
             <div>
                 <h4 className="text-lg font-medium text-gray-600 dark:text-gray-300">{recipe.name}</h4>
                 <p className="mb-2 dark:text-white">{recipe.description}</p>
-                <button type="button" className="px-4 py-2 text-xs font-medium text-green-900 dark:bg-green-900 bg-green-300 dark:text-green-300 rounded-full hover:bg-green-200">VIEW ALL</button>
+                <button type="button" className="px-4 py-2 text-xs font-medium text-green-900 bg-green-300 rounded-full dark:bg-green-900 dark:text-green-300 hover:bg-green-200">VIEW ALL</button>
             </div>
         </div>
     )
@@ -149,7 +149,7 @@ export default function Recipe({darkMode, setDarkMode}) {
                                 <div className="flex flex-row gap-2 p-2">
                                 {recipe.recipe &&
                                 recipe.recipe.categories.map(category => (
-                                        <p key={category.id} className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 dark:text-gray-100 bg-gray-100 dark:bg-gray-600 rounded-md ring-1 ring-inset ring-gray-100 dark:ring-gray-600">{category.name}</p>
+                                        <p key={category.id} className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 bg-gray-100 rounded-md dark:text-gray-100 dark:bg-gray-600 ring-1 ring-inset ring-gray-100 dark:ring-gray-600">{category.name}</p>
                                 ))}
                                 </div>
                             </div>
@@ -175,7 +175,7 @@ export default function Recipe({darkMode, setDarkMode}) {
                         <FontAwesomeIcon className="w-5 h-5 cursor-pointer aspect-square hover:text-green-500" icon={faScaleUnbalanced} />
                     </div>
 
-                    <div className="flex flex-col w-full gap-2 p-5 mx-8 bg-white dark:bg-neutral-800 rounded-lg shadow-custom1 max-w-fit">
+                    <div className="flex flex-col w-full gap-2 p-5 mx-8 bg-white rounded-lg dark:bg-neutral-800 shadow-custom1 max-w-fit">
                         <h3 className="mb-4 text-2xl font-medium text-gray-600 dark:text-gray-300">Description</h3>
                         <div className="flex flex-col gap-2 dark:text-white">
                             {recipe.recipe &&
@@ -185,7 +185,7 @@ export default function Recipe({darkMode, setDarkMode}) {
 
                     <div className="flex flex-col items-center gap-10 p-10">
                         <div className="flex justify-center gap-4">
-                            <div className="flex flex-col gap-2 p-5 bg-white dark:bg-neutral-800 rounded-lg shadow-custom1 h-96 w-max">
+                            <div className="flex flex-col gap-2 p-5 bg-white rounded-lg dark:bg-neutral-800 shadow-custom1 h-96 w-max">
                                 <h3 className="mb-4 text-2xl font-medium text-gray-600 dark:text-gray-300">Ingredients</h3>
                                 <div className="flex flex-col gap-2 overflow-y-scroll dark:text-gray-300">
                                 {recipe.recipe_ingredients &&
@@ -195,7 +195,7 @@ export default function Recipe({darkMode, setDarkMode}) {
                                 }
                                 </div>
                             </div>
-                            <div className="flex flex-col w-1/2 gap-2 p-5 bg-white dark:bg-neutral-800 rounded-lg shadow-custom1">
+                            <div className="flex flex-col w-1/2 gap-2 p-5 bg-white rounded-lg dark:bg-neutral-800 shadow-custom1">
                                 <h3 className="mb-2 text-2xl font-medium text-gray-600 dark:text-gray-300">Recipe</h3>
                                 <div className="flex flex-col gap-2">
                                     <p className="text-lg font-bold text-gray-600 dark:text-gray-300">Steps</p>
@@ -210,7 +210,7 @@ export default function Recipe({darkMode, setDarkMode}) {
                                 </div>
                             </div>
                         </div>
-                        <div className="flex flex-col gap-2 p-5 bg-white dark:bg-neutral-800 rounded-lg shadow-custom1 w-max">
+                        <div className="flex flex-col gap-2 p-5 bg-white rounded-lg dark:bg-neutral-800 shadow-custom1 w-max">
                             <h3 className="mb-4 text-2xl font-medium text-gray-600 dark:text-gray-300">Similar recipes</h3>
                             <div className="flex flex-row flex-wrap gap-2">
                             {RecipeCard({recipe: {name: "Recipe 1", description: "Description 1", imgSrc: "https://via.placeholder.com/150"}})}
@@ -222,6 +222,7 @@ export default function Recipe({darkMode, setDarkMode}) {
                 </div>
             </div>
         </div>
+    </div>
     </div>
     )
 }

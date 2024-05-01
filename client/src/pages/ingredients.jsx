@@ -13,26 +13,12 @@ import "./ingredients.css";
 
 function IngredientCard({ingredient, darkMode}){
     return (
-<<<<<<< HEAD:client/src/pages/ingredients.jsx
-        <div className="relative flex flex-col items-center px-2 py-4 bg-transparent bg-gray-200 shadow-lg cursor-pointer w-72 rounded-xl" onClick={() => window.location.href += "/" + ingredient.product_id}>
-            <img className="object-contain w-full mt-2 mb-4 rounded-xl max-h-52" src={ingredient.image} alt="Ingredient" />
-            <div className="flex items-center gap-2 mt-auto">
-                <h3 className="text-xl font-bold">{ingredient.name}</h3>
-                <p className="bg-transparent macro-badge-purple">{ingredient.category}</p>
-            </div>
-            <div className="p-2 macros">
-                <div className="flex justify-center gap-2">
-                    <p className="bg-transparent macro-badge-green">P: {ingredient.proteins}g</p>
-                    <p className="bg-transparent macro-badge-d-green">F: {ingredient.fats}g</p>
-                    <p className="bg-transparent macro-badge-brown">C: {ingredient.carbs}g</p>
-=======
         <div className={`${darkMode && "dark"}`} >
-            <div className="relative flex flex-col items-center px-2 py-4 bg-transparent bg-gray-200 shadow-lg dark:shadow-custom1 cursor-pointer w-72 rounded-xl" onClick={() => window.location.href += "/" + ingredient.id}>
+            <div className="relative flex flex-col items-center px-2 py-4 bg-transparent bg-gray-200 shadow-lg cursor-pointer dark:shadow-custom1 w-72 rounded-xl" onClick={() => window.location.href += "/" + ingredient.id}>
                 <img className="w-full mt-2 mb-4 rounded" src="https://via.placeholder.com/150" alt="Ingredient" />
                 <div className="flex items-center gap-2">
                     <h3 className="text-xl font-bold dark:text-white">{ingredient.name}</h3>
                     <p className="bg-transparent macro-badge-purple">{ingredient.category}</p>
->>>>>>> 46672b7 (Complete darkMode):client/src/pages/ingredients.js
                 </div>
                 <div className="p-2 macros">
                     <div className="flex justify-center gap-2">
@@ -144,9 +130,9 @@ export default function Ingredients({darkMode, setDarkMode}) {
     const options = ["all", "vegetable", "fruit", "meat", "seafood", "grains", "legumes", "dairy", "spices"]
 
     return (
-<<<<<<< HEAD:client/src/pages/ingredients.jsx
         <>
-            <Navbar />
+        <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode}/>
+        <div className={`${darkMode && "dark"}`} >
             <Modal className="relative z-50 select-none w-96" isOpen={filterModal} onClose={() => {setFilterModal(false)}}>
                 <div className="">
                     <h2 className="text-xl font-bold">Filters</h2>
@@ -202,93 +188,7 @@ export default function Ingredients({darkMode, setDarkMode}) {
                 </div>
                 <Footer />
             </main>
-        </>
-=======
-        <div className="flex flex-col">
-        <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode}/>
-        <div className={`${darkMode && "dark"}`} >
-            <main className="flex flex-col items-center dark:bg-neutral-900">
-                <div className="search-bar dark:text-white dark:border-white">
-                    <input onChange={(e) => {setSearch(e.target.value)}} type="text" />
-                    <button className="dark:text-white"><FontAwesomeIcon icon={ faMagnifyingGlass } /></button>
-                </div>
-                <div className="container h-fit">
-                    <div className="filters dark:border-white">
-                        <h2 className="text-xl font-bold dark:text-white">Filters</h2>
-                        <div className="filter dark:text-white">
-                            <p>Category</p>
-                            <select className="dark:border-white" onChange={(e) => {setCategory(e.target.value)}} defaultValue="all">
-                                <option value="all">All</option>
-                                <option value="vegetable">Vegetables</option>
-                                <option value="fruit">Fruits</option>
-                                <option value="meat">Meat</option>
-                                <option value="seafood">Seafood</option>
-                                <option value="grains">Grains</option>
-                                <option value="legumes">Legumes</option>
-                                <option value="dairy">Dairy</option>
-                                <option value="spices">Spices</option>
-                            </select>
-                        </div>
-                        <h4 className="text-lg dark:text-white">Nutrients</h4>
-                        <div className="filter dark:text-white">
-                            <p>Proteins</p>
-                            <input className="dark:bg-neutral-900 dark:border-white" onChange={(e) => {setProteins(e.target.value)}} type="number" min="0" defaultValue={0} />
-                            g/kg
-                        </div>
-                        <div className="filter dark:text-white">
-                            <p>Fats</p>
-                            <input className="dark:bg-neutral-900 dark:border-white" onChange={(e) => {setFats(e.target.value)}} type="number" min="0" defaultValue={0} />
-                            g/kg
-                        </div>
-                        <div className="filter dark:text-white">
-                            <p>Carbs</p>
-                            <input className="dark:bg-neutral-900 dark:border-white" onChange={(e) => {setCarbs(e.target.value)}} type="number" min="0" defaultValue={0} />
-                            g/kg
-                        </div>
-                        <div className="filter dark:text-white">
-                            <p>Glycemic index</p>
-                            <input className="dark:bg-neutral-900 dark:border-white" onChange={(e) => {setGlycemic(e.target.value)}} type="number" min="0" defaultValue={0} />
-                            g/kg
-                        </div>
-                        <div className="filter dark:text-white">
-                            <p>Calories</p>
-                            <input className="dark:bg-neutral-900 dark:border-white" onChange={(e) => {setCalories(e.target.value)}} type="number" min="0" defaultValue={0} />
-                            kcal/kg
-                        </div>
-                        <div className="filter">
-                            <p className="dark:text-white">Vitamins</p>
-                            <MultiSelect darkMode={darkMode} className="rounded-full" placeholder="Select" prefix="Vitamin " options={[
-                                "A", 
-                                "B", 
-                                "C", 
-                                "D", 
-                                "E", 
-                                "K"]} selected={selectedVitamins} setSelected={setSelectedVitamins} />
-                        </div>
-                        <h4 className="text-lg dark:text-white">Allergies</h4>
-                        <div className="filter">
-                            <p className="dark:text-white" >Allergens</p>
-                            <MultiSelect darkMode={darkMode} className="rounded-full" placeholder="Select" options={[
-                                "Nuts", 
-                                "Milk", 
-                                "Fish", 
-                                "Meats", 
-                                "Soy", 
-                                "Citrus"]} selected={selectedAllergies} setSelected={setSelectedAllergies} />
-                        </div>
-                    </div>
-                        <Pagination darkMode={darkMode} itemsPerPage={10}>{
-                            filteredIngredients.map((ingredient, index) => (
-                                    <IngredientCard key={index} ingredient={ingredient} />
-                                )
-                            )
-                        }
-                        </Pagination>
-                    </div>
-                    <Footer />
-                </main>
-            </div>
         </div>
->>>>>>> 46672b7 (Complete darkMode):client/src/pages/ingredients.js
+    </>
     );
 }

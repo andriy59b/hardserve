@@ -15,49 +15,50 @@ const checkBoxStyle = "p-2 rounded-lg shadow bg-white w-fit h-fit ring-green-500
 function RecipeCard({ recipe }) {
     return (
         
-        <div className="px-2 py-4 bg-white dark:bg-neutral-800  shadow-sm cursor-pointer w-72 rounded-xl" >
+        <div className="px-2 py-4 bg-white shadow-sm cursor-pointer dark:bg-neutral-800 w-72 rounded-xl" >
 
-        <div className="relative flex flex-col items-center " onClick={() => window.location.href += "/" + recipe.id}>
-            <img className="w-full mb-4 -mt-2 rounded" src={recipe.image} alt="Recipe" />
-        </div>
-
-        <div className="relative flex flex-col items-left" >
-            <p className="text-xs font-light text-left pl-2 text-gray-600 dark:text-gray-400" >{recipe.date}</p>
-        </div>
-
-        <div className="relative flex flex-col pl-1 pr-1 " onClick={() => window.location.href += "/" + recipe.id}>
-            <div className="flex justify-between p-1">
-                <h3 className="text-xl font-bold dark:text-[#fefdfd]">{recipe.name}</h3>
-                <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-green-700 bg-green-100 dark:bg-green-700 dark:text-green-100 rounded-md ring-1 ring-inset ring-green-50 dark:ring-green-700">{recipe.category}</p>
+            <div className="relative flex flex-col items-center " onClick={() => window.location.href += "/" + recipe.id}>
+                <img className="w-full mb-4 -mt-2 rounded" src={recipe.image} alt="Recipe" />
             </div>
-            <div className="p-1 macros">
-                <div className="flex justify-between gap-2">
-                    <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 dark:bg-gray-600 bg-gray-100 dark:text-gray-100 rounded-md ring-1 ring-inset ring-gray-100 dark:ring-gray-600">P: {recipe.proteins}g</p>
-                    <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 dark:bg-gray-600 bg-gray-100 dark:text-gray-100 rounded-md ring-1 ring-inset ring-gray-100 dark:ring-gray-600">F: {recipe.fats}g</p>
-                    <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 dark:bg-gray-600 bg-gray-100 dark:text-gray-100 rounded-md ring-1 ring-inset ring-gray-100 dark:ring-gray-600">C: {recipe.carbs}g</p>
+
+            <div className="relative flex flex-col items-left" >
+                <p className="pl-2 text-xs font-light text-left text-gray-600 dark:text-gray-400" >{recipe.date}</p>
+            </div>
+
+            <div className="relative flex flex-col pl-1 pr-1 " onClick={() => window.location.href += "/" + recipe.id}>
+                <div className="flex justify-between p-1">
+                    <h3 className="text-xl font-bold dark:text-[#fefdfd]">{recipe.name}</h3>
+                    <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-green-700 bg-green-100 rounded-md dark:bg-green-700 dark:text-green-100 ring-1 ring-inset ring-green-50 dark:ring-green-700">{recipe.category}</p>
                 </div>
-                <div className="flex flex-wrap justify-between gap-2 pt-2">
-                    <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 dark:bg-gray-600 bg-gray-100 dark:text-gray-100 rounded-md ring-1 ring-inset ring-gray-100 dark:ring-gray-600">Calories: {recipe.calories}kcal</p>
-                    <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 dark:bg-gray-600 bg-gray-100 dark:text-gray-100 rounded-md ring-1 ring-inset ring-gray-100 dark:ring-gray-600">Cuisine: {recipe.cuisine}</p>
-                    <div class="flex items-center">
-                        <svg class="w-3 h-3 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                        </svg>
-                        <svg className="w-3 h-3 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                        </svg>
-                        <svg className="w-3 h-3 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                        </svg>
-                        <svg className="w-3 h-3 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                        </svg>
-                        <svg className="w-3 h-3 text-gray-300 me-1 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                            <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                        </svg>
-                        <p className="text-xs font-medium text-gray-500 ms-1 dark:text-gray-400">{recipe.points}</p>
-                        <p className="text-xs font-medium text-gray-500 ms-1 dark:text-gray-400">out of</p>
-                        <p className="text-xs font-medium text-gray-500 ms-1 dark:text-gray-400">5</p>
+                <div className="p-1 macros">
+                    <div className="flex justify-between gap-2">
+                        <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 bg-gray-100 rounded-md dark:bg-gray-600 dark:text-gray-100 ring-1 ring-inset ring-gray-100 dark:ring-gray-600">P: {recipe.proteins}g</p>
+                        <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 bg-gray-100 rounded-md dark:bg-gray-600 dark:text-gray-100 ring-1 ring-inset ring-gray-100 dark:ring-gray-600">F: {recipe.fats}g</p>
+                        <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 bg-gray-100 rounded-md dark:bg-gray-600 dark:text-gray-100 ring-1 ring-inset ring-gray-100 dark:ring-gray-600">C: {recipe.carbs}g</p>
+                    </div>
+                    <div className="flex flex-wrap justify-between gap-2 pt-2">
+                        <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 bg-gray-100 rounded-md dark:bg-gray-600 dark:text-gray-100 ring-1 ring-inset ring-gray-100 dark:ring-gray-600">Calories: {recipe.calories}kcal</p>
+                        <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 bg-gray-100 rounded-md dark:bg-gray-600 dark:text-gray-100 ring-1 ring-inset ring-gray-100 dark:ring-gray-600">Cuisine: {recipe.cuisine}</p>
+                        <div class="flex items-center">
+                            <svg class="w-3 h-3 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                            </svg>
+                            <svg className="w-3 h-3 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                            </svg>
+                            <svg className="w-3 h-3 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                            </svg>
+                            <svg className="w-3 h-3 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                            </svg>
+                            <svg className="w-3 h-3 text-gray-300 me-1 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                            </svg>
+                            <p className="text-xs font-medium text-gray-500 ms-1 dark:text-gray-400">{recipe.points}</p>
+                            <p className="text-xs font-medium text-gray-500 ms-1 dark:text-gray-400">out of</p>
+                            <p className="text-xs font-medium text-gray-500 ms-1 dark:text-gray-400">5</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -251,55 +252,55 @@ export default function Recipes({darkMode, setDarkMode}) {
         <>
             <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
             <div className={`flex flex-col items-center p-4 ${darkMode && "dark"}`} >
-              <div className="flex flex-col items-center p-4 bg-[#fefdfd] dark:bg-neutral-900">
-                  <FilterModal />
-                  <Modal className="relative select-none w-96 h-96" isOpen={ingredientsModal} onClose={() => {setIngredientsModal(false)}}>
-                      <div className="flex flex-col h-full">
-                          <h1 className="pb-2 text-2xl font-bold text-center">Ingredients</h1>
-                          <IngredientPicker className="" ingredients={onlyFavorites ? favoritedIngredients : ingredients} selected={selectedIngredients} setSelected={setSelectedIngredients} />
-                          { username && password ? 
+                <div className="flex flex-col items-center p-4 bg-[#fefdfd] dark:bg-neutral-900">
+                    <FilterModal />
+                    <Modal className="relative select-none w-96 h-96" isOpen={ingredientsModal} onClose={() => {setIngredientsModal(false)}}>
+                        <div className="flex flex-col h-full">
+                            <h1 className="pb-2 text-2xl font-bold text-center">Ingredients</h1>
+                            <IngredientPicker className="" ingredients={onlyFavorites ? favoritedIngredients : ingredients} selected={selectedIngredients} setSelected={setSelectedIngredients} />
+                            { username && password ? 
 
-                          <BadgeToggle value={onlyFavorites} onChange={setOnlyFavorites} className="mt-1 ml-4" label="Included Ingredients">
-                              <FontAwesomeIcon icon={faHeart} /> Favorites
-                          </BadgeToggle>
+                            <BadgeToggle value={onlyFavorites} onChange={setOnlyFavorites} className="mt-1 ml-4" label="Included Ingredients">
+                                <FontAwesomeIcon icon={faHeart} /> Favorites
+                            </BadgeToggle>
 
-                          : null }
+                            : null }
 
-                          <div className="flex flex-wrap h-40 gap-2 p-2 mt-5 overflow-y-auto border-2 border-gray-300 border-dashed rounded-lg shadow-inner">
-                              {selectedIngredients.map((ingredient, index) => (
+                            <div className="flex flex-wrap h-40 gap-2 p-2 mt-5 overflow-y-auto border-2 border-gray-300 border-dashed rounded-lg shadow-inner">
+                                {selectedIngredients.map((ingredient, index) => (
 
-                                  <IngredientCheckBox 
-                                      includedIngredients={includedIngredients} 
-                                      excludedIngredients={excludedIngredients} 
-                                      setExcludedIngredients={setExcludedIngredients}
-                                      setIncludedIngredients={setIncludedIngredients}
-                                      ingredient={ingredient} 
-                                      key={index}/>
+                                    <IngredientCheckBox 
+                                        includedIngredients={includedIngredients} 
+                                        excludedIngredients={excludedIngredients} 
+                                        setExcludedIngredients={setExcludedIngredients}
+                                        setIncludedIngredients={setIncludedIngredients}
+                                        ingredient={ingredient} 
+                                        key={index}/>
 
-                              ))}
-                          </div>
-                          <CancelButton onClick={ResetIngredients} className="w-full mt-auto">Reset Ingredients</CancelButton>
-                      </div>
-                  </Modal>
-                  <h1 className="pb-5 text-4xl font-bold text-center">Recipes</h1>
-                  <div className="flex flex-col items-center w-[40rem] max-w-[70vw] dark:text-[#fefdfd]">
-                      <SearchBar darkMode={darkMode} className="w-full" type="text" value={search} onChange={handleSearch} placeholder="Search..."/>
-                      <div className="flex flex-wrap justify-start w-full gap-4 p-2 mx-5">
-                          <p onClick={() => {setFilterModal(true)}} className="text-sm font-bold text-gray-500 cursor-pointer hover:text-green-500"><FontAwesomeIcon icon={ faFilter }/> Filters</p>
-                          <p onClick={() => {setIngredientsModal(true)}} className="text-sm font-bold text-gray-500 cursor-pointer hover:text-green-500"><FontAwesomeIcon icon={ faCarrot }/> Ingredients</p>
-                      </div>
-                  </div>
-                  <div className="flex flex-wrap justify-center w-full gap-4 p-2 mx-5">
-                      {filteredRecipes.length === 0 ? <p className="text-lg font-bold text-gray-500">
-                          <FontAwesomeIcon icon={faArrowsRotate} className="mx-1 animate-spin" /> Loading...</p> : 
-                      (<Pagination itemsPerPage={9}>
-                          {filteredRecipes.filter(recipe => recipe.name.toLowerCase().includes(search.toLowerCase())).map(recipe => (
-                              <RecipeCard key={recipe.id} recipe={recipe} />
-                          ))}
-                      </Pagination>)
-                      }
-                  </div>
-              </div>
+                                ))}
+                            </div>
+                            <CancelButton onClick={ResetIngredients} className="w-full mt-auto">Reset Ingredients</CancelButton>
+                        </div>
+                    </Modal>
+                    <h1 className="pb-5 text-4xl font-bold text-center">Recipes</h1>
+                    <div className="flex flex-col items-center w-[40rem] max-w-[70vw] dark:text-[#fefdfd]">
+                        <SearchBar darkMode={darkMode} className="w-full" type="text" value={search} onChange={handleSearch} placeholder="Search..."/>
+                        <div className="flex flex-wrap justify-start w-full gap-4 p-2 mx-5">
+                            <p onClick={() => {setFilterModal(true)}} className="text-sm font-bold text-gray-500 cursor-pointer hover:text-green-500"><FontAwesomeIcon icon={ faFilter }/> Filters</p>
+                            <p onClick={() => {setIngredientsModal(true)}} className="text-sm font-bold text-gray-500 cursor-pointer hover:text-green-500"><FontAwesomeIcon icon={ faCarrot }/> Ingredients</p>
+                        </div>
+                    </div>
+                    <div className="flex flex-wrap justify-center w-full gap-4 p-2 mx-5">
+                        {filteredRecipes.length === 0 ? <p className="text-lg font-bold text-gray-500">
+                            <FontAwesomeIcon icon={faArrowsRotate} className="mx-1 animate-spin" /> Loading...</p> : 
+                        (<Pagination itemsPerPage={9}>
+                            {filteredRecipes.filter(recipe => recipe.name.toLowerCase().includes(search.toLowerCase())).map(recipe => (
+                                <RecipeCard key={recipe.id} recipe={recipe} />
+                            ))}
+                        </Pagination>)
+                        }
+                    </div>
+                </div>
             </div>
         </>
     );
