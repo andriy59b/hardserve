@@ -99,7 +99,7 @@ class FavoriteRecipeSerializerInfo(serializers.ModelSerializer):
         recipe = RecipeSerializer(read_only=True)
         model = Favorite
         fields = ['recipe']
-
+        
 class NotFavoriteProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Not_Favorite
@@ -124,4 +124,8 @@ class NotFavoriteProductSerializerInfo(serializers.ModelSerializer):
     class Meta:
         model = Not_Favorite
         fields = ['product']
-
+  
+class UserWeightHistorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserWeightHistory
+        fields = ['weight', 'date']
