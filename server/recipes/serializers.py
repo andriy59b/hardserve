@@ -22,7 +22,7 @@ class RecipeSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Recipe
-        fields = ['id', 'name', 'image', 'categories', 'short_description', 'ingredient_ids']
+        fields = ['id', 'name', 'image', 'categories', 'short_description', 'ingredient_ids', 'meal_time']
 
 class RecipeStepSerializer(serializers.ModelSerializer):
     class Meta:
@@ -34,3 +34,8 @@ class RecipeEquipmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Recipe_Equipment
         fields = ['recipe_id', 'equipment_id', 'equipment', 'image']
+
+class RecipeNameIdSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Recipe
+        fields = ['id', 'name']
