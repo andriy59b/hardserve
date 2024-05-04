@@ -11,29 +11,31 @@ import { SearchBar, NumberField, Select, CancelButton } from "../components/form
 
 import "./ingredients.css";
 
-function IngredientCard({ingredient}){
+function IngredientCard({ingredient, darkMode}){
     return (
-        <div className="relative flex flex-col items-center px-2 py-4 bg-transparent bg-gray-200 shadow-lg cursor-pointer w-72 rounded-xl" onClick={() => window.location.href += "/" + ingredient.id}>
-            <img className="w-full mt-2 mb-4 rounded" src="https://via.placeholder.com/150" alt="Ingredient" />
-            <div className="flex items-center gap-2">
-                <h3 className="text-xl font-bold">{ingredient.name}</h3>
-                <p className="bg-transparent macro-badge-purple">{ingredient.category}</p>
-            </div>
-            <div className="p-2 macros">
-                <div className="flex justify-center gap-2">
-                    <p className="bg-transparent macro-badge-green">P: {ingredient.proteins}g</p>
-                    <p className="bg-transparent macro-badge-d-green">F: {ingredient.fats}g</p>
-                    <p className="bg-transparent macro-badge-brown">C: {ingredient.carbs}g</p>
+        <div className={`${darkMode && "dark"}`} >
+            <div className="relative flex flex-col items-center px-2 py-4 bg-transparent bg-gray-200 shadow-lg cursor-pointer dark:shadow-custom1 w-72 rounded-xl" onClick={() => window.location.href += "/" + ingredient.id}>
+                <img className="w-full mt-2 mb-4 rounded" src="https://via.placeholder.com/150" alt="Ingredient" />
+                <div className="flex items-center gap-2">
+                    <h3 className="text-xl font-bold dark:text-white">{ingredient.name}</h3>
+                    <p className="bg-transparent macro-badge-purple">{ingredient.category}</p>
                 </div>
-                <div className="flex flex-wrap justify-center gap-2 pt-2">
-                    <p className="bg-transparent macro-badge-purple">Glycemic index: {ingredient.glycemic_index}</p>
-                    <p className="bg-transparent macro-badge-green">Calories: {ingredient.calories}kcal</p>
+                <div className="p-2 macros">
+                    <div className="flex justify-center gap-2">
+                        <p className="bg-transparent macro-badge-green">P: {ingredient.proteins}g</p>
+                        <p className="bg-transparent macro-badge-d-green">F: {ingredient.fats}g</p>
+                        <p className="bg-transparent macro-badge-brown">C: {ingredient.carbs}g</p>
+                    </div>
+                    <div className="flex flex-wrap justify-center gap-2 pt-2">
+                        <p className="bg-transparent macro-badge-purple">Glycemic index: {ingredient.glycemic_index}</p>
+                        <p className="bg-transparent macro-badge-green">Calories: {ingredient.calories}kcal</p>
+                    </div>
                 </div>
+                {/* <div className="w-full p-2 bg-transparent border-2 border-b-indigo-500 border-t-transparent border-r-transparent border-l-transparent">
+                    <p>Vitamins: {ingredient.vitamins?.join(", ")}</p>
+                    <p>Allergens: {ingredient.allergens?.join(", ")}</p>
+                </div> */}
             </div>
-            {/* <div className="w-full p-2 bg-transparent border-2 border-b-indigo-500 border-t-transparent border-r-transparent border-l-transparent">
-                <p>Vitamins: {ingredient.vitamins?.join(", ")}</p>
-                <p>Allergens: {ingredient.allergens?.join(", ")}</p>
-            </div> */}
         </div>
     );
 }
@@ -46,10 +48,14 @@ async function getIngredients(){
         }
     });
     const data = await response.json();
+    data.products = data.products.map((product, index) => {
+        product.image = product.image.replace("http://localhost:8000/media/", "").replace("%3A", ":/");
+        return product;
+    })
     return data.products;
 }
 
-export default function Ingredients() {
+export default function Ingredients({darkMode, setDarkMode}) {
     const [loadedIngredients, setLoadedIngredients] = useState();
 
     const [filteredIngredients, setFilteredIngredients] = useState([]);
@@ -61,6 +67,12 @@ export default function Ingredients() {
     const [glycemic, setGlycemic] = useState(0);
     const [calories, setCalories] = useState(0);
     const [filterModal, setFilterModal] = useState(false);
+
+    const toggleDarkMode = () => {
+        const newDarkMode = !darkMode;
+        setDarkMode(newDarkMode);
+        localStorage.setItem('darkMode', newDarkMode); // Зберігаємо нове значення в локальному сховищі
+    };
 
     useEffect(() => {
         getIngredients().then(data => {
@@ -119,7 +131,8 @@ export default function Ingredients() {
 
     return (
         <>
-            <Navbar />
+        <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode}/>
+        <div className={`${darkMode && "dark"}`} >
             <Modal className="relative z-50 select-none w-96" isOpen={filterModal} onClose={() => {setFilterModal(false)}}>
                 <div className="">
                     <h2 className="text-xl font-bold">Filters</h2>
@@ -175,6 +188,7 @@ export default function Ingredients() {
                 </div>
                 <Footer />
             </main>
-        </>
+        </div>
+    </>
     );
 }

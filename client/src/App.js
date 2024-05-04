@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import {
   BrowserRouter as Router,
@@ -22,19 +22,21 @@ import PasswordReset from "./pages/password-reset";
 import AccountPage from "./pages/accountPage/main";
 
 function App() {
+  const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+    const [darkMode, setDarkMode] = useState(savedDarkMode);
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
+        <Route path="/" element={<Home darkMode={darkMode} setDarkMode={setDarkMode}/>} />
+        <Route path="/about" element={<About  />} />
         <Route path="/login" element={<LogIn/>} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/account" element={<AccountPage />} />
+        <Route path="/account" element={<AccountPage darkMode={darkMode} setDarkMode={setDarkMode}/>} />
         <Route path="/accounts/password-reset-confirm/:uid/:token" element={<PasswordReset />} />
-        <Route path="/ingredients" element={<Ingredients />} />
-        <Route path="/ingredients/:id" element={<Ingredient />} />
-        <Route path="/recipes" element={<Recipes />} />
-        <Route path="/recipes/:id" element={<Recipe />} />
+        <Route path="/ingredients" element={<Ingredients darkMode={darkMode} setDarkMode={setDarkMode} />} />
+        <Route path="/ingredients/:id" element={<Ingredient darkMode={darkMode} setDarkMode={setDarkMode} />} />
+        <Route path="/recipes" element={<Recipes darkMode={darkMode} setDarkMode={setDarkMode} />} />
+        <Route path="/recipes/:id" element={<Recipe darkMode={darkMode} setDarkMode={setDarkMode} />} />
       </Routes>
     </Router>
   );

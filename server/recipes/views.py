@@ -96,3 +96,7 @@ class RecipeView(ListAPIView):
             }
 
         return response
+    
+class RecipeNameIdView(ListAPIView):
+    queryset = Recipe.objects.all()
+    serializer_class = RecipeNameIdSerializer

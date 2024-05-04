@@ -7,4 +7,5 @@ urlpatterns = [
     # path('ingredients/', RecipeIngredientView.as_view(), name='recipe-ingredients'),
     # path('equipments/', RecipeEquipmentView.as_view(), name='recipe-equipment'),
     path('<int:pk>/', RecipeView.as_view(), name='recipe-detail'),
+    path('names-ids/', RecipeNameIdView.as_view(), name='recipe-names-ids'),
 ]   
