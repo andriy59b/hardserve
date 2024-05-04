@@ -12,12 +12,12 @@ import Modal from "../components/modal";
 
 function RecipeCard({recipe}) {
     return (
-        <div className="flex flex-col gap-2 p-2 ">
+        <div className="flex flex-col gap-2 p-2 dark:bg-neutral-800 ">
             <img className="rounded-lg" src={recipe.imgSrc} alt="Recipe" />
             <div>
-                <h4 className="text-lg font-medium text-gray-600">{recipe.name}</h4>
-                <p>{recipe.description}</p>
-                <button type="button" className="px-4 py-2 text-xs font-medium text-green-900 bg-green-300 rounded-full hover:bg-green-200">VIEW ALL</button>
+                <h4 className="text-lg font-medium text-gray-600 dark:text-gray-300">{recipe.name}</h4>
+                <p className="dark:text-white">{recipe.description}</p>
+                <button type="button" className="px-4 py-2 text-xs font-medium text-[#3c7e86] dark:text-[#a1f480] dark:bg-[#3c7e86]/50 bg-[#a1f480]/50 rounded-full hover:bg-green-300 dark:hover:bg-green-800">VIEW ALL</button>
             </div>
         </div>
     )
@@ -28,8 +28,8 @@ function IngredientCard(ingredient, key) {
         <div className="flex gap-2 p-2" key={key}>
             <img className="object-contain w-20 h-20 rounded-lg" src={ingredient.image.replace("/media/", "").replace("%3A", ":/")} alt="Product" />
             <div>
-                <a className="p-0 text-lg font-medium text-gray-600" href={`/ingredients/${ingredient.ingredient_id}`}>{ingredient.ingredient}</a>
-                <p>Amount: {ingredient.amount} {ingredient.unit}</p>
+                <a className="p-0 text-lg font-medium text-gray-600 dark:text-gray-300" href={`/ingredients/${ingredient.ingredient_id}`}>{ingredient.ingredient}</a>
+                <p className="dark:text-white">Amount: {ingredient.amount} {ingredient.unit}</p>
             </div>
         </div>
     )
@@ -119,55 +119,46 @@ export default function Recipe({darkMode, setDarkMode}) {
             <div className={darkMode && "dark"}>
                 <div className={`flex justify-center max-w-screen bg-[#fefdfd] dark:bg-neutral-900`}>
                     <div className="relative flex flex-col items-center ">
-                        <div className="flex flex-col items-center lg:items-start lg:flex-row h-fit my-16 shadow-sm w-[80vw] rounded-[15px] bg-white min-w-fit max-w-full p-5" style={{ boxShadow: "0px 3.5px 5.499999523162842px 0 rgba(0,0,0,0.02)" }}>
-                            <h3 className="text-lg font-bold text-left text-[#2d3748]">{recipe.recipe && recipe.recipe.name}</h3>
-                            <img className="object-contain mr-4 rounded-xl h-96" src={recipe.recipe && recipe.recipe.image} alt="Ingredient" />
-                            <div className="flex flex-col items-center w-full mt-4 justify-begin h-fit">
-                                <div>
-                                    
-                                    <div className="flex flex-row gap-2 p-2">
-                                        {recipe.recipe &&
-                                        recipe.recipe.categories.map(category => (
-                                                <p key={category.id} className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 bg-gray-100 rounded-md ring-1 ring-inset ring-gray-100">{category.name}</p>
-                                        ))}
-                                    </div>
+                        <div className="flex flex-col lg:flex-row items-center h-fit my-16 shadow-sm rounded-[15px] bg-white dark:bg-neutral-800 min-w-fit p-5" style={{ boxShadow: "0px 3.5px 5.499999523162842px 0 rgba(0,0,0,0.02)" }}>
+
+                            <div className="flex flex-col items-start">
+                                <h3 className="text-2xl font-bold text-[#2d3748] mb-5 dark:text-white">{recipe.recipe && recipe.recipe.name}</h3>
+                                <img className="object-contain mr-4 rounded-xl h-100 mb-2" src={recipe.recipe && recipe.recipe.image} alt="Ingredient" />
+                                <div className="flex gap-4 p-2 lg:ml-2 min-w-9 h-fit md:flex-row">
+                                    <FontAwesomeIcon className={"h-10 w-10 aspect-square cursor-pointer " + (favorited ? "text-rose-500" : "hover:text-rose-500")} onClick={favorited ? null : favoriteRecipe} icon={faHeart} />
+                                    <FontAwesomeIcon className="w-10 h-10 cursor-pointer text-neutral-900 dark:text-white aspect-square hover:text-green-500 dark:hover:text-green-500" icon={faScaleUnbalanced} />
                                 </div>
-                                {/* <div className="w-full h-56 p-4 overflow-y-scroll min-w-fit">
-                                    <h3 className="text-2xl font-medium text-gray-600">Nutritional Information</h3>
-                                    <h4>Product description</h4>
-                                    <br />
-                                    {recipe.nutrients.map((nutrient, index) => {
-                                        return (
-                                            <div className={"flex flex-row justify-between " + (index % 2 === 0 ? "bg-gray-200" : "")}>
-                                                <p>{nutrient.name}</p>
-                                                <p>{nutrient.amount} {nutrient.units}</p>
-                                            </div>
-                                        )
-
-                                        })
-                                    }
-                                </div> */}
                             </div>
 
-                            <div className="flex flex-row justify-end gap-4 p-2 lg:ml-2 min-w-9 h-fit items-right lg:flex-col">
-                                <FontAwesomeIcon className={"h-5 w-5 aspect-square cursor-pointer " + (favorited ? "text-rose-500" : "hover:text-rose-500")} onClick={favorited ? null : favoriteRecipe} icon={faHeart} />
-                                <FontAwesomeIcon className="w-5 h-5 cursor-pointer aspect-square hover:text-green-500" icon={faScaleUnbalanced} />
-                            </div>
-                        </div>
+                            <div className="flex flex-col mt-6">
 
-                        <div className="flex flex-col w-full gap-2 p-5 mx-8 bg-white rounded-lg shadow-sm max-w-fit">
-                            <h3 className="mb-4 text-2xl font-medium text-gray-600">Description</h3>
-                            <div className="flex flex-col gap-2">
-                                {recipe.recipe &&
-                                parse(recipe.recipe.short_description)}
-                            </div>
-                        </div>
+                                <div className="flex flex-row items-center w-full mt-4 justify-begin h-fit">
+                                        
+                                        <div className="flex flex-row gap-2 p-2">
+                                            {recipe.recipe &&
+                                            recipe.recipe.categories.map(category => (
+                                                    <p key={category.id} className="inline-flex items-center px-6 py-4 text-sm font-medium text-[#3c7e86] dark:text-[#a1f480] dark:bg-[#3c7e86]/50 rounded-[10px] bg-[#a1f480]/50">{category.name}</p>
+                                            ))}
+                                        </div>
+                                    {/* <div className="w-full h-56 p-4 overflow-y-scroll min-w-fit">
+                                        <h3 className="text-2xl font-medium text-gray-600">Nutritional Information</h3>
+                                        <h4>Product description</h4>
+                                        <br />
+                                        {recipe.nutrients.map((nutrient, index) => {
+                                            return (
+                                                <div className={"flex flex-row justify-between " + (index % 2 === 0 ? "bg-gray-200" : "")}>
+                                                    <p>{nutrient.name}</p>
+                                                    <p>{nutrient.amount} {nutrient.units}</p>
+                                                </div>
+                                            )
 
+                                            })
+                                        }
+                                    </div> */}
+                                </div>
 
-                        <div className="flex flex-col items-center gap-10 p-10">
-                            <div className="flex justify-center gap-4">
-                                <div className="flex flex-col gap-2 p-5 bg-white rounded-lg shadow-sm h-96 w-max">
-                                    <h3 className="mb-4 text-2xl font-medium text-gray-600">Ingredients</h3>
+                                <div className="flex flex-col gap-2 p-5 bg-transperent h-96 w-max">
+                                    <h3 className="mb-4 text-lg text-center font-bold text-[#2d3748] dark:text-white">Ingredients</h3>
                                     <div className="flex flex-col gap-2 overflow-y-scroll">
                                         {recipe.recipe_ingredients &&
                                             recipe.recipe_ingredients.map((ingredient, index) => (
@@ -176,23 +167,34 @@ export default function Recipe({darkMode, setDarkMode}) {
                                         }
                                     </div>
                                 </div>
-                                <div className="flex flex-col w-1/2 gap-2 p-5 bg-white rounded-lg shadow-sm">
-                                    <h3 className="mb-2 text-2xl font-medium text-gray-600">Recipe</h3>
+                            </div>
+                        </div>
+
+                        <div className="flex flex-col gap-2 p-5 mx-8 bg-white dark:bg-neutral-800 shadow-sm w-[80vw] rounded-[15px] max-w-fit" style={{ boxShadow: "0px 3.5px 5.499999523162842px 0 rgba(0,0,0,0.02)" }}>
+                            <h3 className="mb-4 text-xl font-bold text-[#2d3748] dark:text-white">Description</h3>
+                            <div className="flex flex-col text-left text-sm gap-2 dark:text-gray-300">
+                                {recipe.recipe &&
+                                parse(recipe.recipe.short_description)}
+                            </div>
+                        </div>
+
+                        <div className="flex flex-col lg:flex-row items-center gap-10 p-10">
+                                <div className="flex flex-col w-1/2 gap-2 p-5 bg-white dark:bg-neutral-800 shadow-sm rounded-[15px]" style={{ boxShadow: "0px 3.5px 5.499999523162842px 0 rgba(0,0,0,0.02)" }}>
+                                    <h3 className="mb-2 text-xl font-bold text-[#2d3748] dark:text-white">Recipe</h3>
                                     <div className="flex flex-col gap-2">
-                                        <p className="text-lg font-bold text-gray-600">Steps</p>
+                                        <p className="text-lg font-bold text-gray-600 dark:text-gray-300">Steps</p>
                                         <ol type="1">
                                             {recipe.recipe_steps &&
                                             recipe.recipe_steps.map((step, index) => (
                                                 <div className="p-1" key={index}>
-                                                    <li className="text-gray-600 text-md">{step.step_number}. {step.description}</li>
+                                                    <li className="text-gray-600 dark:text-gray-300 text-md">{step.step_number}. {step.description}</li>
                                                 </div>
                                             ))}
                                         </ol>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="flex flex-col gap-2 p-5 bg-white rounded-lg shadow-sm w-max">
-                                <h3 className="mb-4 text-2xl font-medium text-gray-600">Similar recipes</h3>
+                            <div className="flex flex-col gap-2 p-5 bg-white dark:bg-neutral-800 shadow-sm rounded-[15px]" style={{ boxShadow: "0px 3.5px 5.499999523162842px 0 rgba(0,0,0,0.02)" }}>
+                                <h3 className="mb-4 text-xl font-bold text-[#2d3748] dark:text-white">Similar recipes</h3>
                                 <div className="flex flex-row flex-wrap gap-2">
                                 {RecipeCard({recipe: {name: "Recipe 1", description: "Description 1", imgSrc: "https://via.placeholder.com/150"}})}
                                 {RecipeCard({recipe: {name: "Recipe 2", description: "Description 2", imgSrc: "https://via.placeholder.com/150"}})}

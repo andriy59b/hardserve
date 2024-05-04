@@ -115,6 +115,7 @@ export default function Recipes({ darkMode, setDarkMode }) {
     localStorage.getItem("password"),
   ];
 
+
   useEffect(() => {
     fetch("http://localhost:8000/favorites/", {
       method: "GET",
@@ -230,10 +231,17 @@ export default function Recipes({ darkMode, setDarkMode }) {
     );
   }, [filters, recipes, includedIngredients, excludedIngredients]);
 
+  const toggleDarkMode = () => {
+    const newDarkMode = !darkMode;
+    setDarkMode(newDarkMode);
+    localStorage.setItem('darkMode', newDarkMode); // Зберігаємо нове значення в локальному сховищі
+};
+
   return (
     <>
-      <Navbar darkMode={darkMode} toggleDarkMode={() => setDarkMode(!darkMode)} />
-      <div className={`flex flex-col items-center ${darkMode && "dark"}`}>
+      <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+      <div className={darkMode && "dark"}>
+      <div className={`flex flex-col items-center dark:bg-neutral-900`}>
         <div className="flex flex-col items-center p-4 bg-[#fefdfd] dark:bg-neutral-900">
           <Modal className="relative select-none w-96" isOpen={filterModal} onClose={() => setFilterModal(false)}>
             <h1 className="pb-2 text-2xl font-bold text-center">Filters</h1>
@@ -299,6 +307,7 @@ export default function Recipes({ darkMode, setDarkMode }) {
             )}
           </div>
         </div>
+      </div>
       </div>
     </>
   );

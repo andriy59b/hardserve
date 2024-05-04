@@ -69,7 +69,7 @@ function IngredientCard({ product }) {
   );
 }
 
-export default function Ingredient() {
+export default function Ingredient( darkMode, setDarkMode ) {
   const { id: ingredientId } = useParams();
   const [ingredient, setIngredient] = useState();
   const [favorited, setFavorited] = useState(false);
