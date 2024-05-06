@@ -33,34 +33,29 @@ async function getIngredient(ingredientId) {
   return result;
 }
 
-function RecipeCard({ recipe }) {
+function RecipeCard({recipe}) {
   return (
-    <div className="flex flex-col gap-2 p-2 ">
-      <img className="rounded-lg" src={recipe.imgSrc} alt="Recipe" />
-      <div>
-        <h4 className="text-lg font-medium text-gray-600">{recipe.name}</h4>
-        <p>{recipe.description}</p>
-        <button
-          type="button"
-          className="px-4 py-2 text-xs font-medium text-green-900 bg-green-300 rounded-full hover:bg-green-200"
-        >
-          VIEW ALL
-        </button>
+      <div className="flex flex-col gap-2 p-2 dark:bg-neutral-800 ">
+          <img className="rounded-lg" src={recipe.imgSrc} alt="Recipe" />
+          <div>
+              <h4 className="text-lg font-medium text-gray-600 dark:text-gray-300">{recipe.name}</h4>
+              <p className="dark:text-white">{recipe.description}</p>
+              <button type="button" className="px-4 py-2 text-xs font-medium text-[#3c7e86] dark:text-[#a1f480] dark:bg-[#3c7e86]/50 bg-[#a1f480]/50 rounded-full hover:bg-green-300 dark:hover:bg-green-800">VIEW ALL</button>
+          </div>
       </div>
-    </div>
-  );
+  )
 }
 
 function IngredientCard({ product }) {
   return (
-    <div className="flex flex-col gap-2 p-2">
+    <div className="flex flex-col gap-2 p-2 dark:bg-neytral-800">
       <img className="rounded-lg" src={product.imgSrc} alt="Product" />
       <div>
-        <h4 className="text-lg font-medium text-gray-600">{product.name}</h4>
-        <p>{product.description}</p>
+        <h4 className="text-lg font-medium text-gray-600 dark:text-gray-300">{product.name}</h4>
+        <p className="dark:text-white">{product.description}</p>
         <button
           type="button"
-          className="px-4 py-2 text-xs font-medium text-green-900 bg-green-300 rounded-full hover:bg-green-200"
+          className="px-4 py-2 text-xs font-medium text-[#3c7e86] dark:text-[#a1f480] dark:bg-[#3c7e86]/50 bg-[#a1f480]/50 rounded-full hover:bg-green-300 dark:hover:bg-green-800"
         >
           VIEW ALL
         </button>
@@ -69,7 +64,7 @@ function IngredientCard({ product }) {
   );
 }
 
-export default function Ingredient( darkMode, setDarkMode ) {
+export default function Ingredient({darkMode, setDarkMode}) {
   const { id: ingredientId } = useParams();
   const [ingredient, setIngredient] = useState();
   const [favorited, setFavorited] = useState(false);
@@ -78,6 +73,12 @@ export default function Ingredient( darkMode, setDarkMode ) {
     localStorage.getItem("password"),
   ];
   const [loginQuery, setLoginQuery] = useState(false);
+
+  const toggleDarkMode = () => {
+    const newDarkMode = !darkMode;
+    setDarkMode(newDarkMode);
+    localStorage.setItem('darkMode', newDarkMode); // Зберігаємо нове значення в локальному сховищі
+};
 
   useEffect(() => {
     if (username && password && ingredient) {
@@ -150,7 +151,7 @@ export default function Ingredient( darkMode, setDarkMode ) {
   else
     return (
       <>
-        <Nav />
+        <Nav darkMode={darkMode} toggleDarkMode={toggleDarkMode}/>
         <Modal
           isOpen={loginQuery}
           onClose={() => setLoginQuery(false)}
@@ -168,136 +169,138 @@ export default function Ingredient( darkMode, setDarkMode ) {
             </button>
           </div>
         </Modal>
-        <div className="flex justify-center bg-[#fefdfd]">
-          <div className="relative flex flex-col items-center ">
-            <div className="flex flex-col items-center lg:items-start lg:flex-row h-fit bg-white border-2 my-16 shadow-sm w-[80vw] min-w-fit rounded-xl p-10 gap-10">
-              <img
-                className="object-contain m-2 rounded-xl h-96"
-                src={ingredient.image}
-                alt="Ingredient"
-              />
-              <div className="flex flex-col items-center justify-around w-full h-96">
-                <div>
-                  <div className="flex items-center gap-2">
-                    <h3 className="text-5xl font-medium text-gray-600">
-                      {ingredient.name}
-                    </h3>
-                    <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-green-700 bg-green-100 rounded-md ring-1 ring-inset ring-green-50">
-                      {ingredient.category}
-                    </p>
-                  </div>
+        <div className={darkMode && "dark"}>
+          <div className="flex justify-center bg-[#fefdfd] dark:bg-neutral-900">
+            <div className="relative flex flex-col items-center ">
+              <div className="flex flex-col lg:flex-row items-center h-fit my-16 shadow-sm rounded-[15px] bg-white dark:bg-neutral-800 min-w-fit p-5" style={{ boxShadow: "0px 3.5px 5.499999523162842px 0 rgba(0,0,0,0.02)" }}>
+                <img
+                  className="object-contain mr-5 rounded-xl h-96"
+                  src={ingredient.image}
+                  alt="Ingredient"
+                />
+                <div className="flex flex-col items-center justify-around w-full h-96">
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-4xl font-bold text-[#2d3748] mb-5 dark:text-white">
+                        {ingredient.name}
+                      </h3>
+                    </div>
 
-                  <div className="p-2 macros">
-                    <div className="flex justify-center gap-2 pt-2">
-                      <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 bg-gray-100 rounded-md ring-1 ring-inset ring-gray-100">
-                        Glycemic index: {ingredient.glycemic_index}
+                    <div className="p-2 macros">
+                      <div className="flex justify-center gap-2 pt-2">
+                      <p className="inline-flex items-center px-6 py-4 text-sm font-medium text-[#3c7e86] dark:text-[#a1f480] dark:bg-[#3c7e86]/50 rounded-[10px] bg-[#a1f480]/50">
+                        {ingredient.category}
                       </p>
-                      <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 bg-gray-100 rounded-md ring-1 ring-inset ring-gray-100">
-                        Calories: {ingredient.calories}kcal
-                      </p>
-                    </div>
-                    <div className="flex justify-center gap-2 pt-2">
-                      <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 bg-gray-100 rounded-md ring-1 ring-inset ring-gray-100">
-                        P: {ingredient.proteins}g
-                      </p>
-                      <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 bg-gray-100 rounded-md ring-1 ring-inset ring-gray-100">
-                        F: {ingredient.fats}g
-                      </p>
-                      <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 bg-gray-100 rounded-md ring-1 ring-inset ring-gray-100">
-                        C: {ingredient.carbs}g
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="w-full h-56 p-4 overflow-y-scroll min-w-fit">
-                  <h3 className="text-2xl font-medium text-gray-600">
-                    Nutritional Information
-                  </h3>
-                  <h4>Product description</h4>
-                  <br />
-                  {ingredient.nutrients.map((nutrient, index) => {
-                    return (
-                      <div
-                        className={
-                          "flex flex-row justify-between " +
-                          (index % 2 === 0 ? "bg-gray-200" : "")
-                        }
-                      >
-                        <p>{nutrient.name}</p>
-                        <p>
-                          {nutrient.amount} {nutrient.units}
+                        <p className="inline-flex items-center px-6 py-4 text-sm font-medium text-gray-600 dark:text-gray-100 dark:bg-gray-600 rounded-[10px] bg-gray-100">
+                          Glycemic index: {ingredient.glycemic_index}
+                        </p>
+                        <p className="inline-flex items-center px-6 py-4 text-sm font-medium text-gray-600 dark:text-gray-100 dark:bg-gray-600 rounded-[10px] bg-gray-100">
+                          Calories: {ingredient.calories}kcal
                         </p>
                       </div>
-                    );
-                  })}
+                      <div className="flex justify-center gap-2 pt-2">
+                        <p className="inline-flex items-center px-6 py-4 text-sm font-medium text-gray-600 dark:text-gray-100 dark:bg-gray-600 rounded-[10px] bg-gray-100">
+                          P: {ingredient.proteins}g
+                        </p>
+                        <p className="inline-flex items-center px-6 py-4 text-sm font-medium text-gray-600 dark:text-gray-100 dark:bg-gray-600 rounded-[10px] bg-gray-100">
+                          F: {ingredient.fats}g
+                        </p>
+                        <p className="inline-flex items-center px-6 py-4 text-sm font-medium text-gray-600 dark:text-gray-100 dark:bg-gray-600 rounded-[10px] bg-gray-100">
+                          C: {ingredient.carbs}g
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="w-full h-56 p-4 overflow-y-scroll min-w-fit">
+                    <h3 className="text-2xl font-medium text-[#2d3748] mb-5 dark:text-white">
+                      Nutritional Information
+                    </h3>
+                    <h4 className="dark:text-white" >Product description</h4>
+                    <br />
+                    {ingredient.nutrients.map((nutrient, index) => {
+                      return (
+                        <div
+                          className={
+                            "flex flex-row justify-between " +
+                            (index % 2 === 0 ? "bg-gray-200 dark:bg-gray-600" : "")
+                          }
+                        >
+                          <p className="dark:text-white">{nutrient.name}</p>
+                          <p className="dark:text-white">
+                            {nutrient.amount} {nutrient.units}
+                          </p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                <div className="flex flex-row justify-end w-full gap-4 max-w-9 h-fit items-right lg:flex-col">
+                  <FontAwesomeIcon
+                    className={
+                      "w-10 h-10 aspect-square text-neutral-900 dark:text-white cursor-pointer " +
+                      (favorited ? "text-rose-500 dark:text-rose-500" : "hover:text-rose-500 dark:hover:text-rose-500")
+                    }
+                    onClick={favorited ? unfavoriteIngredient : favoriteIngredient}
+                    icon={faBookmark}
+                  />
+                  <FontAwesomeIcon
+                    className="w-10 h-10 cursor-pointer text-neutral-900 dark:text-white aspect-square hover:text-green-500 dark:hover:text-green-500"
+                    icon={faScaleUnbalanced}
+                  />
                 </div>
               </div>
 
-              <div className="flex flex-row justify-end w-full gap-4 max-w-9 h-fit items-right lg:flex-col">
-                <FontAwesomeIcon
-                  className={
-                    "h-5 w-5 aspect-square cursor-pointer " +
-                    (favorited ? "text-rose-500" : "hover:text-rose-500")
-                  }
-                  onClick={favorited ? unfavoriteIngredient : favoriteIngredient}
-                  icon={faBookmark}
-                />
-                <FontAwesomeIcon
-                  className="w-5 h-5 cursor-pointer aspect-square hover:text-green-500"
-                  icon={faScaleUnbalanced}
-                />
-              </div>
-            </div>
-
-            <div className="flex flex-col items-center gap-10 p-10">
-              <div className="flex flex-col gap-2 p-5 bg-white rounded-lg shadow-sm w-max">
-                <h3 className="mb-4 text-2xl font-medium text-gray-600">
-                  Recipes with this ingredient
-                </h3>
-                <div className="flex flex-row flex-wrap gap-2">
-                  {RecipeCard({
-                    recipe: {
-                      name: "Recipe 1",
-                      description: "Description 1",
-                      imgSrc: "https://via.placeholder.com/150",
-                    },
-                  })}
-                  {RecipeCard({
-                    recipe: {
-                      name: "Recipe 2",
-                      description: "Description 2",
-                      imgSrc: "https://via.placeholder.com/150",
-                    },
-                  })}
-                  {RecipeCard({
-                    recipe: {
-                      name: "Recipe 3",
-                      description: "Description 3",
-                      imgSrc: "https://via.placeholder.com/150",
-                    },
-                  })}
+              <div className="flex flex-col items-center gap-10 p-10 lg:flex-row">
+                <div className="flex flex-col gap-2 p-5 bg-white shadow-sm dark:bg-neutral-800 rounded-[15px] w-max" style={{ boxShadow: "0px 3.5px 5.499999523162842px 0 rgba(0,0,0,0.02)" }}>
+                  <h3 className="mb-4 text-2xl font-bold text-[#2d3748] dark:text-white">
+                    Recipes with this ingredient
+                  </h3>
+                  <div className="flex flex-row flex-wrap gap-2 ">
+                    {RecipeCard({
+                      recipe: {
+                        name: "Recipe 1",
+                        description: "Description 1",
+                        imgSrc: "https://via.placeholder.com/150",
+                      },
+                    })}
+                    {RecipeCard({
+                      recipe: {
+                        name: "Recipe 2",
+                        description: "Description 2",
+                        imgSrc: "https://via.placeholder.com/150",
+                      },
+                    })}
+                    {RecipeCard({
+                      recipe: {
+                        name: "Recipe 3",
+                        description: "Description 3",
+                        imgSrc: "https://via.placeholder.com/150",
+                      },
+                    })}
+                  </div>
                 </div>
-              </div>
 
-              <div className="flex flex-col gap-2 p-5 bg-white rounded-lg shadow-sm w-max">
-                <h3 className="mb-4 text-2xl font-medium text-gray-600">
-                  Similar ingredients
-                </h3>
-                <div className="flex flex-row flex-wrap gap-2">
-                  {IngredientCard({
-                    product: {
-                      name: "Product 1",
-                      description: "Description 1",
-                      imgSrc: "https://via.placeholder.com/150",
-                    },
-                  })}
-                  {IngredientCard({
-                    product: {
-                      name: "Product 2",
-                      description: "Description 2",
-                      imgSrc: "https://via.placeholder.com/150",
-                    },
-                  })}
+                <div className="flex flex-col gap-2 p-5 bg-white shadow-sm dark:bg-neutral-800 rounded-[15px] w-max" style={{ boxShadow: "0px 3.5px 5.499999523162842px 0 rgba(0,0,0,0.02)" }}>
+                  <h3 className="mb-4 text-2xl font-bold text-[#2d3748] dark:text-white">
+                    Similar ingredients
+                  </h3>
+                  <div className="flex flex-row flex-wrap gap-2">
+                    {IngredientCard({
+                      product: {
+                        name: "Product 1",
+                        description: "Description 1",
+                        imgSrc: "https://via.placeholder.com/150",
+                      },
+                    })}
+                    {IngredientCard({
+                      product: {
+                        name: "Product 2",
+                        description: "Description 2",
+                        imgSrc: "https://via.placeholder.com/150",
+                      },
+                    })}
+                  </div>
                 </div>
               </div>
             </div>
