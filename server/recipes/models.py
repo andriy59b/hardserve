@@ -28,3 +28,9 @@ class Recipe_Equipment(models.Model):
     equipment_id = models.IntegerField()
     equipment = models.CharField(max_length=255)
     image = models.ImageField(null=True, blank=True)
+
+class RecipeNutrition(models.Model):
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    calories = models.IntegerField()
+    protein = models.IntegerField()
+    fat = models.IntegerField()
