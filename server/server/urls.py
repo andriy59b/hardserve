@@ -25,3 +25,5 @@ urlpatterns = [
     path('recipes/', include('recipes.urls')),
     path('', include('Profile.urls')),
 ]
+
+
