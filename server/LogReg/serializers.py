@@ -38,5 +38,22 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
+
+        user.is_active = False
+        user.save()
+
         return user
+    
+class UserGoogleUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('gender', 'age', 'height', 'weight')
+
+    def update(self, instance, validated_data):
+        instance.gender = validated_data.get('gender', instance.gender)
+        instance.age = validated_data.get('age', instance.age)
+        instance.height = validated_data.get('height', instance.height)
+        instance.weight = validated_data.get('weight', instance.weight)
+        instance.save()
+        return instance
 
