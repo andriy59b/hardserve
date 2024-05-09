@@ -22,39 +22,54 @@ const checkBoxStyle =
   "p-2 rounded-lg shadow bg-white w-fit h-fit ring-green-500 hover:ring-2";
 
 function RecipeCard({ recipe }) {
-  return (
-    <div className="px-2 py-4 bg-white dark:bg-neutral-800 shadow-sm cursor-pointer w-72 rounded-xl">
-      <div className="relative flex flex-col items-center" onClick={() => (window.location.href += "/" + recipe.id)}>
-        <img className="w-full mb-4 -mt-2 rounded" src={recipe.image} alt="Recipe" />
-      </div>
+    return (
+        
+        <div className="px-2 py-4 bg-white shadow-sm cursor-pointer dark:bg-neutral-800 w-72 rounded-xl" >
 
-      <div className="relative flex flex-col items-left">
-        <p className="text-xs font-light text-left pl-2 text-gray-600 dark:text-gray-400">{recipe.date}</p>
-      </div>
+            <div className="relative flex flex-col items-center " onClick={() => window.location.href += "/" + recipe.id}>
+                <img className="w-full mb-4 -mt-2 rounded" src={recipe.image} alt="Recipe" />
+            </div>
 
-      <div className="relative flex flex-col pl-1 pr-1" onClick={() => (window.location.href += "/" + recipe.id)}>
-        <div className="flex justify-between p-1">
-          <h3 className="text-xl font-bold dark:text-[#fefdfd]">{recipe.name}</h3>
-          {/* <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-green-700 bg-green-100 dark:bg-green-700 dark:text-green-100 rounded-md ring-1 ring-inset ring-green-50 dark:ring-green-700">{recipe.category}</p> */}
-        </div>
-        <div className="p-1 macros">
-          <div className="flex justify-between gap-2">
-            <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 dark:bg-gray-600 bg-gray-100 dark:text-gray-100 rounded-md ring-1 ring-inset ring-gray-100 dark:ring-gray-600">P: {recipe.proteins}g</p>
-            <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 dark:bg-gray-600 bg-gray-100 dark:text-gray-100 rounded-md ring-1 ring-inset ring-gray-100 dark:ring-gray-600">F: {recipe.fats}g</p>
-            <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 dark:bg-gray-600 bg-gray-100 dark:text-gray-100 rounded-md ring-1 ring-inset ring-gray-100 dark:ring-gray-600">C: {recipe.carbs}g</p>
-          </div>
-          <div className="flex flex-wrap justify-between gap-2 pt-2">
-            <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 dark:bg-gray-600 bg-gray-100 dark:text-gray-100 rounded-md ring-1 ring-inset ring-gray-100 dark:ring-gray-600">Calories: {recipe.calories}kcal</p>
-            <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 dark:bg-gray-600 bg-gray-100 dark:text-gray-100 rounded-md ring-1 ring-inset ring-gray-100 dark:ring-gray-600">Cuisine: {recipe.cuisine}</p>
-            <div className="flex items-center">
-              {[...Array(5)].map((_, index) => (
-                <svg key={index} className="w-3 h-3 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                  <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
-                </svg>
-              ))}
-              <p className="text-xs font-medium text-gray-500 ms-1 dark:text-gray-400">{recipe.points}</p>
-              <p className="text-xs font-medium text-gray-500 ms-1 dark:text-gray-400">out of</p>
-              <p className="text-xs font-medium text-gray-500 ms-1 dark:text-gray-400">5</p>
+            <div className="relative flex flex-col items-left" >
+                <p className="pl-2 text-xs font-light text-left text-gray-600 dark:text-gray-400" >{recipe.date}</p>
+            </div>
+
+            <div className="relative flex flex-col pl-1 pr-1 " onClick={() => window.location.href += "/" + recipe.id}>
+                <div className="flex justify-between p-1">
+                    <h3 className="text-xl font-bold dark:text-[#fefdfd]">{recipe.name}</h3>
+                    <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-green-700 bg-green-100 rounded-md dark:bg-green-700 dark:text-green-100 ring-1 ring-inset ring-green-50 dark:ring-green-700">{recipe.category}</p>
+                </div>
+                <div className="p-1 macros">
+                    <div className="flex justify-between gap-2">
+                        <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 bg-gray-100 rounded-md dark:bg-gray-600 dark:text-gray-100 ring-1 ring-inset ring-gray-100 dark:ring-gray-600">P: {recipe.proteins}g</p>
+                        <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 bg-gray-100 rounded-md dark:bg-gray-600 dark:text-gray-100 ring-1 ring-inset ring-gray-100 dark:ring-gray-600">F: {recipe.fats}g</p>
+                        <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 bg-gray-100 rounded-md dark:bg-gray-600 dark:text-gray-100 ring-1 ring-inset ring-gray-100 dark:ring-gray-600">C: {recipe.carbs}g</p>
+                    </div>
+                    <div className="flex flex-wrap justify-between gap-2 pt-2">
+                        <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 bg-gray-100 rounded-md dark:bg-gray-600 dark:text-gray-100 ring-1 ring-inset ring-gray-100 dark:ring-gray-600">Calories: {recipe.calories}kcal</p>
+                        <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 bg-gray-100 rounded-md dark:bg-gray-600 dark:text-gray-100 ring-1 ring-inset ring-gray-100 dark:ring-gray-600">Cuisine: {recipe.cuisine}</p>
+                        <div class="flex items-center">
+                            <svg class="w-3 h-3 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                            </svg>
+                            <svg className="w-3 h-3 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                            </svg>
+                            <svg className="w-3 h-3 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                            </svg>
+                            <svg className="w-3 h-3 text-yellow-300 me-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                            </svg>
+                            <svg className="w-3 h-3 text-gray-300 me-1 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+                            </svg>
+                            <p className="text-xs font-medium text-gray-500 ms-1 dark:text-gray-400">{recipe.points}</p>
+                            <p className="text-xs font-medium text-gray-500 ms-1 dark:text-gray-400">out of</p>
+                            <p className="text-xs font-medium text-gray-500 ms-1 dark:text-gray-400">5</p>
+                        </div>
+                    </div>
+                </div>
             </div>
           </div>
         </div>
@@ -165,7 +180,36 @@ export default function Recipes({ darkMode, setDarkMode }) {
                 recipe.image = recipe.image.replace("http://localhost:8000/media/", "").replace("%3A", ":/");
                 resolve(recipe);
               });
-            });
+    }, [])
+
+    useEffect(() => {
+        fetch("http://localhost:8000/products/",
+        {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then(response => response.json()).then(data => {
+            data.products = data.products.map((product, index) => {
+                product.image = product.image.replace("http://localhost:8000/media/", "").replace("%3A", ":/");
+                return product;
+            })
+            setIngredients(data.products);
+        })
+    }, [])
+    
+
+    // function handleChange(e) {
+    //     setFilters({
+    //         ...filters,
+    //         [e.target.name]: e.target.value
+    //     });
+    // }
+
+    function handleToggle(e) {
+        setFilters({
+            ...filters,
+            [e.target.name]: e.target.checked
         });
         Promise.all(promises).then((recipes) => {
           setRecipes(recipes);

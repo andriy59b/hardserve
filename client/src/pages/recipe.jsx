@@ -16,8 +16,8 @@ function RecipeCard({recipe}) {
             <img className="rounded-lg" src={recipe.imgSrc} alt="Recipe" />
             <div>
                 <h4 className="text-lg font-medium text-gray-600 dark:text-gray-300">{recipe.name}</h4>
-                <p className="dark:text-white">{recipe.description}</p>
-                <button type="button" className="px-4 py-2 text-xs font-medium text-[#3c7e86] dark:text-[#a1f480] dark:bg-[#3c7e86]/50 bg-[#a1f480]/50 rounded-full hover:bg-green-300 dark:hover:bg-green-800">VIEW ALL</button>
+                <p className="mb-2 dark:text-white">{recipe.description}</p>
+                <button type="button" className="px-4 py-2 text-xs font-medium text-green-900 bg-green-300 rounded-full dark:bg-green-900 dark:text-green-300 hover:bg-green-200">VIEW ALL</button>
             </div>
         </div>
     )
