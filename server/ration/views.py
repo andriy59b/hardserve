@@ -13,7 +13,10 @@ def query_openai(request):
 
         completion = client.chat.completions.create(
             model="meta/llama3-70b-instruct",
-            messages=[{"role":"user","content": prompt}],
+            messages=[
+                {"role":"system","content":"You are a helpful assistant that specializes in discussing products, rations, ingredients, and related topics. You can provide information, answer questions, and offer suggestions. You do not answer on other topics. "},
+                {"role":"user","content": prompt}
+            ],
             temperature=0.5,
             top_p=1,
             max_tokens=1024,
