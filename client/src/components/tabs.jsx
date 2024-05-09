@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export function Tabs({ children, defaultTab}) {
+export function Tabs({ children, defaultTab, className}) {
     const [currentTab, setCurrentTab] = useState(defaultTab);
 
     let tabTriggers = React.Children.map(children, (child) => {
@@ -18,7 +18,7 @@ export function Tabs({ children, defaultTab}) {
     })
 
     return (
-        <div className='flex'>
+        <div className={'flex ' + className}>
             <div className="p-4 tabs-triggers-block basis-3/12">
                 {tabTriggers}
             </div>
@@ -44,7 +44,7 @@ export function TabTriggers({ children, tabUpdate, currentTab }) {
 
 export function TabTrigger({ tabUpdate, currentTab, tab, children }) {
     return (
-        <div className={"flex items-center p-2 cursor-pointer rounded-xl text-sm font-bold  " + (currentTab === tab ? "bg-white dark:text-white dark:bg-neutral-800 shadow" : "text-gray-400 ")} onClick={() => {tabUpdate(tab)}}>
+        <div className={"flex items-center min-w-fit p-2 cursor-pointer rounded-xl text-sm font-bold  " + (currentTab === tab ? "bg-white dark:text-white dark:bg-neutral-800 shadow" : "text-gray-400 ")} onClick={() => {tabUpdate(tab)}}>
             {children}
         </div>
     );

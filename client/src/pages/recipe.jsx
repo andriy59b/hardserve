@@ -136,7 +136,7 @@ export default function Recipe({darkMode, setDarkMode}) {
             </div> 
         </Modal>
         <div className={`${darkMode && "dark"}`} >
-            <div className="flex justify-center max-w-screen bg-[#fefdfd] dark:bg-neutral-900">
+            <div className="flex flex-col justify-center max-w-screen bg-[#fefdfd] dark:bg-neutral-900">
                 <div className="relative flex flex-col items-center">
                     <div className="flex flex-col items-center lg:items-start lg:flex-row h-fit bg-white dark:bg-neutral-800 border-2 dark:border-0 my-16 shadow-custom1 w-[80vw] min-w-fit max-w-full rounded-xl p-5">
                         <img className="object-contain mr-4 rounded-xl h-96" src={recipe.recipe && recipe.recipe.image} alt="Ingredient" />
@@ -173,6 +173,8 @@ export default function Recipe({darkMode, setDarkMode}) {
                     <div className="flex flex-row justify-end gap-4 p-2 lg:ml-2 min-w-9 h-fit items-right lg:flex-col">
                         <FontAwesomeIcon className={"h-5 w-5 aspect-square cursor-pointer " + (favorited ? "text-rose-500" : "hover:text-rose-500")} onClick={favorited ? unfavoriteRecipe : favoriteRecipe} icon={faHeart} />
                         <FontAwesomeIcon className="w-5 h-5 cursor-pointer aspect-square hover:text-green-500" icon={faScaleUnbalanced} />
+                    </div>
+
                     </div>
 
                     <div className="flex flex-col w-full gap-2 p-5 mx-8 bg-white rounded-lg dark:bg-neutral-800 shadow-custom1 max-w-fit">
@@ -222,7 +224,6 @@ export default function Recipe({darkMode, setDarkMode}) {
                 </div>
             </div>
         </div>
-    </div>
     </div>
     )
 }

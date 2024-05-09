@@ -20,4 +20,18 @@
       -ms-overflow-style: none;  
       scrollbar-width: none;  
   }
+
+  .no-track {
+    scrollbar-color: aqua;
+  }
+
+  .no-track::-webkit-scrollbar-track {
+    background-color: aqua;
+  }
+
+  .thumb-enabled::-webkit-slider-thumb {
+    pointer-events: all;
+    cursor: pointer;
+    background-color: red;
+  }
 }
