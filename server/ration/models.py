@@ -8,8 +8,8 @@ from recipes.models import Recipe
 from django.conf import settings
 
 user = get_user_model()
-class Profile(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='profile_gold')
-    products = models.ForeignKey(Product, on_delete=models.CASCADE)
-    recipes = models.ForeignKey(Recipe, on_delete=models.CASCADE)    
+class Profile_Gold(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='profile_gold')
+    products = models.ManyToManyField(Product, blank=True)
+    recipes = models.ManyToManyField(Recipe, blank=True)
     

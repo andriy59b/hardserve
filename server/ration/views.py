@@ -2,10 +2,22 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from openai import OpenAI
 from .models import *
+from .models import Profile_Gold
+from rest_framework import permissions
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
-def query_openai(request):
-    if request.method == 'GET':
+class QueryOpenAIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
         prompt = request.GET.get('prompt', '')
+        profile, created = Profile_Gold.objects.get_or_create(user=request.user)
+
+        favorite_products = ', '.join([product.name for product in profile.products.all()])
+        favorite_recipes = ', '.join([recipe.name for recipe in profile.recipes.all()])
+        weight_history = ', '.join([str(weight.weight) for weight in UserWeightHistory.objects.filter(user=request.user)])
 
         client = OpenAI(
             base_url = "https://integrate.api.nvidia.com/v1",
@@ -15,7 +27,7 @@ def query_openai(request):
         completion = client.chat.completions.create(
             model="meta/llama3-70b-instruct",
             messages=[
-                {"role":"system","content":"You are a helpful assistant that specializes in discussing products, rations, ingredients, and related topics. You can provide information, answer questions, and offer suggestions. You do not answer on other topics. Here`s more inforamtion about user - {user}, he`s favorite products are {products}, favorite recipes are {recipes} and his weight history is {weight_history}"},
+                {"role":"system","content": f"You are a helpful assistant that specializes in discussing products, rations, ingredients, and related topics. You can provide information, answer questions, and offer suggestions. You do not answer on other topics. Here`s more information about user - {request.user.username}, his favorite products are {favorite_products}, favorite recipes are {favorite_recipes} and his weight history is {weight_history}"},
                 {"role":"user","content": prompt}
             ],
             temperature=0.5,
@@ -29,5 +41,4 @@ def query_openai(request):
             if chunk.choices[0].delta.content is not None:
                 response_text += chunk.choices[0].delta.content
 
-        return JsonResponse({'response': response_text})
-    return JsonResponse({'error': 'Invalid HTTP method'}, status=405)
+        return Response({'response': response_text})
