@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from openai import OpenAI
 from Profile.models import *
-from .models import Profile_Gold
+from .models import *
 from .serializers import *
 from rest_framework import permissions
 from rest_framework.permissions import IsAuthenticated
