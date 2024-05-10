@@ -48,5 +48,9 @@ class QueryOpenAIView(APIView):
         return Response({'response': response_text})
     
 class RationBasicView(APIView):
-    queryset = Ration_Basic_Components.objects.all()
-    serializer_class = RationBasicComponents
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        rations = Ration_Basic.objects.all()
+        serializer = RationBasic(rations, many=True)
+        return Response(serializer.data)
