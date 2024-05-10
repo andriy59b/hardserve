@@ -13,3 +13,10 @@ class Profile_Gold(models.Model):
     products = models.ManyToManyField(Product, blank=True)
     recipes = models.ManyToManyField(Recipe, blank=True)
     
+class Ration_Basic(models.Model):
+    name = models.CharField(max_length=255)
+
+class Ration_Basic_Components(models.Model):
+    ration = models.ForeignKey(Ration_Basic, on_delete=models.CASCADE)
+    recipe = models.ManyToManyField(Recipe, blank=True)
+    meal_time = models.CharField(max_length=255)
