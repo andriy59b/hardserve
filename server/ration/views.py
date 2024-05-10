@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from openai import OpenAI
-from .models import *
+from Profile.models import *
 from .models import Profile_Gold
 from rest_framework import permissions
 from rest_framework.permissions import IsAuthenticated
@@ -13,21 +13,24 @@ class QueryOpenAIView(APIView):
 
     def get(self, request):
         prompt = request.GET.get('prompt', '')
-        profile, created = Profile_Gold.objects.get_or_create(user=request.user)
+        profile, created = Profile.objects.get_or_create(user=request.user)
+        favorites = Favorite.objects.filter(user=request.user)
 
-        favorite_products = ', '.join([product.name for product in profile.products.all()])
-        favorite_recipes = ', '.join([recipe.name for recipe in profile.recipes.all()])
-        weight_history = ', '.join([str(weight.weight) for weight in UserWeightHistory.objects.filter(user=request.user)])
-
+        favorite_products = ', '.join([favorite.product.name for favorite in favorites if favorite.product]) if favorites.exists() else "No favorite products"
+        favorite_recipes = ', '.join([favorite.recipe.name for favorite in favorites if favorite.recipe]) if favorites.exists() else "No favorite recipes"
+        weight_history = ', '.join([str(weight.weight) for weight in UserWeightHistory.objects.filter(user=request.user)]) if UserWeightHistory.objects.filter(user=request.user).exists() else "No weight history recorded"
+        
         client = OpenAI(
             base_url = "https://integrate.api.nvidia.com/v1",
             api_key = "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"
         )
 
+        system_message = f"You are a helpful assistant that specializes in discussing products, rations, ingredients, and related topics. You can provide information, answer questions, and offer suggestions. You do not answer on other topics. Here`s more information about user - {request.user.username}, his favorite products are {favorite_products}, favorite recipes are {favorite_recipes}, his weight history is {weight_history}"
+
         completion = client.chat.completions.create(
             model="meta/llama3-70b-instruct",
             messages=[
-                {"role":"system","content": f"You are a helpful assistant that specializes in discussing products, rations, ingredients, and related topics. You can provide information, answer questions, and offer suggestions. You do not answer on other topics. Here`s more information about user - {request.user.username}, his favorite products are {favorite_products}, favorite recipes are {favorite_recipes} and his weight history is {weight_history}"},
+                {"role":"system","content": system_message},
                 {"role":"user","content": prompt}
             ],
             temperature=0.5,
