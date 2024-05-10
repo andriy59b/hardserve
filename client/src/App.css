@@ -32,6 +32,15 @@
   .thumb-enabled::-webkit-slider-thumb {
     pointer-events: all;
     cursor: pointer;
-    background-color: red;
+  }
+
+  .locked {
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .locked .thumb-enabled::-webkit-slider-thumb {
+    pointer-events: none;
+    cursor: default;
   }
 }

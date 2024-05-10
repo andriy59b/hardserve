@@ -4,7 +4,7 @@ import { faTrash, faPen, faCheck, faBowlRice, faMugSaucer, faBurger } from "@for
 import { useState, useEffect } from "react"
 
 import Modal from "../../components/modal"
-import { TextField, TextArea, AcceptButton, CancelButton, DeleteButton, Select, RecipePicker, RecipeRecommendation, MultiSlider } from "../../components/formComponents"
+import { TextField, TextArea, AcceptButton, CancelButton, DeleteButton, Select, RecipePicker, RecipeRecommendation, MultiSlider, Locked } from "../../components/formComponents"
 import { Tabs, TabTriggers, TabTrigger, TabsContent, TabContent } from "../../components/tabs"
 
 const demoPlans = [
@@ -119,11 +119,15 @@ export default function Plans() {
     return (
         <>
             <Modal isOpen={addModal} title="Add Plan" onClose={() => {setAddModal(false)}}>
-                <TextField placeholder="Name" />
-                <MultiSlider className="mb-4" label="Calories distributuion" min={1} max={100} step={1} value={test} onChange={setTest} constaints={[10, 10, 10, 10]} colors={["bg-green-400", "bg-amber-400", "bg-violet-400", "bg-red-400"]} />
-                <Select className="mb-4" label="Select your goal" options={["Lose weight", "Eat healthy", "Gain weight"]} />
+                <Locked locked label="Purchase Gold plan to unlock">
+                    <TextField placeholder="Name" />
+                </Locked>
+                <Locked locked label="Purchase Gold plan to unlock">
+                    <MultiSlider className="mb-4" label="Calories distributuion" min={1} max={100} step={1} value={test} onChange={setTest} constaints={[10, 10, 10, 10]} colors={["bg-green-400", "bg-amber-400", "bg-violet-400", "bg-red-400"]} />
+                </Locked>
+                <Select className="mb-4 w-52" label="Select your goal" options={["Lose weight", "Eat healthy", "Gain weight"]} />
                 <div className="bg-gray-200 rounded-lg shadow-inner">
-                    <Tabs className=" w-[700px]" defaultTab="breakfast">
+                    <Tabs className=" w-[700px]" defaultTab={meals[0].name.toLowerCase()}>
                         <TabTriggers>
                             {meals.map((meal, index) => (
                                 <TabTrigger tab={meal.name.toLowerCase()} key={index}>{meal.name} <FontAwesomeIcon className="ml-1" icon={meal.icon}/></TabTrigger>

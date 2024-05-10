@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faMagnifyingGlass, faMinus, faPlus, faXmark, faPause } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faMagnifyingGlass, faMinus, faPlus, faXmark, faPause, faLock } from "@fortawesome/free-solid-svg-icons";
 
 export function TextField({label, type, name, value, onChange, placeholder, className, id}) {
     return (
@@ -90,7 +90,7 @@ export function TriStateCheckBox({label, value, onChange, className, id}) {
 
 export function Select({label, options, value, onChange, className, id}) {
     return (
-        <div className={"flex flex-col " + className}>
+        <div className={"flex m-1 flex-col " + className}>
             <label className="text-xs mb-0.5 text-gray-500">{label}</label>
             <select value={value} onChange={onChange} id={id} className="p-2 border-0 rounded-lg ring-2 ring-gray-300 focus:ring-2 focus:ring-green-500">
                 {options.map((option, index) => (
@@ -354,5 +354,16 @@ export function MultiSlider({value, onChange, min, max, constaints, colors, labe
                 </div>
             </div>
         </>
+    )
+}
+
+export function Locked({locked, label, children}) {
+    return (
+        <div className={locked ? "my-2 opacity-50 bg-gray-300 px-2 pt-2 rounded-lg shadow-lg locked" : ""}>
+            {locked && <label className="text-xs text-gray-500"><FontAwesomeIcon icon={faLock}/> {label}</label>}
+            <div>
+                {children}
+            </div>
+        </div>
     )
 }

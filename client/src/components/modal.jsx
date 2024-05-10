@@ -15,7 +15,7 @@ export default function Modal({children, isOpen, onClose, title, className}) {
                 { onClose &&
                     <FontAwesomeIcon icon={faX} className="absolute top-0 right-0 h-4 p-1 m-2 text-white bg-red-500 rounded-md cursor-pointer aspect-square" onClick={onClose}/>
                 }
-                <div className='h-full p-2 overflow-y-scroll no-scrollbar'>
+                <div className='h-full max-h-[80vh] p-2 overflow-y-auto no-scrollbar'>
                     {children}
                 </div>
             </div>
