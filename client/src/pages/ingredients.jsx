@@ -18,16 +18,17 @@ function IngredientCard({ingredient, darkMode}){
             <img className="object-contain w-full mt-2 mb-4 rounded-xl max-h-52" src={ingredient.image} alt="Ingredient" />
             <div className="flex items-center gap-2 mt-auto">
                 <h3 className={`text-xl font-bold ${darkMode ? 'dark:text-white' : ''}`}>{ingredient.name}</h3>
-                <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-green-700 bg-green-100 dark:bg-green-700 dark:text-green-100 rounded-md ring-1 ring-inset ring-green-50 dark:ring-green-700">{ingredient.category}</p>
+                <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-green-700 bg-green-100 rounded-md dark:bg-green-700 dark:text-green-100 ring-1 ring-inset ring-green-50 dark:ring-green-700">{ingredient.category}</p>
             </div>
             <div className="p-2 macros">
                 <div className="flex justify-center gap-2">
-                    <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 dark:bg-gray-600 bg-gray-100 dark:text-gray-100 rounded-md ring-1 ring-inset ring-gray-100 dark:ring-gray-600">P: {ingredient.proteins}g</p>
-                    <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 dark:bg-gray-600 bg-gray-100 dark:text-gray-100 rounded-md ring-1 ring-inset ring-gray-100 dark:ring-gray-600">F: {ingredient.fats}g</p>
-                    <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 dark:bg-gray-600 bg-gray-100 dark:text-gray-100 rounded-md ring-1 ring-inset ring-gray-100 dark:ring-gray-600">C: {ingredient.carbs}g</p>
+                    <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 bg-gray-100 rounded-md dark:bg-gray-600 dark:text-gray-100 ring-1 ring-inset ring-gray-100 dark:ring-gray-600">P: {ingredient.proteins}g</p>
+                    <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 bg-gray-100 rounded-md dark:bg-gray-600 dark:text-gray-100 ring-1 ring-inset ring-gray-100 dark:ring-gray-600">F: {ingredient.fats}g</p>
+                    <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 bg-gray-100 rounded-md dark:bg-gray-600 dark:text-gray-100 ring-1 ring-inset ring-gray-100 dark:ring-gray-600">C: {ingredient.carbs}g</p>
                 </div>
             </div>
         </div>
+    </div>
     );
 }
 

@@ -72,9 +72,6 @@ function RecipeCard({ recipe }) {
                 </div>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
   );
 }
 
@@ -164,22 +161,12 @@ export default function Recipes({ darkMode, setDarkMode }) {
     })
       .then((response) => response.json())
       .then((data) => {
-        const promises = data.recipes.map((recipe) => {
-          return fetch("http://localhost:8000/recipes/" + recipe.id + "/", {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              return new Promise((resolve, reject) => {
-                recipe.recipe_ingredients = data.recipe_ingredients.map(
-                  (ingredient) => ingredient.ingredient_id
-                );
-                recipe.image = recipe.image.replace("http://localhost:8000/media/", "").replace("%3A", ":/");
-                resolve(recipe);
-              });
+        data.recipes = data.recipes.map((recipe, index) => {
+          recipe.image = recipe.image.replace("http://localhost:8000/media/", "").replace("%3A", ":/");
+          return recipe;
+        });
+        setRecipes(data.recipes);
+      });
     }, [])
 
     useEffect(() => {
@@ -205,34 +192,6 @@ export default function Recipes({ darkMode, setDarkMode }) {
     //         [e.target.name]: e.target.value
     //     });
     // }
-
-    function handleToggle(e) {
-        setFilters({
-            ...filters,
-            [e.target.name]: e.target.checked
-        });
-        Promise.all(promises).then((recipes) => {
-          setRecipes(recipes);
-        });
-      });
-  }, []);
-
-  useEffect(() => {
-    fetch("http://localhost:8000/products/", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        data.products = data.products.map((product, index) => {
-          product.image = product.image.replace("http://localhost:8000/media/", "").replace("%3A", ":/");
-          return product;
-        });
-        setIngredients(data.products);
-      });
-  }, []);
 
   function handleToggle(e) {
     setFilters({
