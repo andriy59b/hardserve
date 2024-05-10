@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from openai import OpenAI
 from Profile.models import *
 from .models import Profile_Gold
+from .serializers import *
 from rest_framework import permissions
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
@@ -45,3 +46,7 @@ class QueryOpenAIView(APIView):
                 response_text += chunk.choices[0].delta.content
 
         return Response({'response': response_text})
+    
+class RationBasicView(APIView):
+    queryset = Ration_Basic_Components.objects.all()
+    serializer_class = RationBasicComponents
