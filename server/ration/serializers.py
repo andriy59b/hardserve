@@ -12,3 +12,13 @@ class RationBasic(serializers.ModelSerializer):
     class Meta:
         model = Ration_Basic
         fields = ['id', 'name', 'components']
+
+class ProfileBasicSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile_Basic
+        fields = ['user', 'ration']
+
+class RationBasicSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Ration_Basic
+        fields = '__all__'
