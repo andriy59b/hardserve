@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPen, faHeart, faBookmark, faScaleUnbalanced, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPen, faHeart, faBookmark, faScaleUnbalanced, faTrash, faCrown } from '@fortawesome/free-solid-svg-icons';
 
 import { useState, useEffect } from 'react';
 
@@ -159,10 +159,11 @@ export default function UserBar() {
                     <h1 className="text-xl font-bold dark:text-white">{displayName}</h1>
                     <p className="text-sm text-gray-400">{email}</p>
                 </div>
-                <FontAwesomeIcon onClick={() => {setFavoritedRecipesModal(true)}} icon={faHeart} className='h-6 p-2 mr-2 text-sm text-red-500 bg-white dark:bg-neutral-900 shadow dark:shadow-custom1 cursor-pointer aspect-square rounded-xl hover:text-red-700 hover:bg-gray-200' />
-                <FontAwesomeIcon icon={faScaleUnbalanced} className='h-6 p-2 mr-2 text-sm text-green-500 bg-white dark:bg-neutral-900 shadow dark:shadow-custom1 cursor-pointer aspect-square rounded-xl hover:text-green-700 hover:bg-gray-200' />
-                <FontAwesomeIcon onClick={() => {setFavoritedIngredientsModal(true)}} icon={faBookmark} className='h-6 p-2 mr-2 text-sm text-red-500 bg-white dark:bg-neutral-900 shadow dark:shadow-custom1 cursor-pointer aspect-square rounded-xl hover:text-red-700 hover:bg-gray-200' />
-                <button onClick={Quit} className="w-20 h-10 p-2 mr-2 text-sm font-bold text-white dark:text-neutral-900 bg-red-500 shadow hover:bg-red-700 rounded-xl">Quit</button>
+                <FontAwesomeIcon onClick={() => {setFavoritedRecipesModal(true)}} icon={faHeart} className='h-6 p-2 mr-2 text-sm text-red-500 bg-white shadow cursor-pointer dark:bg-neutral-900 dark:shadow-custom1 aspect-square rounded-xl hover:text-red-700 hover:bg-gray-200' />
+                <FontAwesomeIcon icon={faScaleUnbalanced} className='h-6 p-2 mr-2 text-sm text-green-500 bg-white shadow cursor-pointer dark:bg-neutral-900 dark:shadow-custom1 aspect-square rounded-xl hover:text-green-700 hover:bg-gray-200' />
+                <FontAwesomeIcon onClick={() => {setFavoritedIngredientsModal(true)}} icon={faBookmark} className='h-6 p-2 mr-2 text-sm text-red-500 bg-white shadow cursor-pointer dark:bg-neutral-900 dark:shadow-custom1 aspect-square rounded-xl hover:text-red-700 hover:bg-gray-200' />
+                <FontAwesomeIcon icon={faCrown} onClick={() => {window.location.href += "/subscriptions"}} className='h-6 p-2 mr-2 text-sm text-yellow-500 bg-white shadow cursor-pointer dark:bg-neutral-900 dark:shadow-custom1 aspect-square rounded-xl hover:text-yellow-700 hover:bg-gray-200' />
+                <button onClick={Quit} className="w-20 h-10 p-2 mr-2 text-sm font-bold text-white bg-red-500 shadow dark:text-neutral-900 hover:bg-red-700 rounded-xl">Quit</button>
             </div>
         </div>
     );
