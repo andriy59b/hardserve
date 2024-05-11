@@ -8,6 +8,8 @@ from rest_framework import permissions
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework import status
+from rest_framework.generics import ListAPIView
 
 class QueryOpenAIView(APIView):
     permission_classes = [IsAuthenticated]
@@ -54,3 +56,43 @@ class RationBasicView(APIView):
         rations = Ration_Basic.objects.all()
         serializer = RationBasic(rations, many=True)
         return Response(serializer.data)
+    
+class ProfileBasicView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, ration_id):
+        try:
+            ration = Ration_Basic.objects.get(pk=ration_id)
+        except Ration_Basic.DoesNotExist:
+            return Response({"error": "Ration with given id does not exist."}, status=400)
+
+        if Profile_Basic.objects.filter(user=request.user, ration=ration).exists():
+            return Response({"error": "This ration has already been added for the user."}, status=400)
+
+        profile = Profile_Basic.objects.create(user=request.user, ration=ration) 
+        print(f"Profile: {profile}")  
+        profile.save()  
+        serializer = ProfileBasicSerializer(profile)
+        return Response(serializer.data, status=201)
+    
+    def delete(self, request, ration_id):
+        try:
+            ration = Ration_Basic.objects.get(pk=ration_id)
+        except Ration_Basic.DoesNotExist:
+            return Response({"error": "Ration with given id does not exist."}, status=status.HTTP_400_BAD_REQUEST)
+
+        profile = Profile_Basic.objects.filter(user=request.user, ration=ration)
+        if not profile.exists():
+            return Response({"error": "This ration is not associated with the user."}, status=status.HTTP_400_BAD_REQUEST)
+
+        profile.delete()
+        return Response({"message": "Ration successfully removed from the user."}, status=status.HTTP_204_NO_CONTENT)
+
+class UserBasicRationsView(ListAPIView):
+    serializer_class = RationBasicSerializer  
+
+    def get_queryset(self):
+        user = self.request.user
+        return Ration_Basic.objects.filter(profile_basic__user=user)
+    
+
