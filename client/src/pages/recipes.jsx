@@ -1,16 +1,25 @@
 import React, { useState, useEffect } from "react";
-
 import Modal from "../components/modal";
 import Navbar from "../components/navbar";
-import { SearchBar, CheckBox, TriStateCheckBox, CancelButton, IngredientPicker, BadgeToggle } from "../components/formComponents";
-
+import {
+  SearchBar,
+  CheckBox,
+  TriStateCheckBox,
+  CancelButton,
+  IngredientPicker,
+  BadgeToggle,
+} from "../components/formComponents";
 import Pagination from "../components/pagination";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowsRotate, faCarrot, faFilter, faHeart } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowsRotate,
+  faCarrot,
+  faFilter,
+  faHeart,
+} from "@fortawesome/free-solid-svg-icons";
 
-const checkBoxStyle = "p-2 rounded-lg shadow bg-white w-fit h-fit ring-green-500 hover:ring-2";
-
+const checkBoxStyle =
+  "p-2 rounded-lg shadow bg-white w-fit h-fit ring-green-500 hover:ring-2";
 
 function RecipeCard({ recipe }) {
     return (
@@ -62,94 +71,103 @@ function RecipeCard({ recipe }) {
                     </div>
                 </div>
             </div>
-        </div>
-    );
+          </div>
+  );
 }
 
-function IngredientCheckBox({ingredient, setIncludedIngredients, setExcludedIngredients, includedIngredients, excludedIngredients}){
-    const [value, setValue] = useState(null);
-    const id = ingredient.product_id;
+function IngredientCheckBox({
+  ingredient,
+  setIncludedIngredients,
+  setExcludedIngredients,
+  includedIngredients,
+  excludedIngredients,
+}) {
+  const [value, setValue] = useState(null);
+  const id = ingredient.product_id;
 
-    useEffect(() => {
-        if (value === null) {
-            setIncludedIngredients(includedIngredients.filter(ing => ing !== id));
-            setExcludedIngredients(excludedIngredients.filter(ing => ing !== id));
-        } else if (value) {
-            setIncludedIngredients([...includedIngredients, id]);
-            setExcludedIngredients(excludedIngredients.filter(ing => ing !== id));
-        } else {
-            setExcludedIngredients([...excludedIngredients, id]);
-            setIncludedIngredients(includedIngredients.filter(ing => ing !== id));
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [value])
-
-    return (
-        <TriStateCheckBox value={value} onChange={setValue} className={checkBoxStyle} label={ingredient.name} id={ingredient.name}/>
-    )
-}
-
-
-export default function Recipes({darkMode, setDarkMode}) {
-    const [recipes, setRecipes] = useState([]);
-    const [filteredRecipes, setFilteredRecipes] = useState([]);
-    const [search, setSearch] = useState("");
-    const [filterModal, setFilterModal] = useState(false);
-    const [ingredientsModal, setIngredientsModal] = useState(false);
-    const [ingredients, setIngredients] = useState([]);
-    const [onlyFavorites, setOnlyFavorites] = useState(false);
-    const [favoritedIngredients, setFavoritedIngredients] = useState([]);
-    const [selectedIngredients, setSelectedIngredients] = useState([]);
-    const [includedIngredients, setIncludedIngredients] = useState([]);
-    const [excludedIngredients, setExcludedIngredients] = useState([]);
-    const [filters, setFilters] = useState({
-        vegan: false,
-        vegetarian: false,
-        glutenFree: false,
-        dairyFree: false,
-        lowFodmap: false,
-        veryHealthy: false,
-    });
-    const [username, password] = [
-        localStorage.getItem("username"),
-        localStorage.getItem("password"),
-    ];
-
-    useEffect(() => {
-        fetch('http://localhost:8000/favorites/', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Basic ' + btoa(username + ':' + password),
-            },
-        }).catch((error) => {
-            console.error('Error:', error);
-        }
-        ).then(response => response.json()).then(data => {
-            if (data.detail) {
-                return
-            }
-            data = data.map((el) => {
-                el.product.image = el.product.image.replace("/media/", "").replace("%3A", ":/");
-                return el;
-            })
-            setFavoritedIngredients(data.map(record => record.product));
-        })
-    }, [username, password])
-
-
-    useEffect(() => {
-        fetch("http://localhost:8000/recipes/",
-        {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        }).then(response => response.json()).then(data => {
-            setRecipes(data.recipes)
-        })
+  useEffect(() => {
+    if (value === null) {
+      setIncludedIngredients(includedIngredients.filter((ing) => ing !== id));
+      setExcludedIngredients(excludedIngredients.filter((ing) => ing !== id));
+    } else if (value) {
+      setIncludedIngredients([...includedIngredients, id]);
+      setExcludedIngredients(excludedIngredients.filter((ing) => ing !== id));
+    } else {
+      setExcludedIngredients([...excludedIngredients, id]);
+      setIncludedIngredients(includedIngredients.filter((ing) => ing !== id));
     }
-    , [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value]);
+
+  return <TriStateCheckBox value={value} onChange={setValue} className={checkBoxStyle} label={ingredient.name} id={ingredient.name} />;
+}
+
+export default function Recipes({ darkMode, setDarkMode }) {
+  const [recipes, setRecipes] = useState([]);
+  const [filteredRecipes, setFilteredRecipes] = useState([]);
+  const [search, setSearch] = useState("");
+  const [filterModal, setFilterModal] = useState(false);
+  const [ingredientsModal, setIngredientsModal] = useState(false);
+  const [ingredients, setIngredients] = useState([]);
+  const [onlyFavorites, setOnlyFavorites] = useState(false);
+  const [favoritedIngredients, setFavoritedIngredients] = useState([]);
+  const [selectedIngredients, setSelectedIngredients] = useState([]);
+  const [includedIngredients, setIncludedIngredients] = useState([]);
+  const [excludedIngredients, setExcludedIngredients] = useState([]);
+  const [filters, setFilters] = useState({
+    vegan: false,
+    vegetarian: false,
+    glutenFree: false,
+    dairyFree: false,
+    lowFodmap: false,
+    veryHealthy: false,
+  });
+  const [username, password] = [
+    localStorage.getItem("username"),
+    localStorage.getItem("password"),
+  ];
+
+
+  useEffect(() => {
+    fetch("http://localhost:8000/favorites/", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Basic " + btoa(username + ":" + password),
+      },
+    })
+      .catch((error) => {
+        console.error("Error:", error);
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.detail) {
+          return;
+        }
+        data = data.map((el) => {
+          el.product.image = el.product.image.replace("/media/", "").replace("%3A", ":/");
+          return el;
+        });
+        setFavoritedIngredients(data.map((record) => record.product));
+      });
+  }, [username, password]);
+
+  useEffect(() => {
+    fetch("http://localhost:8000/recipes/", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        data.recipes = data.recipes.map((recipe, index) => {
+          recipe.image = recipe.image.replace("http://localhost:8000/media/", "").replace("%3A", ":/");
+          return recipe;
+        });
+        setRecipes(data.recipes);
+      });
+    }, [])
 
     useEffect(() => {
         fetch("http://localhost:8000/products/",
@@ -175,133 +193,125 @@ export default function Recipes({darkMode, setDarkMode}) {
     //     });
     // }
 
-    function handleToggle(e) {
-        setFilters({
-            ...filters,
-            [e.target.name]: e.target.checked
-        });
-    }
+  function handleToggle(e) {
+    setFilters({
+      ...filters,
+      [e.target.name]: e.target.checked,
+    });
+  }
 
-    function handleSearch(e) {
-        setSearch(e.target.value);
-    }
+  function handleSearch(e) {
+    setSearch(e.target.value);
+  }
 
-    function ResetFilters(){
-        setFilters({
-            vegan: false,
-            vegetarian: false,
-            glutenFree: false,
-            dairyFree: false,
-            lowFodmap: false,
-            veryHealthy: false,
-        });
-    }
+  function ResetFilters() {
+    setFilters({
+      vegan: false,
+      vegetarian: false,
+      glutenFree: false,
+      dairyFree: false,
+      lowFodmap: false,
+      veryHealthy: false,
+    });
+  }
 
-    function ResetIngredients(){
-        setSelectedIngredients([]);
-        setIncludedIngredients([]);
-        setExcludedIngredients([]);
-    
-    }
+  function ResetIngredients() {
+    setSelectedIngredients([]);
+    setIncludedIngredients([]);
+    setExcludedIngredients([]);
+  }
 
-    useEffect(() => {
-        setFilteredRecipes(recipes.filter(recipe => {
-            if (!includedIngredients.every(ingredient => (
-                recipe.ingredient_ids.includes(ingredient)
-            ))) return false;
-            if (excludedIngredients.some(ingredient => (
-                recipe.ingredient_ids.includes(ingredient)
-            ))) return false;
-            for (const [key, value] of Object.entries(filters)) {
-                if (value && !recipe.categories.map(category => category.name).includes(key)) return false;
-            }
-            return true;
-        }));
-    }, [filters, recipes, includedIngredients, excludedIngredients])
-
-    function FilterModal(){
-        return (
-            <Modal className="relative select-none w-96" isOpen={filterModal} onClose={() => {setFilterModal(false)}}>
-                <h1 className="pb-2 text-2xl font-bold text-center">Filters</h1>
-                <div className="flex flex-col relative items-center overflow-auto no-scrollbar max-h-[80vh]">
-                    <div className="p-2 bg-gray-300 shadow-inner w-fit rounded-xl">
-                        <h4 className="mb-3 text-lg font-bold text-center bg-white rounded-lg shadow-inner">Dietary Restrictions</h4>
-                        <div className="grid grid-cols-2 gap-2 ">
-                            <CheckBox className={checkBoxStyle} label="Vegan" value={filters.vegan} onChange={handleToggle} name="vegan" id="vegan"/>
-                            <CheckBox className={checkBoxStyle} label="Vegetarian" value={filters.vegetarian} onChange={handleToggle} name="vegetarian" id="vegetarian"/>
-                            <CheckBox className={checkBoxStyle} label="Gluten Free" value={filters.glutenFree} onChange={handleToggle} name="glutenFree" id="glutenFree"/>
-                            <CheckBox className={checkBoxStyle} label="Dairy Free" value={filters.dairyFree} onChange={handleToggle} name="dairyFree" id="dairyFree"/>
-                            <CheckBox className={checkBoxStyle} label="Low Fodmap" value={filters.lowFodmap} onChange={handleToggle} name="lowFodmap" id="lowFodmap"/>
-                            <CheckBox className={checkBoxStyle} label="Very Healthy" value={filters.veryHealthy} onChange={handleToggle} name="veryHealthy" id="veryHealthy"/>
-                        </div>
-                    </div>
-                </div>
-                <CancelButton onClick={ResetFilters} className="w-full mt-5">Reset Filters</CancelButton>
-            </Modal>
-        )
-    }
-
-    const toggleDarkMode = () => {
-        const newDarkMode = !darkMode;
-        setDarkMode(newDarkMode);
-        localStorage.setItem('darkMode', newDarkMode); // Зберігаємо нове значення в локальному сховищі
-    }
-
-    return (
-
-        <>
-            <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
-            <div className={`flex flex-col items-center p-4 ${darkMode && "dark"}`} >
-                <div className="flex flex-col items-center p-4 bg-[#fefdfd] dark:bg-neutral-900">
-                    <FilterModal />
-                    <Modal className="relative select-none w-96 h-96" isOpen={ingredientsModal} onClose={() => {setIngredientsModal(false)}}>
-                        <div className="flex flex-col h-full">
-                            <h1 className="pb-2 text-2xl font-bold text-center">Ingredients</h1>
-                            <IngredientPicker className="" ingredients={onlyFavorites ? favoritedIngredients : ingredients} selected={selectedIngredients} setSelected={setSelectedIngredients} />
-                            { username && password ? 
-
-                            <BadgeToggle value={onlyFavorites} onChange={setOnlyFavorites} className="mt-1 ml-4" label="Included Ingredients">
-                                <FontAwesomeIcon icon={faHeart} /> Favorites
-                            </BadgeToggle>
-
-                            : null }
-
-                            <div className="flex flex-wrap h-40 gap-2 p-2 mt-5 overflow-y-auto border-2 border-gray-300 border-dashed rounded-lg shadow-inner">
-                                {selectedIngredients.map((ingredient, index) => (
-
-                                    <IngredientCheckBox 
-                                        includedIngredients={includedIngredients} 
-                                        excludedIngredients={excludedIngredients} 
-                                        setExcludedIngredients={setExcludedIngredients}
-                                        setIncludedIngredients={setIncludedIngredients}
-                                        ingredient={ingredient} 
-                                        key={index}/>
-
-                                ))}
-                            </div>
-                            <CancelButton onClick={ResetIngredients} className="w-full mt-auto">Reset Ingredients</CancelButton>
-                        </div>
-                    </Modal>
-                    <h1 className="pb-5 text-4xl font-bold text-center">Recipes</h1>
-                    <div className="flex flex-col items-center w-[40rem] max-w-[70vw] dark:text-[#fefdfd]">
-                        <SearchBar darkMode={darkMode} className="w-full" type="text" value={search} onChange={handleSearch} placeholder="Search..."/>
-                        <div className="flex flex-wrap justify-start w-full gap-4 p-2 mx-5">
-                            <p onClick={() => {setFilterModal(true)}} className="text-sm font-bold text-gray-500 cursor-pointer hover:text-green-500"><FontAwesomeIcon icon={ faFilter }/> Filters</p>
-                            <p onClick={() => {setIngredientsModal(true)}} className="text-sm font-bold text-gray-500 cursor-pointer hover:text-green-500"><FontAwesomeIcon icon={ faCarrot }/> Ingredients</p>
-                        </div>
-                    </div>
-                    <div className="flex flex-wrap justify-center w-full gap-4 p-2 mx-5">
-                        {filteredRecipes.length === 0 ? <p className="text-lg font-bold text-gray-500">
-                            <FontAwesomeIcon icon={faArrowsRotate} className="mx-1 animate-spin" /> Loading...</p> : 
-                        (<Pagination itemsPerPage={9}>
-                            {filteredRecipes.filter(recipe => recipe.name.toLowerCase().includes(search.toLowerCase())).map(recipe => (
-                                <RecipeCard key={recipe.id} recipe={recipe} />
-                            ))}
-                        </Pagination>)
-                        }
-                    </div>
-                </div>
-            </div>
-        </>
+  useEffect(() => {
+    setFilteredRecipes(
+      recipes.filter((recipe) => {
+        if (!includedIngredients.every((ingredient) => recipe.recipe_ingredients.includes(ingredient))) return false;
+        if (excludedIngredients.some((ingredient) => recipe.recipe_ingredients.includes(ingredient))) return false;
+        for (const [key, value] of Object.entries(filters)) {
+          if (value && !recipe.categories.map((category) => category.name).includes(key)) return false;
+        }
+        return true;
+      })
     );
+  }, [filters, recipes, includedIngredients, excludedIngredients]);
+
+  const toggleDarkMode = () => {
+    const newDarkMode = !darkMode;
+    setDarkMode(newDarkMode);
+    localStorage.setItem('darkMode', newDarkMode); // Зберігаємо нове значення в локальному сховищі
+};
+
+  return (
+    <>
+      <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+      <div className={darkMode && "dark"}>
+      <div className={`flex flex-col items-center dark:bg-neutral-900`}>
+        <div className="flex flex-col items-center p-4 bg-[#fefdfd] dark:bg-neutral-900">
+          <Modal className="relative select-none w-96" isOpen={filterModal} onClose={() => setFilterModal(false)}>
+            <h1 className="pb-2 text-2xl font-bold text-center">Filters</h1>
+            <div className="flex flex-col relative items-center overflow-auto no-scrollbar max-h-[80vh]">
+              <div className="p-2 bg-gray-300 shadow-inner w-fit rounded-xl">
+                <h4 className="mb-3 text-lg font-bold text-center bg-white rounded-lg shadow-inner">Dietary Restrictions</h4>
+                <div className="grid grid-cols-2 gap-2 ">
+                  <CheckBox className={checkBoxStyle} label="Vegan" value={filters.vegan} onChange={handleToggle} name="vegan" id="vegan" />
+                  <CheckBox className={checkBoxStyle} label="Vegetarian" value={filters.vegetarian} onChange={handleToggle} name="vegetarian" id="vegetarian" />
+                  <CheckBox className={checkBoxStyle} label="Gluten Free" value={filters.glutenFree} onChange={handleToggle} name="glutenFree" id="glutenFree" />
+                  <CheckBox className={checkBoxStyle} label="Dairy Free" value={filters.dairyFree} onChange={handleToggle} name="dairyFree" id="dairyFree" />
+                  <CheckBox className={checkBoxStyle} label="Low Fodmap" value={filters.lowFodmap} onChange={handleToggle} name="lowFodmap" id="lowFodmap" />
+                  <CheckBox className={checkBoxStyle} label="Very Healthy" value={filters.veryHealthy} onChange={handleToggle} name="veryHealthy" id="veryHealthy" />
+                </div>
+              </div>
+            </div>
+            <CancelButton onClick={ResetFilters} className="w-full mt-5">
+              Reset Filters
+            </CancelButton>
+          </Modal>
+          <Modal className="relative select-none w-96 h-96" isOpen={ingredientsModal} onClose={() => setIngredientsModal(false)}>
+            <div className="flex flex-col h-full">
+              <h1 className="pb-2 text-2xl font-bold text-center">Ingredients</h1>
+              <IngredientPicker className="" ingredients={onlyFavorites ? favoritedIngredients : ingredients} selected={selectedIngredients} setSelected={setSelectedIngredients} />
+              {username && password ? (
+                <BadgeToggle value={onlyFavorites} onChange={setOnlyFavorites} className="mt-1 ml-4" label="Included Ingredients">
+                  <FontAwesomeIcon icon={faHeart} /> Favorites
+                </BadgeToggle>
+              ) : null}
+              <div className="flex flex-wrap h-40 gap-2 p-2 mt-5 overflow-y-auto border-2 border-gray-300 border-dashed rounded-lg shadow-inner">
+                {selectedIngredients.map((ingredient, index) => (
+                  <IngredientCheckBox includedIngredients={includedIngredients} excludedIngredients={excludedIngredients} setExcludedIngredients={setExcludedIngredients} setIncludedIngredients={setIncludedIngredients} ingredient={ingredient} key={index} />
+                ))}
+              </div>
+              <CancelButton onClick={ResetIngredients} className="w-full mt-auto">
+                Reset Ingredients
+              </CancelButton>
+            </div>
+          </Modal>
+          <h1 className="pb-5 text-4xl font-bold text-center dark:text-white">Recipes</h1>
+          <div className="flex flex-col items-center w-[40rem] max-w-[70vw] dark:text-[#fefdfd]">
+            <SearchBar darkMode={darkMode} className="w-full" type="text" value={search} onChange={handleSearch} placeholder="Search..." />
+            <div className="flex flex-wrap justify-start w-full gap-4 p-2 mx-5">
+              <p onClick={() => setFilterModal(true)} className="text-sm font-bold text-gray-500 cursor-pointer hover:text-green-500">
+                <FontAwesomeIcon icon={faFilter} /> Filters
+              </p>
+              <p onClick={() => setIngredientsModal(true)} className="text-sm font-bold text-gray-500 cursor-pointer hover:text-green-500">
+                <FontAwesomeIcon icon={faCarrot} /> Ingredients
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-wrap justify-center w-full gap-4 p-2 mx-5">
+            {filteredRecipes.length === 0 ? (
+              <p className="text-lg font-bold text-gray-500">
+                <FontAwesomeIcon icon={faArrowsRotate} className="mx-1 animate-spin" /> Loading...
+              </p>
+            ) : (
+              <Pagination itemsPerPage={9}>
+                {filteredRecipes.filter((recipe) => recipe.name.toLowerCase().includes(search.toLowerCase())).map((recipe) => (
+                  <RecipeCard key={recipe.id} recipe={recipe} />
+                ))}
+              </Pagination>
+            )}
+          </div>
+        </div>
+      </div>
+      </div>
+    </>
+  );
 }

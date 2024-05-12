@@ -13,30 +13,22 @@ import "./ingredients.css";
 
 function IngredientCard({ingredient, darkMode}){
     return (
-        <div className={`${darkMode && "dark"}`} >
-            <div className="relative flex flex-col items-center px-2 py-4 bg-transparent bg-gray-200 shadow-lg cursor-pointer dark:shadow-custom1 w-72 rounded-xl" onClick={() => window.location.href += "/" + ingredient.id}>
-                <img className="w-full mt-2 mb-4 rounded" src="https://via.placeholder.com/150" alt="Ingredient" />
-                <div className="flex items-center gap-2">
-                    <h3 className="text-xl font-bold dark:text-white">{ingredient.name}</h3>
-                    <p className="bg-transparent macro-badge-purple">{ingredient.category}</p>
+      <div className={`${darkMode && "dark"}`} >
+        <div className={`relative flex flex-col items-center px-2 py-4 bg-transparent ${darkMode ? 'bg-gray-200 dark:bg-neutral-800' : 'bg-gray-200'} shadow-lg cursor-pointer w-72 rounded-xl`} onClick={() => window.location.href += "/" + ingredient.product_id}>
+            <img className="object-contain w-full mt-2 mb-4 rounded-xl max-h-52" src={ingredient.image} alt="Ingredient" />
+            <div className="flex items-center gap-2 mt-auto">
+                <h3 className={`text-xl font-bold ${darkMode ? 'dark:text-white' : ''}`}>{ingredient.name}</h3>
+                <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-green-700 bg-green-100 rounded-md dark:bg-green-700 dark:text-green-100 ring-1 ring-inset ring-green-50 dark:ring-green-700">{ingredient.category}</p>
+            </div>
+            <div className="p-2 macros">
+                <div className="flex justify-center gap-2">
+                    <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 bg-gray-100 rounded-md dark:bg-gray-600 dark:text-gray-100 ring-1 ring-inset ring-gray-100 dark:ring-gray-600">P: {ingredient.proteins}g</p>
+                    <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 bg-gray-100 rounded-md dark:bg-gray-600 dark:text-gray-100 ring-1 ring-inset ring-gray-100 dark:ring-gray-600">F: {ingredient.fats}g</p>
+                    <p className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 bg-gray-100 rounded-md dark:bg-gray-600 dark:text-gray-100 ring-1 ring-inset ring-gray-100 dark:ring-gray-600">C: {ingredient.carbs}g</p>
                 </div>
-                <div className="p-2 macros">
-                    <div className="flex justify-center gap-2">
-                        <p className="bg-transparent macro-badge-green">P: {ingredient.proteins}g</p>
-                        <p className="bg-transparent macro-badge-d-green">F: {ingredient.fats}g</p>
-                        <p className="bg-transparent macro-badge-brown">C: {ingredient.carbs}g</p>
-                    </div>
-                    <div className="flex flex-wrap justify-center gap-2 pt-2">
-                        <p className="bg-transparent macro-badge-purple">Glycemic index: {ingredient.glycemic_index}</p>
-                        <p className="bg-transparent macro-badge-green">Calories: {ingredient.calories}kcal</p>
-                    </div>
-                </div>
-                {/* <div className="w-full p-2 bg-transparent border-2 border-b-indigo-500 border-t-transparent border-r-transparent border-l-transparent">
-                    <p>Vitamins: {ingredient.vitamins?.join(", ")}</p>
-                    <p>Allergens: {ingredient.allergens?.join(", ")}</p>
-                </div> */}
             </div>
         </div>
+    </div>
     );
 }
 
@@ -127,12 +119,12 @@ export default function Ingredients({darkMode, setDarkMode}) {
         setCalories(0);
     }
 
-    const options = ["all", "vegetable", "fruit", "meat", "seafood", "grains", "legumes", "dairy", "spices"]
+    const options = ["all", "vegetable", "fruit", "meat", "seafood", "grains", "legumes", "dairy", "spices"];
 
     return (
         <>
-        <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode}/>
-        <div className={`${darkMode && "dark"}`} >
+            <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
+            <div className={darkMode && "dark"}>
             <Modal className="relative z-50 select-none w-96" isOpen={filterModal} onClose={() => {setFilterModal(false)}}>
                 <div className="">
                     <h2 className="text-xl font-bold">Filters</h2>
@@ -169,21 +161,19 @@ export default function Ingredients({darkMode, setDarkMode}) {
                 </div>
                 
             </Modal>
-            <main className="flex flex-col items-center">
-            <h1 className="pb-5 text-4xl font-bold text-center">Ingredients</h1>
+            <main className={`flex flex-col items-center bg-[#fefdfd] dark:bg-neutral-900`}>
+                <h1 className="pb-5 text-4xl font-bold text-center dark:text-white">Ingredients</h1>
                 <div className="w-[30rem]">
                     <SearchBar type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search..."/>
                     <div className="flex flex-wrap justify-start gap-4 p-2 mx-5">
                         <p onClick={() => {setFilterModal(true)}} className="text-sm font-bold text-gray-500 cursor-pointer hover:text-green-500"><FontAwesomeIcon icon={ faFilter }/> Filters</p>
                     </div>
                 </div>
-                <div className="container px-5 h-fit">
-                    <Pagination itemsPerPage={9}>{
-                        filteredIngredients.map((ingredient, index) => (
-                                <IngredientCard key={index} ingredient={ingredient} />
-                            )
-                        )
-                    }
+                <div className="container px-5 h-fit bg-[#fefdfd] dark:bg-neutral-900">
+                    <Pagination itemsPerPage={9}>
+                        {filteredIngredients.map((ingredient, index) => (
+                            <IngredientCard key={index} ingredient={ingredient} darkMode={darkMode} />
+                        ))}
                     </Pagination>
                 </div>
                 <Footer />
