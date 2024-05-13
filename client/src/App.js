@@ -29,7 +29,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home darkMode={darkMode} setDarkMode={setDarkMode}/>} />
-        <Route path="/about" element={<About  />} />
+        <Route path="/about" element={<About darkMode={darkMode} setDarkMode={setDarkMode}/>} />
         <Route path="/login" element={<LogIn/>} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/account" element={<AccountPage darkMode={darkMode} setDarkMode={setDarkMode}/>} />
