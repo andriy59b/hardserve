@@ -106,27 +106,32 @@ export default function Recipe({darkMode, setDarkMode}) {
     if (recipe === undefined) return <div>Loading...</div>
     else return (
         <div className="w-screen overflow-x-clip">
-            <Nav darkMode={darkMode} toggleDarkMode={toggleDarkMode}/>
-            <Modal isOpen={loginQuery} onClose={() => setLoginQuery(false)} title="Log In">
-                <div className="flex flex-col gap-4">
-                    <p>You need to login to perform this action</p>
-                    <button className='p-2 text-white bg-green-400 rounded-lg' onClick={() => {
-                        window.location.href = '/login';
-                    }
-                    }>Log In</button>
-                </div> 
-            </Modal>
-            <div className={darkMode && "dark"}>
-                <div className={`flex justify-center max-w-screen bg-[#fefdfd] dark:bg-neutral-900`}>
-                    <div className="relative flex flex-col items-center ">
-                        <div className="flex flex-col lg:flex-row items-center h-fit my-16 shadow-sm rounded-[15px] bg-white dark:bg-neutral-800 min-w-fit p-5" style={{ boxShadow: "0px 3.5px 5.499999523162842px 0 rgba(0,0,0,0.02)" }}>
-
-                            <div className="flex flex-col items-start">
-                                <h3 className="text-2xl font-bold text-[#2d3748] mb-5 dark:text-white">{recipe.recipe && recipe.recipe.name}</h3>
-                                <img className="object-contain mr-4 rounded-xl h-100 mb-2" src={recipe.recipe && recipe.recipe.image} alt="Ingredient" />
-                                <div className="flex gap-4 p-2 lg:ml-2 min-w-9 h-fit md:flex-row">
-                                    <FontAwesomeIcon className={"h-10 w-10 aspect-square cursor-pointer " + (favorited ? "text-rose-500" : "hover:text-rose-500")} onClick={favorited ? null : favoriteRecipe} icon={faHeart} />
-                                    <FontAwesomeIcon className="w-10 h-10 cursor-pointer text-neutral-900 dark:text-white aspect-square hover:text-green-500 dark:hover:text-green-500" icon={faScaleUnbalanced} />
+        <Nav darkMode={darkMode} toggleDarkMode={toggleDarkMode}/>
+        <Modal darkMode={darkMode} isOpen={loginQuery} onClose={() => setLoginQuery(false)} title="Log In">
+            <div className="flex flex-col gap-4">
+                <p>You need to login to perform this action</p>
+                <button className='p-2 text-white bg-green-400 rounded-lg' onClick={() => {
+                    window.location.href = '/login';
+                }
+                }>Log In</button>
+            </div> 
+        </Modal>
+        <div className={`${darkMode && "dark"}`} >
+            <div className="flex flex-col justify-center max-w-screen bg-[#fefdfd] dark:bg-neutral-900">
+                <div className="relative flex flex-col items-center">
+                    <div className="flex flex-col items-center lg:items-start lg:flex-row h-fit bg-white dark:bg-neutral-800 border-2 dark:border-0 my-16 shadow-custom1 w-[80vw] min-w-fit max-w-full rounded-xl p-5">
+                        <img className="object-contain mr-4 rounded-xl h-96" src={recipe.recipe && recipe.recipe.image} alt="Ingredient" />
+                        <div className="flex flex-col items-center w-full mt-4 justify-begin h-fit">
+                            <div>
+                                <div className="flex items-center gap-2">
+                                    <h3 className="text-5xl font-medium text-gray-600 dark:text-gray-300">{recipe.recipe && recipe.recipe.name}</h3>
+                                </div>
+                                
+                                <div className="flex flex-row gap-2 p-2">
+                                {recipe.recipe &&
+                                recipe.recipe.categories.map(category => (
+                                        <p key={category.id} className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 bg-gray-100 rounded-md dark:text-gray-100 dark:bg-gray-600 ring-1 ring-inset ring-gray-100 dark:ring-gray-600">{category.name}</p>
+                                ))}
                                 </div>
                             </div>
 
@@ -170,12 +175,18 @@ export default function Recipe({darkMode, setDarkMode}) {
                             </div>
                         </div>
 
-                        <div className="flex flex-col gap-2 p-5 mx-8 bg-white dark:bg-neutral-800 shadow-sm w-[80vw] rounded-[15px] max-w-fit" style={{ boxShadow: "0px 3.5px 5.499999523162842px 0 rgba(0,0,0,0.02)" }}>
-                            <h3 className="mb-4 text-xl font-bold text-[#2d3748] dark:text-white">Description</h3>
-                            <div className="flex flex-col text-left text-sm gap-2 dark:text-gray-300">
-                                {recipe.recipe &&
-                                parse(recipe.recipe.short_description)}
-                            </div>
+                    <div className="flex flex-row justify-end gap-4 p-2 lg:ml-2 min-w-9 h-fit items-right lg:flex-col">
+                        <FontAwesomeIcon className={"h-5 w-5 aspect-square cursor-pointer " + (favorited ? "text-rose-500" : "hover:text-rose-500")} onClick={favorited ? unfavoriteRecipe : favoriteRecipe} icon={faHeart} />
+                        <FontAwesomeIcon className="w-5 h-5 cursor-pointer aspect-square hover:text-green-500" icon={faScaleUnbalanced} />
+                    </div>
+
+                    </div>
+
+                    <div className="flex flex-col w-full gap-2 p-5 mx-8 bg-white rounded-lg dark:bg-neutral-800 shadow-custom1 max-w-fit">
+                        <h3 className="mb-4 text-2xl font-medium text-gray-600 dark:text-gray-300">Description</h3>
+                        <div className="flex flex-col gap-2 dark:text-white">
+                            {recipe.recipe &&
+                            parse(recipe.recipe.short_description)}
                         </div>
 
                         <div className="flex flex-col lg:flex-row items-center gap-10 p-10">
@@ -206,5 +217,6 @@ export default function Recipe({darkMode, setDarkMode}) {
                 </div>
             </div>
         </div>
+    </div>
     )
 }

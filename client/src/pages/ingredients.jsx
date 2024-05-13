@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFilter } from "@fortawesome/free-solid-svg-icons";
+import { faFilter, faArrowsRotate } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 
 import Navbar from "../components/navbar";
@@ -48,7 +48,7 @@ async function getIngredients(){
 }
 
 export default function Ingredients({darkMode, setDarkMode}) {
-    const [loadedIngredients, setLoadedIngredients] = useState();
+    const [loadedIngredients, setLoadedIngredients] = useState([]);
 
     const [filteredIngredients, setFilteredIngredients] = useState([]);
     const [category, setCategory] = useState("all");
@@ -170,11 +170,18 @@ export default function Ingredients({darkMode, setDarkMode}) {
                     </div>
                 </div>
                 <div className="container px-5 h-fit bg-[#fefdfd] dark:bg-neutral-900">
-                    <Pagination itemsPerPage={9}>
-                        {filteredIngredients.map((ingredient, index) => (
-                            <IngredientCard key={index} ingredient={ingredient} darkMode={darkMode} />
-                        ))}
-                    </Pagination>
+                    {loadedIngredients.length === 0 ? <p className="text-lg font-bold text-gray-500">
+                            <FontAwesomeIcon icon={faArrowsRotate} className="mx-1 animate-spin" /> Loading...</p> : 
+                            (
+                                <Pagination itemsPerPage={9}>{
+                                    filteredIngredients.map((ingredient, index) => (
+                                            <IngredientCard key={index} ingredient={ingredient} />
+                                        )
+                                    )
+                                }
+                                </Pagination>
+                            )
+                    }
                 </div>
                 <Footer />
             </main>

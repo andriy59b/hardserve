@@ -20,6 +20,7 @@ import SignUp from "./components/SignUp/SignUp";
 import PasswordReset from "./pages/password-reset";
 
 import AccountPage from "./pages/accountPage/main";
+import Subscriptions from "./pages/accountPage/subsciptions";
 
 function App() {
   const savedDarkMode = localStorage.getItem('darkMode') === 'true';
@@ -32,6 +33,7 @@ function App() {
         <Route path="/login" element={<LogIn/>} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/account" element={<AccountPage darkMode={darkMode} setDarkMode={setDarkMode}/>} />
+        <Route path="/account/subscriptions" element={<Subscriptions darkMode={darkMode} setDarkMode={setDarkMode}/>} />
         <Route path="/accounts/password-reset-confirm/:uid/:token" element={<PasswordReset />} />
         <Route path="/ingredients" element={<Ingredients darkMode={darkMode} setDarkMode={setDarkMode} />} />
         <Route path="/ingredients/:id" element={<Ingredient darkMode={darkMode} setDarkMode={setDarkMode} />} />
