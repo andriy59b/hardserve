@@ -8,11 +8,12 @@ class Profile(models.Model):
     bio = models.TextField(blank=True, null=True)
     location = models.CharField(max_length=100, blank=True, null=True)
     profile_picture = models.ImageField(upload_to='profile_pictures/', blank=True, null=True)
+    basic_plan = models.BooleanField(default=True)
+    premium_plan = models.BooleanField(default=False)
+    gold_plan = models.BooleanField(default=False)
         
     def __str__(self):
-        return self.user.username + " " + self.user.email
-    
-    
+        return self.user.username + " " + self.user.email    
 
 class Favorite(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
