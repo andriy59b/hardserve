@@ -11,6 +11,7 @@ class Profile(models.Model):
     basic_plan = models.BooleanField(default=True)
     premium_plan = models.BooleanField(default=False)
     gold_plan = models.BooleanField(default=False)
+    active_ration = models.ForeignKey('ration.Ration_Basic', on_delete=models.CASCADE, blank=True, null=True, default=None)
         
     def __str__(self):
         return self.user.username + " " + self.user.email    
