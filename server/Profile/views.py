@@ -123,3 +123,47 @@ class UserWeightHistoryView(APIView):
             request.user.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class UpdatePlanView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def put(self, request):
+        profile, created = Profile.objects.get_or_create(user=request.user)
+        plan_type = request.data.get('plan_type')
+        if plan_type == 'premium':
+            if profile.premium_plan:
+                return Response({"detail": "User already has the premium plan."}, status=status.HTTP_400_BAD_REQUEST)
+            profile.premium_plan = True
+        elif plan_type == 'gold':
+            if profile.gold_plan:
+                return Response({"detail": "User already has the gold plan."}, status=status.HTTP_400_BAD_REQUEST)
+            profile.premium_plan = True
+            profile.gold_plan = True
+        else:
+            return Response({"detail": "Invalid plan_type. Must be 'premium' or 'gold'."}, status=status.HTTP_400_BAD_REQUEST)
+        profile.save()
+        serializer = ProfileSerializer(profile)
+        return Response(serializer.data)
+    
+class CancelPlanView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def put(self, request):
+        profile, created = Profile.objects.get_or_create(user=request.user)
+        plan_type = request.data.get('plan_type')
+        if plan_type == 'premium':
+            if not profile.premium_plan:
+                return Response({"detail": "User does not have the premium plan."}, status=status.HTTP_400_BAD_REQUEST)
+            if profile.gold_plan:
+                return Response({"detail": "Cannot cancel premium plan while gold plan is active."}, status=status.HTTP_400_BAD_REQUEST)
+            profile.premium_plan = False
+        elif plan_type == 'gold':
+            if not profile.gold_plan:
+                return Response({"detail": "User does not have the gold plan."}, status=status.HTTP_400_BAD_REQUEST)
+            profile.premium_plan = False
+            profile.gold_plan = False
+        else:
+            return Response({"detail": "Invalid plan_type. Must be 'premium' or 'gold'."}, status=status.HTTP_400_BAD_REQUEST)
+        profile.save()
+        serializer = ProfileSerializer(profile)
+        return Response(serializer.data)
