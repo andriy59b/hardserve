@@ -14,4 +14,5 @@ urlpatterns = [
     path('weight/', UserWeightHistoryView.as_view(), name='weight-history'),
     path('update-plan/', UpdatePlanView.as_view(), name='update-plan'),
     path('cancel-plan/', CancelPlanView.as_view(), name='cancel-plan'),
+    path('active-ration/<int:ration_id>/', ActiveRationView.as_view(), name='active-ration'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
