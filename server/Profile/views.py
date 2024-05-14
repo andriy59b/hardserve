@@ -2,6 +2,7 @@ from rest_framework import permissions, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import *
+from ration.models import Ration_Basic
 from .serializers import *
 from rest_framework.permissions import IsAuthenticated
 
@@ -167,3 +168,35 @@ class CancelPlanView(APIView):
         profile.save()
         serializer = ProfileSerializer(profile)
         return Response(serializer.data)
+    
+class ActiveRationView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, ration_id):
+        try:
+            ration = Ration_Basic.objects.get(pk=ration_id)
+        except Ration_Basic.DoesNotExist:
+            return Response({"error": "Ration with given id does not exist."}, status=400)
+
+        profile, created = Profile.objects.get_or_create(user=request.user)
+        if profile.active_ration is not None:
+            return Response({"error": "An active ration already exists for the user."}, status=400)
+
+        profile.active_ration = ration
+        profile.save()  
+        serializer = ProfileSerializer(profile)
+        return Response(serializer.data, status=201)
+    
+    def delete(self, request, ration_id):
+        try:
+            ration = Ration_Basic.objects.get(pk=ration_id)
+        except Ration_Basic.DoesNotExist:
+            return Response({"error": "Ration with given id does not exist."}, status=status.HTTP_400_BAD_REQUEST)
+
+        profile, created = Profile.objects.get_or_create(user=request.user)
+        if profile.active_ration != ration:
+            return Response({"error": "This ration is not associated with the user's active ration."}, status=status.HTTP_400_BAD_REQUEST)
+
+        profile.active_ration = None
+        profile.save()
+        return Response({"message": "Ration successfully removed from the user's active ration."}, status=status.HTTP_204_NO_CONTENT)
