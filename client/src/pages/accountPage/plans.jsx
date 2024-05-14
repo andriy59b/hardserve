@@ -4,7 +4,7 @@ import { faTrash, faCheck, faBowlRice, faMugSaucer, faBurger } from "@fortawesom
 import { useState, useEffect } from "react"
 
 import Modal from "../../components/modal"
-import { TextField, TextArea, AcceptButton, CancelButton, DeleteButton, Select, RecipePicker, RecipeRecommendation, MultiSlider, Locked, PopUpChat } from "../../components/formComponents"
+import { TextField, TextArea, AcceptButton, CancelButton, DeleteButton, Select, RecipePicker, RecipeRecommendation, MultiSlider, Locked, Chat } from "../../components/formComponents"
 import { Tabs, TabTriggers, TabTrigger, TabsContent, TabContent } from "../../components/tabs"
 
 
@@ -310,8 +310,8 @@ export default function Plans() {
                 </div>
             </div>
 
-            <div className="w-full p-4 mt-10 bg-white rounded-lg shadow dark:bg-neutral-900 dark:shadow-custom1">
-                <PopUpChat className="" messages={messages} onSend={onSend} />
+            <div className="w-full p-4 pb-0 mt-10 bg-white rounded-lg shadow dark:bg-neutral-900 dark:shadow-custom1">
+                <Chat className="" messages={messages} onSend={onSend} />
             </div>
         </>
     )

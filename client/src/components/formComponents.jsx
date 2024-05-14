@@ -370,7 +370,7 @@ export function Locked({locked, label, children}) {
     )
 }
 
-export function PopUpChat({messages, onSend, className, placeholder = "Type a message..."}){
+export function Chat({messages, onSend, className, placeholder = "Type a message..."}){
     const [message, setMessage] = useState("");
 
     function sendMessage() {
@@ -380,15 +380,15 @@ export function PopUpChat({messages, onSend, className, placeholder = "Type a me
 
     return (
         <div className={"flex flex-col gap-2 " + className}>
-            <div className="flex flex-col gap-2 p-2 overflow-y-auto bg-gray-200 rounded-lg shadow-inner max-h-96">
+            <div className="flex flex-col gap-2 p-2 overflow-y-auto bg-gray-200 rounded-lg shadow-inner dark:bg-gray-700 max-h-96">
                 {messages.map((message, index) => (
-                    <div key={index} className="p-2 rounded-lg shadow-md even:bg-green-400 odd:bg-white">
+                    <div key={index} className="p-2 bg-white rounded-lg shadow-md even:bg-green-400 dark:odd:bg-gray-800 dark:text-white">
                         <Markdown>{message}</Markdown>
                     </div>
                 ))}
             </div>
             <div className="flex gap-2">
-                <input type="text" value={message} onChange={(e) => {setMessage(e.target.value)}} placeholder={placeholder} className="p-2 border-2 border-gray-300 rounded-lg shadow-inner focus:ring-0 focus:border-green-500"/>
+                <input type="text" value={message} onChange={(e) => {setMessage(e.target.value)}} placeholder={placeholder} className="p-2 border-2 border-gray-300 rounded-lg shadow-inner dark:border-gray-600 dark:bg-gray-800 dark:text-white focus:ring-0 focus:border-green-500"/>
                 <button onClick={sendMessage} className="h-full p-2 text-white bg-green-500 rounded-lg shadow-md aspect-square hover:bg-green-700">
                     <FontAwesomeIcon className="" icon={faPaperPlane} />
                 </button>
