@@ -63,13 +63,13 @@ export default function About({darkMode, setDarkMode}) {
     <>
       <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
       <div className={darkMode && "dark"}>
-        <div className="flex flex-col items-center w-full mx-auto dark:bg-neutral-900 text-center">
+        <div className="flex flex-col items-center w-full mx-auto text-center dark:bg-neutral-900">
           <div className="w-10/12">
             <h1 className="text-4xl font-bold text-[#2d3748] mb-5 dark:text-white p-5">
               About The Project
             </h1>
             <p className="text-2xl font-light text-[#2d3748] mb-5 dark:text-white">
-              This is a project for the 2021-2022 school year at the{" "}
+              This is a project for the 2023-2024 school year at the{" "}
               <b className="font-medium text-[#2d3748] dark:text-white">
                 Lviv National University of Ivan Franko
               </b>{" "}
@@ -104,7 +104,7 @@ export default function About({darkMode, setDarkMode}) {
               {teamMembers.map((member, index) => (
                 <div
                   key={index}
-                  className="flex flex-col items-center p-4 bg-white dark:bg-neutral-800 shadow-md w-60 rounded-xl"
+                  className="flex flex-col items-center p-4 bg-white shadow-md dark:bg-neutral-800 w-60 rounded-xl"
                 >
                   <img
                     src={member.img}

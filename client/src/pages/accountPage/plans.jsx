@@ -4,7 +4,7 @@ import { faTrash, faCheck, faBowlRice, faMugSaucer, faBurger } from "@fortawesom
 import { useState, useEffect } from "react"
 
 import Modal from "../../components/modal"
-import { TextField, TextArea, AcceptButton, CancelButton, DeleteButton, Select, RecipePicker, RecipeRecommendation, MultiSlider, Locked } from "../../components/formComponents"
+import { TextField, TextArea, AcceptButton, CancelButton, DeleteButton, Select, RecipePicker, RecipeRecommendation, MultiSlider, Locked, PopUpChat } from "../../components/formComponents"
 import { Tabs, TabTriggers, TabTrigger, TabsContent, TabContent } from "../../components/tabs"
 
 
@@ -152,6 +152,7 @@ export default function Plans() {
     const [recipes, setRecipes] = useState([]);
     const [basicPlans, setBasicPlans] = useState([]);
     const [addedPlans, setAddedPlans] = useState([]);
+    const [messages, setMessages] = useState(["Hello I'm your digital assistant. I can provide you with any dietary advice. Just type any question and i'll try to answer it."]);
 
     useEffect(() => {
         fetch("http://localhost:8000/ration/basic",
@@ -226,6 +227,20 @@ export default function Plans() {
         }
     ];
 
+    function onSend(message) {
+        setMessages([...messages, message]);
+        fetch("http://localhost:8000/ration/query-openai/?prompt="+message,
+        {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic ' + btoa(username + ':' + password),
+            }
+        }).then(response => response.json()).then(data => {
+            setMessages([...messages, message, data.response]);
+        })
+    }
+
     return (
         <>
             <Modal isOpen={addModal} title="Add Plan" onClose={() => {setAddModal(false)}}>
@@ -284,7 +299,7 @@ export default function Plans() {
             <div className="w-full p-4 bg-white rounded-lg shadow dark:bg-neutral-900 dark:shadow-custom1">
                 <div className="flex items-center justify-between px-5">
                     <h2 className="text-xl font-bold dark:text-white">My Plans</h2>
-                    <Locked locked label="Purchase Gold plan to unlock">
+                    <Locked locked label="Purchase Premium plan to unlock">
                         <AcceptButton onClick={() => {setAddModal(true)}}>Create Plan +</AcceptButton>
                     </Locked>
                 </div>
@@ -293,6 +308,10 @@ export default function Plans() {
                         <PlanCard plan={plan} refreshPlans={getMyPlans} key={index} />
                     ))}
                 </div>
+            </div>
+
+            <div className="w-full p-4 mt-10 bg-white rounded-lg shadow dark:bg-neutral-900 dark:shadow-custom1">
+                <PopUpChat className="" messages={messages} onSend={onSend} />
             </div>
         </>
     )

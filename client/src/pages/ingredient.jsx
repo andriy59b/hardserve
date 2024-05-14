@@ -235,17 +235,17 @@ export default function Ingredient({darkMode, setDarkMode}) {
                   </div>
                 </div>
 
-                <div className="flex flex-row justify-end w-full gap-4 max-w-9 h-fit items-right lg:flex-col">
+                <div className="flex flex-row items-center justify-start w-full gap-4 mt-2 h-fit max-w-9 lg:flex-col lg:h-full">
                   <FontAwesomeIcon
                     className={
-                      "w-10 h-10 aspect-square text-neutral-900 dark:text-white cursor-pointer " +
+                      "w-5 h-5 aspect-square text-neutral-900 dark:text-white cursor-pointer " +
                       (favorited ? "text-rose-500 dark:text-rose-500" : "hover:text-rose-500 dark:hover:text-rose-500")
                     }
                     onClick={favorited ? unfavoriteIngredient : favoriteIngredient}
                     icon={faBookmark}
                   />
                   <FontAwesomeIcon
-                    className="w-10 h-10 cursor-pointer text-neutral-900 dark:text-white aspect-square hover:text-green-500 dark:hover:text-green-500"
+                    className="w-5 h-5 cursor-pointer text-neutral-900 dark:text-white aspect-square hover:text-green-500 dark:hover:text-green-500"
                     icon={faScaleUnbalanced}
                   />
                 </div>
