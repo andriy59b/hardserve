@@ -134,11 +134,7 @@ export default function Recipes({ darkMode, setDarkMode }) {
         console.error("Error:", error);
       })
       .then((response) => response.json())
-      .then((data) => {
-        if (data.detail) {
-          return;
-        }
-        ).then(response => response.json()).then(data => {
+      .then(data => {
             if (data.detail) {
                 return
             }
@@ -321,58 +317,7 @@ export default function Recipes({ darkMode, setDarkMode }) {
                     </div>
                 </div>
               </div>
-            </div>
-            <CancelButton onClick={ResetFilters} className="w-full mt-5">
-              Reset Filters
-            </CancelButton>
-          </Modal>
-          <Modal className="relative select-none w-96 h-96" isOpen={ingredientsModal} onClose={() => setIngredientsModal(false)}>
-            <div className="flex flex-col h-full">
-              <h1 className="pb-2 text-2xl font-bold text-center">Ingredients</h1>
-              <IngredientPicker className="" ingredients={onlyFavorites ? favoritedIngredients : ingredients} selected={selectedIngredients} setSelected={setSelectedIngredients} />
-              {username && password ? (
-                <BadgeToggle value={onlyFavorites} onChange={setOnlyFavorites} className="mt-1 ml-4" label="Included Ingredients">
-                  <FontAwesomeIcon icon={faHeart} /> Favorites
-                </BadgeToggle>
-              ) : null}
-              <div className="flex flex-wrap h-40 gap-2 p-2 mt-5 overflow-y-auto border-2 border-gray-300 border-dashed rounded-lg shadow-inner">
-                {selectedIngredients.map((ingredient, index) => (
-                  <IngredientCheckBox includedIngredients={includedIngredients} excludedIngredients={excludedIngredients} setExcludedIngredients={setExcludedIngredients} setIncludedIngredients={setIncludedIngredients} ingredient={ingredient} key={index} />
-                ))}
-              </div>
-              <CancelButton onClick={ResetIngredients} className="w-full mt-auto">
-                Reset Ingredients
-              </CancelButton>
-            </div>
-          </Modal>
-          <h1 className="pb-5 text-4xl font-bold text-center dark:text-white">Recipes</h1>
-          <div className="flex flex-col items-center w-[40rem] max-w-[70vw] dark:text-[#fefdfd]">
-            <SearchBar darkMode={darkMode} className="w-full" type="text" value={search} onChange={handleSearch} placeholder="Search..." />
-            <div className="flex flex-wrap justify-start w-full gap-4 p-2 mx-5">
-              <p onClick={() => setFilterModal(true)} className="text-sm font-bold text-gray-500 cursor-pointer hover:text-green-500">
-                <FontAwesomeIcon icon={faFilter} /> Filters
-              </p>
-              <p onClick={() => setIngredientsModal(true)} className="text-sm font-bold text-gray-500 cursor-pointer hover:text-green-500">
-                <FontAwesomeIcon icon={faCarrot} /> Ingredients
-              </p>
-            </div>
-          </div>
-          <div className="flex flex-wrap justify-center w-full gap-4 p-2 mx-5">
-            {filteredRecipes.length === 0 ? (
-              <p className="text-lg font-bold text-gray-500">
-                <FontAwesomeIcon icon={faArrowsRotate} className="mx-1 animate-spin" /> Loading...
-              </p>
-            ) : (
-              <Pagination itemsPerPage={9}>
-                {filteredRecipes.filter((recipe) => recipe.name.toLowerCase().includes(search.toLowerCase())).map((recipe) => (
-                  <RecipeCard key={recipe.id} recipe={recipe} />
-                ))}
-              </Pagination>
-            )}
-          </div>
-        </div>
-      </div>
-      </div>
+            
     </>
   );
 }

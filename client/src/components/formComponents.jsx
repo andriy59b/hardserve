@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 
+import Markdown from 'react-markdown'
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faMagnifyingGlass, faMinus, faPlus, faXmark, faPause, faLock } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faMagnifyingGlass, faMinus, faPlus, faXmark, faPause, faLock, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
 export function TextField({label, type, name, value, onChange, placeholder, className, id}) {
     return (
@@ -361,8 +363,35 @@ export function Locked({locked, label, children}) {
     return (
         <div className={locked ? "my-2 opacity-50 bg-gray-300 px-2 pt-2 rounded-lg shadow-lg locked" : ""}>
             {locked && <label className="text-xs text-gray-500"><FontAwesomeIcon icon={faLock}/> {label}</label>}
-            <div>
+            <div className="flex flex-col items-center p-2">
                 {children}
+            </div>
+        </div>
+    )
+}
+
+export function Chat({messages, onSend, className, placeholder = "Type a message..."}){
+    const [message, setMessage] = useState("");
+
+    function sendMessage() {
+        onSend(message);
+        setMessage("");
+    }
+
+    return (
+        <div className={"flex flex-col gap-2 " + className}>
+            <div className="flex flex-col gap-2 p-2 overflow-y-auto bg-gray-200 rounded-lg shadow-inner dark:bg-gray-700 max-h-96">
+                {messages.map((message, index) => (
+                    <div key={index} className="p-2 bg-white rounded-lg shadow-md even:bg-green-400 dark:odd:bg-gray-800 dark:text-white">
+                        <Markdown>{message}</Markdown>
+                    </div>
+                ))}
+            </div>
+            <div className="flex gap-2">
+                <input type="text" value={message} onChange={(e) => {setMessage(e.target.value)}} placeholder={placeholder} className="p-2 border-2 border-gray-300 rounded-lg shadow-inner dark:border-gray-600 dark:bg-gray-800 dark:text-white focus:ring-0 focus:border-green-500"/>
+                <button onClick={sendMessage} className="h-full p-2 text-white bg-green-500 rounded-lg shadow-md aspect-square hover:bg-green-700">
+                    <FontAwesomeIcon className="" icon={faPaperPlane} />
+                </button>
             </div>
         </div>
     )

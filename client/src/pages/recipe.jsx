@@ -81,6 +81,21 @@ export default function Recipe({darkMode, setDarkMode}) {
         })
     }
 
+    function unfavoriteRecipe(){
+        if (!username || !password) {
+            setLoginQuery(true);
+            return
+        }
+
+        fetch(`http://localhost:8000/favorites/recipes/${recipeId}/remove/`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Basic " + btoa(username + ":" + password),
+            }
+        }).then(response => setFavorited(false))
+    }
+
     useEffect(() => {
         fetch("http://localhost:8000/recipes/" + recipeId + "/", {
             method: "GET",
@@ -127,12 +142,6 @@ export default function Recipe({darkMode, setDarkMode}) {
                                     <h3 className="text-5xl font-medium text-gray-600 dark:text-gray-300">{recipe.recipe && recipe.recipe.name}</h3>
                                 </div>
                                 
-                                <div className="flex flex-row gap-2 p-2">
-                                {recipe.recipe &&
-                                recipe.recipe.categories.map(category => (
-                                        <p key={category.id} className="inline-flex items-center px-4 py-2 text-xs font-medium text-gray-600 bg-gray-100 rounded-md dark:text-gray-100 dark:bg-gray-600 ring-1 ring-inset ring-gray-100 dark:ring-gray-600">{category.name}</p>
-                                ))}
-                                </div>
                             </div>
 
                             <div className="flex flex-col mt-6">
@@ -162,7 +171,7 @@ export default function Recipe({darkMode, setDarkMode}) {
                                     </div> */}
                                 </div>
 
-                                <div className="flex flex-col gap-2 p-5 bg-transperent h-96 w-max">
+                                <div className="flex flex-col gap-2 p-5 bg-transperent h-96 w-96">
                                     <h3 className="mb-4 text-lg text-center font-bold text-[#2d3748] dark:text-white">Ingredients</h3>
                                     <div className="flex flex-col gap-2 overflow-y-scroll">
                                         {recipe.recipe_ingredients &&
@@ -189,7 +198,7 @@ export default function Recipe({darkMode, setDarkMode}) {
                             parse(recipe.recipe.short_description)}
                         </div>
 
-                        <div className="flex flex-col lg:flex-row items-center gap-10 p-10">
+                        <div className="flex flex-col items-center gap-10 p-10 lg:flex-row">
                                 <div className="flex flex-col w-1/2 gap-2 p-5 bg-white dark:bg-neutral-800 shadow-sm rounded-[15px]" style={{ boxShadow: "0px 3.5px 5.499999523162842px 0 rgba(0,0,0,0.02)" }}>
                                     <h3 className="mb-2 text-xl font-bold text-[#2d3748] dark:text-white">Recipe</h3>
                                     <div className="flex flex-col gap-2">
