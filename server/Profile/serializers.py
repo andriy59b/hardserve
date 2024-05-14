@@ -6,7 +6,7 @@ class ProfileSerializer(serializers.ModelSerializer):
     email = serializers.SerializerMethodField()
     class Meta:
         model = Profile
-        fields = ['username', 'email', 'bio', 'location', 'profile_picture', 'basic_plan', 'premium_plan', 'gold_plan']
+        fields = ['username', 'email', 'bio', 'location', 'profile_picture', 'basic_plan', 'premium_plan', 'gold_plan', 'active_ration']
     
     def get_username(self, obj):
         return obj.user.username
