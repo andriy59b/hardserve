@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Modal from "../components/modal";
 import Navbar from "../components/navbar";
+import Footer from "../components/footer";
 import {
   SearchBar,
   CheckBox,
@@ -317,6 +318,8 @@ export default function Recipes({ darkMode, setDarkMode }) {
                     </div>
                 </div>
               </div>
+
+              <Footer/>
             
     </>
   );
