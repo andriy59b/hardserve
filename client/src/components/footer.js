@@ -18,10 +18,18 @@ export default function Footer() {
                     <div className="footer-center">
                         Quick links
                         <ul>
-                            <li>Home</li>
-                            <li>Plans</li>
-                            <li>Recipes</li>
-                            <li>Blog</li>
+                            <li >
+                                <a className="text-base font-light" href="/ingredients">Ingredients</a>           
+                            </li>
+                            <li>
+                                <a className="text-base font-light" href="/about">About Us</a>           
+                            </li>
+                            <li>
+                                <a className="text-base font-light" href="/blog">Blog</a>           
+                            </li>
+                            <li>
+                                <a className="text-base font-light" href="/recipes">Recipes</a>
+                            </li>
                         </ul>
                     </div>
 
@@ -51,7 +59,7 @@ export default function Footer() {
                             <img src="/icons/logo.svg" alt="logo" />
                             <h1 className="text-xl font-bold ">Ration</h1>
                         </div>
-                    <p>© 2021 Ration. All rights reserved.</p>
+                    <p>© 2024 Ration. All rights reserved.</p>
                 </div>
             </footer>
     )
