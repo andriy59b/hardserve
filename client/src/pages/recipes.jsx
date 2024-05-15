@@ -264,7 +264,7 @@ export default function Recipes({ darkMode, setDarkMode }) {
 
         <>
             <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
-            <div className={`flex flex-col items-center p-4 ${darkMode && "dark"}`} >
+            <div className={`${darkMode && "dark"}`} >
                 <div className="flex flex-col items-center p-4 bg-[#fefdfd] dark:bg-neutral-900">
                     <FilterModal />
                     <Modal className="relative select-none w-96 h-96" isOpen={ingredientsModal} onClose={() => {setIngredientsModal(false)}}>
@@ -295,7 +295,7 @@ export default function Recipes({ darkMode, setDarkMode }) {
                             <CancelButton onClick={ResetIngredients} className="w-full mt-auto">Reset Ingredients</CancelButton>
                         </div>
                     </Modal>
-                    <h1 className="pb-5 text-4xl font-bold text-center">Recipes</h1>
+                    <h1 className="pb-5 text-4xl font-bold text-center dark:text-white">Recipes</h1>
                     <div className="flex flex-col items-center w-fit dark:text-[#fefdfd]">
                         <SearchBar className="w-[30rem] max-w-[70vw]" darkMode={darkMode} type="text" value={search} onChange={handleSearch} placeholder="Search..."/>
                         <div className="flex flex-wrap justify-start w-full gap-4 p-2 mx-5">
