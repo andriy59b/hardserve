@@ -202,16 +202,6 @@ const LogIn = () => {
                         <span className="success">{statusMessage}</span>
                     ) : null}
           </div>
-
-          {/* <div > */}
-                <a onClick={PasswordReset} className='tx1'>
-                    Can’t log in?
-                </a>
-                <h1 className='tx2' >
-                Secure Login with reCAPTCHA subject to Google
-                <a href="">Terms</a> & <a href="">Privacy</a>
-                </h1>
-            {/* </div> */}
           
         </div>
         </>
