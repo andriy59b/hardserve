@@ -14,7 +14,7 @@ import "./ingredients.css";
 function IngredientCard({ingredient, darkMode}){
     return (
       <div className={`${darkMode && "dark"}`} >
-        <div className={`relative flex flex-col items-center px-2 py-4 bg-transparent ${darkMode ? 'bg-gray-200 dark:bg-neutral-800' : 'bg-gray-200'} shadow-lg cursor-pointer w-72 rounded-xl`} onClick={() => window.location.href += "/" + ingredient.product_id}>
+        <div className={`relative flex flex-col items-center px-2 py-4 bg-transparent dark:bg-neutral-800 shadow-lg cursor-pointer w-72 rounded-xl`} onClick={() => window.location.href += "/" + ingredient.product_id}>
             <img className="object-contain w-full mt-2 mb-4 rounded-xl max-h-52" src={ingredient.image} alt="Ingredient" />
             <div className="flex items-center gap-2 mt-auto">
                 <h3 className={`text-xl font-bold ${darkMode ? 'dark:text-white' : ''}`}>{ingredient.name}</h3>
