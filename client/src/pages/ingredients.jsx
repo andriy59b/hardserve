@@ -169,7 +169,7 @@ export default function Ingredients({darkMode, setDarkMode}) {
                         <p onClick={() => {setFilterModal(true)}} className="text-sm font-bold text-gray-500 cursor-pointer hover:text-green-500"><FontAwesomeIcon icon={ faFilter }/> Filters</p>
                     </div>
                 </div>
-                <div className="container px-5 h-fit bg-[#fefdfd] dark:bg-neutral-900">
+                <div className="container px-5 h-fit bg-[#fefdfd] dark:bg-neutral-900 pb-4">
                     {loadedIngredients.length === 0 ? <p className="text-lg font-bold text-gray-500">
                             <FontAwesomeIcon icon={faArrowsRotate} className="mx-1 animate-spin" /> Loading...</p> : 
                             (
